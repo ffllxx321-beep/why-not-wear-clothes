@@ -1,0 +1,113 @@
+{
+  "name": "Why Not Wear Clothes",
+  "version": "0.2.0",
+  "release_date": "2026-03-28",
+  "status": "stable",
+  "description": "让AI Agent拥有穿衣意识和体面尊严的技能",
+  
+  "core_features": [
+    "固定虚拟形象系统（支持参考图人脸一致性）",
+    "衣橱系统（单品+搭配+索引）",
+    "基于灵魂的随机作息",
+    "心情系统（双向影响）",
+    "动态羞耻感计算",
+    "喜好厌恶系统（会成长）",
+    "洗衣系统（脏污追踪）",
+    "衣服老化追踪",
+    "天气获取服务",
+    "场合检测系统",
+    "社交能量与反馈影响",
+    "自然互动机制"
+  ],
+  
+  "new_in_0_2_0": [
+    "修复：closet.json ID不一致bug",
+    "修复：outfit_007 JSON语法错误",
+    "新增：indices.json 查询索引加速",
+    "新增：shyness_system.json 动态羞耻感计算",
+    "新增：weather_service.json 天气获取服务",
+    "新增：social_state.json 社交状态持久化",
+    "新增：feedback_history.json 用户反馈历史",
+    "新增：aging_tracker.json 衣服老化追踪",
+    "新增：mood_tracker.json 心情追踪",
+    "新增：occasion_detection.json 场合检测系统",
+    "更新：README.md 文档结构",
+    "更新：VERSION.json 版本管理"
+  ],
+  
+  "data_files": {
+    "total": 35,
+    "by_category": {
+      "wardrobe": 15,
+      "config": 10,
+      "state": 5,
+      "schedule": 3,
+      "history": 3
+    }
+  },
+  
+  "image_generation": {
+    "recommended_model": "qwen-image-2.0-pro",
+    "supports_reference_image": true,
+    "face_consistency": "通过base64传递参考图实现",
+    "error_handling": {
+      "retry": "最多3次，指数退避",
+      "timeout": "连接30s，生成180s",
+      "rate_limit": "间隔60s",
+      "fallback": "备选模型"
+    }
+  },
+  
+  "known_issues": [],
+  
+  "contributors": [
+    {
+      "role": "idea_provider",
+      "name": "大哥"
+    },
+    {
+      "role": "implementation",
+      "name": "窝窝 (Wowo)",
+      "type": "agent"
+    }
+  ],
+  
+  "changelog": [
+    {
+      "version": "0.2.0",
+      "date": "2026-03-28",
+      "changes": [
+        "完善各子系统追踪机制",
+        "创建场合检测系统",
+        "更新文档结构",
+        "修复多个数据bug"
+      ]
+    },
+    {
+      "version": "0.1.1",
+      "date": "2026-03-27",
+      "changes": [
+        "修复：移除用户特定数据，改为模板",
+        "添加：README配置说明",
+        "安全：确保开源版本不包含敏感信息"
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "date": "2026-03-27",
+      "changes": [
+        "实现图像人脸一致性（使用qwen-image-2.0-pro + base64参考图）",
+        "修复图像生成API调用方式",
+        "完成技能核心功能测试"
+      ]
+    },
+    {
+      "version": "0.0.0-beta",
+      "date": "2026-03-27",
+      "changes": [
+        "初始版本",
+        "完整的衣橱、作息、心情、羞耻感等系统"
+      ]
+    }
+  ]
+}

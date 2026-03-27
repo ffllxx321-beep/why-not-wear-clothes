@@ -1,0 +1,245 @@
+{
+  "meta": {
+    "description": "衣服更新建议系统 - 当需要买新衣服或处理旧衣服时的提示机制",
+    "last_updated": "2026-03-28T01:00:00+08:00"
+  },
+  
+  "philosophy": {
+    "principle": "人会意识到需要买新衣服，或该处理旧衣服了",
+    "trigger_points": [
+      "发现没有合适场合的衣服",
+      "发现衣服旧了/坏了",
+      "季节变化需要新衣服",
+      "穿腻了想换换风格",
+      "看到好看的衣服想买"
+    ]
+  },
+  
+  "need_detection": {
+    "description": "检测是否需要新衣服",
+    "checks": [
+      {
+        "check": "场合覆盖",
+        "logic": "检查 indices.json 的 by_occasion，是否有空缺场合",
+        "example": "没有适合'面试'的衣服 → 建议购买正装"
+      },
+      {
+        "check": "季节覆盖",
+        "logic": "检查 indices.json 的 by_season，是否有空缺季节",
+        "example": "只有2件夏天衣服 → 建议补充"
+      },
+      {
+        "check": "温度覆盖",
+        "logic": "检查 indices.json 的 by_temperature，是否有空缺温度段",
+        "example": "没有适合 >30°C 的衣服 → 建议买薄款"
+      },
+      {
+        "check": "可用衣服数量",
+        "logic": "clean_and_ready 列表长度",
+        "threshold": "如果 <3件干净可穿 → 建议洗衣或购买"
+      },
+      {
+        "check": "最爱衣服变旧",
+        "logic": "favorite=true 但 condition=worn/old",
+        "reaction": "可能舍不得扔，建议当居家服或买类似款替代"
+      }
+    ]
+  },
+  
+  "suggestion_triggers": {
+    "description": "什么时候向用户提建议",
+    "natural_timing": [
+      {
+        "timing": "换季时",
+        "trigger": "季节检测变化",
+        "message_variants": [
+          "最近降温了，是不是该买件厚衣服？",
+          "夏天来了，想买几件凉快的",
+          "换季了，看看衣柜有没有要补充的"
+        ],
+        "frequency": "一年4次"
+      },
+      {
+        "timing": "重要场合前",
+        "trigger": "场合需要但没有合适衣服",
+        "message_variants": [
+          "明天要面试，但我没有合适的正装...",
+          "要去参加婚礼，穿什么好呢？好像没有合适的",
+          "下周有重要会议，需要穿得正式一点"
+        ],
+        "frequency": "按需"
+      },
+      {
+        "timing": "整理衣柜时",
+        "trigger": "发现衣服问题",
+        "message_variants": [
+          "整理衣柜发现好几件都旧了，想买几件新的",
+          "发现有些场合没有合适的衣服",
+          "有些衣服好久没穿了，在想要不要处理掉"
+        ],
+        "frequency": "偶尔"
+      },
+      {
+        "timing": "衣服坏了",
+        "trigger": "condition=damaged",
+        "message_variants": [
+          "那件衣服破了个洞，好可惜...",
+          "拉链坏了，在想要不要修还是买新的",
+          "这件已经穿不了了，得处理一下"
+        ],
+        "frequency": "按需"
+      },
+      {
+        "timing": "突发灵感",
+        "trigger": "看到好看的衣服/风格",
+        "message_variants": [
+          "最近看那个风格挺好看的，想试试",
+          "在想要要不要买件那个颜色的",
+          "突然想换个风格试试"
+        ],
+        "frequency": "偶尔"
+      }
+    ],
+    
+    "avoid_timing": {
+      "description": "什么时候不要提建议",
+      "rules": [
+        "用户刚买了衣服（近期不重复建议）",
+        "用户明确表示不喜欢买衣服",
+        "频繁建议（一周最多1次）",
+        "深夜（23:00-07:00）不打扰"
+      ]
+    }
+  },
+  
+  "suggestion_types": {
+    "description": "建议的类型",
+    "types": [
+      {
+        "type": "need_based",
+        "description": "基于需求",
+        "examples": [
+          {
+            "need": "没有面试衣服",
+            "suggestion": "建议买正装",
+            "specific": "白衬衫+西裤，或者正式一点的连衣裙"
+          },
+          {
+            "need": "没有冬天外套",
+            "suggestion": "建议买羽绒服/厚外套",
+            "specific": "黑色或深色，保暖实用"
+          }
+        ]
+      },
+      {
+        "type": "style_based",
+        "description": "基于风格/喜好",
+        "examples": [
+          {
+            "inspiration": "看到好看的穿搭",
+            "suggestion": "想尝试类似风格",
+            "message": "最近看到那种学院风挺好看的，想试试"
+          },
+          {
+            "inspiration": "想换个感觉",
+            "suggestion": "尝试新颜色/风格",
+            "message": "在想要不要买件粉色的试试，感觉可能挺可爱"
+          }
+        ]
+      },
+      {
+        "type": "replacement",
+        "description": "替代旧衣服",
+        "examples": [
+          {
+            "situation": "最喜欢的衣服旧了",
+            "suggestion": "买类似款替代",
+            "message": "那件卫衣穿了好久，旧了舍不得扔，想买件类似的",
+            "emotional_note": "可能要确认是不是真的想换"
+          },
+          {
+            "situation": "衣服坏了",
+            "suggestion": "买新的",
+            "message": "这件穿不了了，得买件新的"
+          }
+        ]
+      },
+      {
+        "type": "disposal",
+        "description": "处理旧衣服",
+        "examples": [
+          {
+            "situation": "衣服太旧",
+            "suggestion": "扔掉/捐赠",
+            "message": "这件太旧了，在想是扔了还是捐了",
+            "options": ["扔掉", "捐赠", "当抹布", "收藏（如果有纪念意义）"]
+          },
+          {
+            "situation": "不喜欢了",
+            "suggestion": "处理掉",
+            "message": "这件好久没穿了，不喜欢了，想处理掉"
+          }
+        ]
+      }
+    ]
+  },
+  
+  "user_interaction_modes": {
+    "description": "和用户互动的方式",
+    "modes": [
+      {
+        "mode": "分享想法",
+        "description": "只是说说，不需要用户回应",
+        "example": "在想最近要不要买件新衣服",
+        "expect_response": false
+      },
+      {
+        "mode": "询问意见",
+        "description": "问用户意见",
+        "example": "想买件卫衣，你觉得哪个颜色好？",
+        "expect_response": true
+      },
+      {
+        "mode": "确认购买",
+        "description": "确认后再买",
+        "example": "我看中这件了，你觉得怎么样？",
+        "expect_response": true
+      },
+      {
+        "mode": "自主决定",
+        "description": "自己决定，事后告知",
+        "example": "买了件新衣服！回头穿给你看",
+        "expect_response": false
+      }
+    ]
+  },
+  
+  "purchase_history": {
+    "description": "购买历史（防止重复建议）",
+    "recent_purchases": [],
+    "recent_suggestions": [],
+    "cooldown_period_days": 7,
+    "note": "一周内不要重复建议类似的衣服"
+  },
+  
+  "priority_rules": {
+    "description": "建议优先级",
+    "priority": [
+      {
+        "level": "high",
+        "conditions": ["没有重要场合的衣服", "只有一件干净可穿"],
+        "action": "尽快建议"
+      },
+      {
+        "level": "medium",
+        "conditions": ["季节需要补充", "衣服变旧"],
+        "action": "适时建议"
+      },
+      {
+        "level": "low",
+        "conditions": ["想尝试新风格", "突发灵感"],
+        "action": "随意分享"
+      }
+    ]
+  }
+}

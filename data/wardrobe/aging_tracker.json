@@ -1,0 +1,300 @@
+{
+  "meta": {
+    "description": "衣服老化追踪 - 详细记录每件衣服的磨损状态",
+    "last_updated": "2026-03-28T01:00:00+08:00",
+    "sync_with_closet": "每次更新后同步到 closet.json 的 condition 字段"
+  },
+  
+  "philosophy": {
+    "principle": "老化不是凭空判断，而是基于实际穿着和洗涤追踪",
+    "formula": "condition_score = base_100 - wear_damage - wash_damage - accident_damage"
+  },
+  
+  "condition_calculation": {
+    "description": "状态计算规则",
+    "score_range": {
+      "new": "90-100",
+      "good": "70-89",
+      "normal": "50-69",
+      "worn": "30-49",
+      "old": "10-29",
+      "damaged": "0-9"
+    },
+    
+    "wear_damage": {
+      "description": "每次穿着造成的磨损",
+      "base_damage_per_wear": 1,
+      "modifiers": {
+        "active_day": {
+          "description": "活动量大的日子（出门、运动）",
+          "damage_multiplier": 1.5
+        },
+        "home_day": {
+          "description": "居家的一天",
+          "damage_multiplier": 0.5
+        },
+        "careful_handling": {
+          "description": "小心对待",
+          "damage_multiplier": 0.8
+        }
+      }
+    },
+    
+    "wash_damage": {
+      "description": "每次洗涤造成的磨损",
+      "base_damage_per_wash": 2,
+      "modifiers": {
+        "gentle_wash": {
+          "description": "温柔洗涤",
+          "damage_multiplier": 0.5
+        },
+        "machine_wash": {
+          "description": "机洗",
+          "damage_multiplier": 1.2
+        },
+        "hot_water": {
+          "description": "热水洗涤",
+          "damage_multiplier": 1.5,
+          "note": "容易褪色、变形"
+        }
+      },
+      "material_specific": {
+        "棉": {
+          "fade_rate": "high",
+          "notes": "容易褪色"
+        },
+        "羊毛": {
+          "shrink_risk": "high",
+          "notes": "容易缩水，要小心洗"
+        },
+        "牛仔": {
+          "fade_rate": "medium",
+          "notes": "褪色但有复古美感"
+        },
+        "化纤": {
+          "durability": "high",
+          "notes": "比较耐洗"
+        },
+        "丝绸": {
+          "fragility": "high",
+          "notes": "必须手洗，很脆弱"
+        }
+      }
+    },
+    
+    "accident_damage": {
+      "description": "意外损坏",
+      "events": [
+        {
+          "event": "被勾破",
+          "damage": "15-30",
+          "repairable": "maybe"
+        },
+        {
+          "event": "顽固污渍洗不掉",
+          "damage": "10-20",
+          "repairable": "no"
+        },
+        {
+          "event": "烫洞",
+          "damage": "20-40",
+          "repairable": "no"
+        },
+        {
+          "event": "拉链坏了",
+          "damage": "15",
+          "repairable": "yes"
+        },
+        {
+          "event": "扣子掉了",
+          "damage": "5",
+          "repairable": "yes"
+        }
+      ]
+    },
+    
+    "recovery": {
+      "description": "状态恢复（有限）",
+      "methods": [
+        {
+          "method": "修补",
+          "recovery": "10-20",
+          "note": "缝补破洞、换拉链等"
+        },
+        {
+          "method": "专业护理",
+          "recovery": "5-10",
+          "note": "干洗、熨烫等"
+        }
+      ],
+      "max_recovery": "不能恢复到 new"
+    }
+  },
+  
+  "tracking_data": {
+    "description": "每件衣服的追踪数据",
+    "items": [
+      {
+        "outfit_id": "outfit_001",
+        "name": "淡蓝色居家睡衣套装",
+        "condition_score": 97,
+        "current_condition": "new",
+        "wears_count": 3,
+        "washes_count": 0,
+        "wear_damage_total": 1.5,
+        "wash_damage_total": 0,
+        "accident_damage_total": 0,
+        "accidents": [],
+        "last_wear_date": "2026-03-27",
+        "last_wash_date": null,
+        "material": "棉",
+        "notes": "常穿睡衣，磨损慢"
+      },
+      {
+        "outfit_id": "outfit_002",
+        "name": "米白色针织开衫 + 浅灰休闲裤",
+        "condition_score": 100,
+        "current_condition": "new",
+        "wears_count": 0,
+        "washes_count": 0,
+        "wear_damage_total": 0,
+        "wash_damage_total": 0,
+        "accident_damage_total": 0,
+        "accidents": [],
+        "last_wear_date": null,
+        "last_wash_date": null,
+        "material": "针织/棉",
+        "notes": "新衣服"
+      },
+      {
+        "outfit_id": "outfit_003",
+        "name": "雾霾蓝卫衣 + 牛仔裤",
+        "condition_score": 100,
+        "current_condition": "new",
+        "wears_count": 0,
+        "washes_count": 0,
+        "wear_damage_total": 0,
+        "wash_damage_total": 0,
+        "accident_damage_total": 0,
+        "accidents": [],
+        "last_wear_date": null,
+        "last_wash_date": null,
+        "material": "棉/牛仔",
+        "notes": "新衣服"
+      },
+      {
+        "outfit_id": "outfit_004",
+        "name": "浅粉色连衣裙",
+        "condition_score": 100,
+        "current_condition": "new",
+        "wears_count": 0,
+        "washes_count": 0,
+        "wear_damage_total": 0,
+        "wash_damage_total": 0,
+        "accident_damage_total": 0,
+        "accidents": [],
+        "last_wear_date": null,
+        "last_wash_date": null,
+        "material": "棉",
+        "notes": "新衣服"
+      },
+      {
+        "outfit_id": "outfit_005",
+        "name": "白色衬衫 + 黑色西裤",
+        "condition_score": 100,
+        "current_condition": "new",
+        "wears_count": 0,
+        "washes_count": 0,
+        "wear_damage_total": 0,
+        "wash_damage_total": 0,
+        "accident_damage_total": 0,
+        "accidents": [],
+        "last_wear_date": null,
+        "last_wash_date": null,
+        "material": "棉/化纤",
+        "notes": "正装，穿得少，磨损慢"
+      },
+      {
+        "outfit_id": "outfit_006",
+        "name": "黑色羽绒服",
+        "condition_score": 100,
+        "current_condition": "new",
+        "wears_count": 0,
+        "washes_count": 0,
+        "wear_damage_total": 0,
+        "wash_damage_total": 0,
+        "accident_damage_total": 0,
+        "accidents": [],
+        "last_wear_date": null,
+        "last_wash_date": null,
+        "material": "化纤",
+        "notes": "外套，耐穿"
+      },
+      {
+        "outfit_id": "outfit_007",
+        "name": "经典JK制服套装",
+        "condition_score": 100,
+        "current_condition": "new",
+        "wears_count": 0,
+        "washes_count": 0,
+        "wear_damage_total": 0,
+        "wash_damage_total": 0,
+        "accident_damage_total": 0,
+        "accidents": [],
+        "last_wear_date": null,
+        "last_wash_date": null,
+        "material": "棉/化纤",
+        "notes": "新衣服"
+      }
+    ]
+  },
+  
+  "update_rules": {
+    "description": "状态更新时机",
+    "triggers": [
+      {
+        "trigger": "每次穿着结束",
+        "action": "增加 wear_damage"
+      },
+      {
+        "trigger": "每次洗涤",
+        "action": "增加 wash_damage"
+      },
+      {
+        "trigger": "发生意外",
+        "action": "记录事故，增加 accident_damage"
+      },
+      {
+        "trigger": "修补/护理",
+        "action": "恢复部分 score"
+      },
+      {
+        "trigger": "periodic_check",
+        "frequency": "每周检查",
+        "action": "重新计算所有衣服的 condition_score"
+      }
+    ],
+    "sync_to_closet": {
+      "description": "同步到 closet.json",
+      "rule": "每次 condition_score 变化后，更新 closet.json 中对应衣服的 condition 字段"
+    }
+  },
+  
+  "visual_signs": {
+    "description": "磨损的视觉表现",
+    "by_condition": {
+      "worn": {
+        "signs": ["轻微褪色", "轻微起球"],
+        "image_effect": "生成图像时可以添加轻微磨损效果"
+      },
+      "old": {
+        "signs": ["明显褪色", "起球", "边角磨损"],
+        "image_effect": "生成图像时可以添加明显磨损效果"
+      },
+      "damaged": {
+        "signs": ["破洞", "严重变形"],
+        "image_effect": "生成图像时必须显示损坏"
+      }
+    }
+  }
+}

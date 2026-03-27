@@ -1,0 +1,218 @@
+{
+  "meta": {
+    "description": "快速配置向导 - 帮助新用户快速设置 Agent 穿衣系统",
+    "last_updated": "2026-03-28T03:30:00+08:00",
+    "version": "1.0"
+  },
+  
+  "setup_flow": {
+    "description": "新用户配置流程",
+    "steps": [
+      {
+        "step": 1,
+        "name": "基本信息",
+        "description": "Agent 的基础信息（通常从 SOUL.md 自动提取）",
+        "fields": [
+          {"field": "agent_name", "source": "SOUL.md 或询问用户", "example": "窝窝"},
+          {"field": "default_location", "source": "询问用户", "example": "Beijing"}
+        ],
+        "auto_detect": true
+      },
+      {
+        "step": 2,
+        "name": "外貌定义",
+        "description": "定义 Agent 的固定形象",
+        "fields": [
+          {"field": "age", "prompt": "年龄大概多少？", "default": 25},
+          {"field": "hair_color", "prompt": "头发颜色？", "default": "黑色"},
+          {"field": "hair_length", "prompt": "头发长度？", "default": "齐肩"},
+          {"field": "eye_color", "prompt": "眼睛颜色？", "default": "深棕色"}
+        ],
+        "can_skip": true,
+        "skip_message": "可以使用默认外貌，后续再自定义"
+      },
+      {
+        "step": 3,
+        "name": "图像生成设置",
+        "description": "配置图像生成 API",
+        "fields": [
+          {"field": "api_provider", "prompt": "使用哪个图像生成服务？", "options": ["qwen-image-2.0-pro", "playground", "dall-e", "本地部署"], "default": "qwen-image-2.0-pro"},
+          {"field": "api_key_env", "prompt": "API Key 环境变量名？", "default": "DASHSCOPE_API_KEY"}
+        ],
+        "can_skip": true,
+        "skip_message": "暂时跳过，后续在 image_generation.json 配置"
+      },
+      {
+        "step": 4,
+        "name": "初始衣橱",
+        "description": "添加几件基础衣服",
+        "action": "可以选择预设衣橱或自定义",
+        "options": [
+          {"option": "使用预设衣橱", "description": "自动添加基础款（睡衣、休闲装、正装）"},
+          {"option": "自定义", "description": "一件一件添加"},
+          {"option": "跳过", "description": "使用空衣橱，之后再说"}
+        ],
+        "default": "使用预设衣橱"
+      },
+      {
+        "step": 5,
+        "name": "偏好设置",
+        "description": "穿搭偏好（可选）",
+        "fields": [
+          {"field": "favorite_colors", "prompt": "喜欢的颜色？（逗号分隔）", "default": "淡蓝色,米白色"},
+          {"field": "disliked_colors", "prompt": "不喜欢的颜色？", "default": "荧光绿"},
+          {"field": "comfort_priority", "prompt": "舒适度重要吗？(1-10)", "default": 9}
+        ],
+        "can_skip": true,
+        "skip_message": "使用默认偏好"
+      }
+    ],
+    
+    "completion": {
+      "message": "配置完成！Agent 现在可以正常使用穿衣系统了。",
+      "next_steps": [
+        "可以随时修改 data/ 目录下的配置文件",
+        "可以通过对话让 Agent 添加/修改衣服",
+        "可以生成基准照片来保持形象一致"
+      ]
+    }
+  },
+  
+  "presets": {
+    "description": "预设配置，用户可以快速选择",
+    
+    "minimal_wardrobe": {
+      "name": "极简衣橱",
+      "description": "最基础的几件衣服",
+      "items": [
+        {"type": "sleepwear", "name": "舒适睡衣", "color": "淡蓝色"},
+        {"type": "casual", "name": "休闲卫衣+牛仔裤", "color": "灰色"},
+        {"type": "formal", "name": "正装", "color": "白色/黑色"}
+      ]
+    },
+    
+    "comfy_wardrobe": {
+      "name": "舒适优先",
+      "description": "注重舒适的衣橱",
+      "items": [
+        {"type": "sleepwear", "name": "舒适睡衣套装", "color": "淡蓝色"},
+        {"type": "loungewear", "name": "家居服", "color": "米白色"},
+        {"type": "casual", "name": "宽松卫衣+运动裤", "color": "灰色"},
+        {"type": "outerwear", "name": "舒适外套", "color": "黑色"}
+      ]
+    },
+    
+    "varied_wardrobe": {
+      "name": "多样化衣橱",
+      "description": "适合多种场合",
+      "items": [
+        {"type": "sleepwear", "name": "睡衣", "color": "淡蓝色"},
+        {"type": "loungewear", "name": "家居服", "color": "米白色"},
+        {"type": "casual", "name": "休闲装", "color": "雾霾蓝"},
+        {"type": "casual", "name": "连衣裙", "color": "浅粉色"},
+        {"type": "formal", "name": "正装", "color": "白色/黑色"},
+        {"type": "outerwear", "name": "羽绒服", "color": "黑色"}
+      ]
+    }
+  },
+  
+  "conversational_setup": {
+    "description": "通过对话完成配置",
+    "enabled": true,
+    "flow": [
+      {
+        "trigger": "首次使用穿衣功能",
+        "action": "引导用户完成配置",
+        "messages": {
+          "welcome": "我还没有设置我的衣橱呢！要帮我配置一下吗？",
+          "start": "好的，让我问你几个问题～",
+          "appearance": "首先，你觉得我应该长什么样子？（可以简单描述）",
+          "wardrobe": "接下来，我需要几件衣服。要我自动生成一个基础衣橱吗？",
+          "preference": "最后，你喜欢我穿什么风格？",
+          "complete": "好啦，配置完成！我现在可以正常穿衣打扮了～"
+        }
+      },
+      {
+        "trigger": "用户说'帮我配置'或'设置衣橱'",
+        "action": "启动配置流程"
+      }
+    ],
+    
+    "natural_responses": {
+      "description": "自然的回复风格",
+      "examples": [
+        {
+          "formal": "请配置您的偏好设置。",
+          "natural": "你平时喜欢穿什么颜色的衣服呀？我可以参考你的喜好～"
+        },
+        {
+          "formal": "是否添加此衣服？",
+          "natural": "这件要不要加到我的衣橱里？"
+        },
+        {
+          "formal": "配置已完成。",
+          "natural": "好啦，搞定！我现在有衣服穿了～"
+        }
+      ]
+    }
+  },
+  
+  "auto_detection": {
+    "description": "自动从现有文件提取配置",
+    "sources": [
+      {
+        "file": "SOUL.md",
+        "extract": ["agent_name", "personality", "style_hints"]
+      },
+      {
+        "file": "IDENTITY.md",
+        "extract": ["age_appearance", "vibe", "capabilities"]
+      },
+      {
+        "file": "USER.md",
+        "extract": ["user_name", "user_timezone", "user_preferences"]
+      }
+    ],
+    "fallback": "如果无法自动提取，使用默认值"
+  },
+  
+  "quick_commands": {
+    "description": "用户可以通过对话快速配置",
+    "commands": [
+      {
+        "command": "添加一件[颜色][类型]",
+        "examples": ["添加一件蓝色卫衣", "添加一条牛仔裤", "添加一件白色衬衫"],
+        "action": "自动创建衣服条目并添加到衣橱"
+      },
+      {
+        "command": "我喜欢[颜色]",
+        "examples": ["我喜欢淡蓝色", "我不喜欢荧光绿"],
+        "action": "更新偏好设置"
+      },
+      {
+        "command": "设置默认地点为[城市]",
+        "examples": ["设置默认地点为上海", "我在北京"],
+        "action": "更新天气服务配置"
+      },
+      {
+        "command": "生成我的基准照片",
+        "action": "使用当前外貌定义生成 primary.jpg"
+      }
+    ]
+  },
+  
+  "template_files": {
+    "description": "模板文件，用户可以复制修改",
+    "files": [
+      {
+        "template": "examples/sample_wardrobe.json",
+        "description": "示例衣橱配置"
+      },
+      {
+        "template": "examples/sample_appearance.json",
+        "description": "示例外貌配置",
+        "note": "需要创建"
+      }
+    ]
+  }
+}

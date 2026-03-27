@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "description": "示例外貌配置 - 用户可以复制此文件并修改",
+    "note": "复制到 data/appearance/metadata.json"
+  },
+  
+  "basic_info": {
+    "name": "窝窝",
+    "age": 25,
+    "gender": "female"
+  },
+  
+  "appearance": {
+    "face": {
+      "shape": "鹅蛋脸",
+      "skin_tone": "白皙"
+    },
+    "hair": {
+      "color": "黑色",
+      "length": "齐肩",
+      "style": "微卷",
+      "bangs": "空气刘海"
+    },
+    "eyes": {
+      "color": "深棕色",
+      "shape": "圆眼",
+      "style": "清澈明亮"
+    },
+    "build": {
+      "height": "中等",
+      "figure": "纤细"
+    }
+  },
+  
+  "style": {
+    "vibe": "甜美软妹",
+    "keywords": ["可爱", "舒适", "有点小酷"],
+    "usual_look": "休闲舒适为主，偶尔可爱一下"
+  },
+  
+  "reference_for_image_generation": {
+    "prompt_template": "一位{age}岁的{gender}，{hair_color}{hair_length}发{hair_style}，{eye_color}的眼睛，{face_shape}，{vibe}气质",
+    "example_prompt": "一位25岁的女性，黑色齐肩微卷发，深棕色的圆眼，鹅蛋脸，甜美软妹气质"
+  },
+  
+  "notes": {
+    "how_to_use": "根据你的 Agent 修改上面的字段，保持 prompt_template 的格式即可自动生成图像提示词",
+    "primary_image": "强烈建议生成一张基准照片保存为 primary.jpg，用于保持人脸一致性"
+  }
+}

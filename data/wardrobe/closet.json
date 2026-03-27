@@ -137,6 +137,28 @@
       "source": "self",
       "emotional_value": null,
       "notes": "冬天出门必备"
+    },
+    {
+      "id": "outfit_007",
+      "name": "经典JK制服套装",
+      "type": "casual",
+      "category": ["上衣", "裙子"],
+      "description": "经典日式JK制服，白色衬衫配海军蓝百褶裙，红色领结，学院风",
+      "color": "白色/海军蓝",
+      "style": ["可爱", "学院风", "青春"],
+      "season": ["spring", "autumn", "summer"],
+      "temperature_range": [15, 25],
+      "occasion": ["出门玩", "约会", "拍照", "逛街"],
+      "exposure_level": 2,
+      "favorite": false,
+      "wears_count": 0,
+      "last_worn": null,
+      "dirty": false,
+      "condition": "new",
+      "acquired_date": "2026-03-27",
+      "source": "self",
+      "emotional_value": null,
+      "notes": "偶尔想当学生妹的时候穿"
     }
   ]
 }

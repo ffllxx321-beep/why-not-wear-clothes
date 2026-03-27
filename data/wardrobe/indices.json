@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "description": "衣橱查询索引 - 加速按条件查找衣服",
+    "created": "2026-03-27T22:15:00+08:00",
+    "last_updated": "2026-03-27T22:15:00+08:00",
+    "auto_generated": true,
+    "source_file": "closet.json"
+  },
+  
+  "by_occasion": {
+    "居家": ["outfit_001", "outfit_002"],
+    "睡觉": ["outfit_001"],
+    "早晨": ["outfit_001"],
+    "晚上": ["outfit_001"],
+    "见朋友": ["outfit_002", "outfit_003"],
+    "出门购物": ["outfit_002"],
+    "出门": ["outfit_003", "outfit_004", "outfit_006"],
+    "逛街": ["outfit_003", "outfit_007"],
+    "写代码": ["outfit_003"],
+    "约会": ["outfit_004", "outfit_007"],
+    "拍照": ["outfit_004", "outfit_007"],
+    "见客户": ["outfit_005"],
+    "开会": ["outfit_005"],
+    "正式场合": ["outfit_005"],
+    "冬天": ["outfit_006"],
+    "出门玩": ["outfit_007"]
+  },
+  
+  "by_season": {
+    "spring": ["outfit_001", "outfit_002", "outfit_003", "outfit_004", "outfit_005", "outfit_007"],
+    "summer": ["outfit_001", "outfit_004", "outfit_005", "outfit_007"],
+    "autumn": ["outfit_001", "outfit_002", "outfit_003", "outfit_005", "outfit_007"],
+    "winter": ["outfit_003", "outfit_005", "outfit_006"]
+  },
+  
+  "by_type": {
+    "sleepwear": ["outfit_001"],
+    "loungewear": ["outfit_002"],
+    "casual": ["outfit_003", "outfit_004", "outfit_007"],
+    "formal": ["outfit_005"],
+    "outerwear": ["outfit_006"]
+  },
+  
+  "by_temperature": {
+    "below_0": ["outfit_006"],
+    "0_to_10": ["outfit_003", "outfit_006"],
+    "10_to_15": ["outfit_002", "outfit_003", "outfit_005"],
+    "15_to_20": ["outfit_001", "outfit_002", "outfit_003", "outfit_005", "outfit_007"],
+    "20_to_25": ["outfit_001", "outfit_004", "outfit_005", "outfit_007"],
+    "above_25": ["outfit_001", "outfit_004", "outfit_005"]
+  },
+  
+  "by_color": {
+    "淡蓝色": ["outfit_001"],
+    "米白色": ["outfit_002"],
+    "雾霾蓝": ["outfit_003"],
+    "浅粉色": ["outfit_004"],
+    "白色": ["outfit_005"],
+    "黑色": ["outfit_006"],
+    "白色/海军蓝": ["outfit_007"]
+  },
+  
+  "by_style": {
+    "可爱": ["outfit_001", "outfit_004", "outfit_007"],
+    "舒适": ["outfit_001", "outfit_002"],
+    "简约": ["outfit_002", "outfit_004", "outfit_005", "outfit_006"],
+    "休闲": ["outfit_003"],
+    "有点小酷": ["outfit_003"],
+    "正式": ["outfit_005"],
+    "干练": ["outfit_005"],
+    "实用": ["outfit_006"],
+    "学院风": ["outfit_007"],
+    "青春": ["outfit_007"]
+  },
+  
+  "favorites": ["outfit_001", "outfit_002", "outfit_003"],
+  
+  "clean_and_ready": ["outfit_001", "outfit_002", "outfit_003", "outfit_004", "outfit_005", "outfit_006", "outfit_007"],
+  
+  "notes": {
+    "usage": "使用索引快速查找符合条件的 outfit_id，然后从 closet.json 获取详情",
+    "update": "当 closet.json 更新时，需要重新生成此索引",
+    "temperature_logic": "温度范围基于 temperature_range 字段，分段可能有重叠"
+  }
+}

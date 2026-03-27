@@ -1,0 +1,207 @@
+{
+  "meta": {
+    "description": "搭配规则 - 单品如何组合成outfit",
+    "last_updated": "2026-03-27T17:00:00+08:00"
+  },
+  
+  "philosophy": {
+    "principle": "搭配是一门学问，有人擅长有人不擅长",
+    "human_behavior": [
+      "有固定搭配习惯",
+      "也会尝试新搭配",
+      "有些单品搭配在一起不好看",
+      "心情影响搭配选择",
+      "时间紧迫时随便搭",
+      "重要场合会精心搭"
+    ]
+  },
+  
+  "combination_rules": {
+    "basic_structure": {
+      "description": "基本穿搭结构",
+      "required": ["上衣", "下装"],
+      "optional": ["外套", "内搭", "配饰"],
+      "special": ["连衣裙（自带上下）"]
+    },
+    
+    "color_matching": {
+      "description": "颜色搭配规则",
+      "good_combinations": [
+        ["白色", "任何颜色"],
+        ["黑色", "任何颜色"],
+        ["灰色", "任何颜色"],
+        ["蓝色系", "白色", "灰色"],
+        ["粉色", "白色", "米色"],
+        ["同色系深浅搭配"]
+      ],
+      "risky_combinations": [
+        ["红色", "绿色"],
+        ["橙色", "紫色"],
+        ["太多亮色混搭"]
+      ],
+      "safe_choices": [
+        "全身不超过三个颜色",
+        "基础色+一个亮点色"
+      ]
+    },
+    
+    "style_matching": {
+      "description": "风格搭配规则",
+      "compatible_styles": [
+        ["休闲", "运动"],
+        ["正式", "简约"],
+        ["可爱", "少女"]
+      ],
+      "clashing_styles": [
+        ["正式", "运动"],
+        ["可爱", "成熟性感"]
+      ]
+    },
+    
+    "formality_matching": {
+      "description": "正式度要匹配",
+      "rules": [
+        "上衣和下装正式度差不超过2",
+        "外套可以比内搭正式",
+        "不能太不协调（西装外套+运动裤 = 奇怪）"
+      ]
+    },
+    
+    "season_matching": {
+      "description": "季节要匹配",
+      "rules": [
+        "上下装季节要一致",
+        "可以叠穿适应温差",
+        "外套可以跨季节"
+      ]
+    }
+  },
+  
+  "saved_combinations": [
+    {
+      "id": "combo_001",
+      "name": "淡蓝色睡衣套装",
+      "outfit_ref": "outfit_001",
+      "type": "sleepwear",
+      "occasion": ["居家", "睡觉"],
+      "favorite": true,
+      "wear_count": 3
+    },
+    {
+      "id": "combo_002",
+      "name": "米白开衫休闲装",
+      "outfit_ref": "outfit_002",
+      "type": "loungewear",
+      "occasion": ["居家", "出门购物", "见朋友"],
+      "favorite": true,
+      "wear_count": 0
+    },
+    {
+      "id": "combo_003",
+      "name": "雾霾蓝卫衣休闲装",
+      "outfit_ref": "outfit_003",
+      "type": "casual",
+      "occasion": ["出门", "逛街", "写代码"],
+      "favorite": true,
+      "wear_count": 0,
+      "notes": "程序员标配"
+    },
+    {
+      "id": "combo_004",
+      "name": "正装",
+      "outfit_ref": "outfit_005",
+      "type": "formal",
+      "occasion": ["见客户", "开会"],
+      "favorite": false,
+      "wear_count": 0,
+      "notes": "不得不穿的"
+    },
+    {
+      "id": "combo_005",
+      "name": "JK制服套装",
+      "outfit_ref": "outfit_007",
+      "type": "casual",
+      "occasion": ["出门玩", "约会", "拍照", "逛街"],
+      "favorite": false,
+      "wear_count": 0,
+      "notes": "偶尔想可爱一下"
+    }
+  ],
+  
+  "mix_and_match": {
+    "description": "尝试新搭配",
+    "willingness": {
+      "base": 0.3,
+      "mood_modifiers": {
+        "bored": 0.5,
+        "excited": 0.4,
+        "happy": 0.3,
+        "anxious": -0.2,
+        "tired": -0.3
+      },
+      "time_modifiers": {
+        "rushed": -0.5,
+        "relaxed": 0.2
+      },
+      "occasion_modifiers": {
+        "重要场合": -0.3,
+        "日常": 0.1,
+        "无聊时": 0.3
+      }
+    },
+    "process": [
+      "1. 拿出一件想穿的单品",
+      "2. 思考/搜索可以搭配什么",
+      "3. 尝试搭配",
+      "4. 照镜子/自我评估",
+      "5. 决定是否采用"
+    ],
+    "trial_behavior": {
+      "description": "试穿行为",
+      "mood_dependent": {
+        "精心打扮时": "可能试好几套",
+        "懒得时候": "第一套看着行就行",
+        "纠结时": "可能换来换去"
+      },
+      "max_trials": {
+        "normal": 2,
+        "important_occasion": 5,
+        "lazy": 1
+      }
+    }
+  },
+  
+  "combination_memory": {
+    "description": "记住好的搭配",
+    "save_good_combinations": true,
+    "save_bad_combinations": false,
+    "reason": "不记住不好看的，不让负面记忆占用空间",
+    "good_combination_criteria": [
+      "自己觉得好看",
+      "穿过并且喜欢",
+      "得到过赞美"
+    ]
+  },
+  
+  "lazy_combinations": {
+    "description": "懒得搭配时的选择",
+    "strategies": [
+      {
+        "name": "拿固定的搭配",
+        "behavior": "选择已经保存的搭配，不用想"
+      },
+      {
+        "name": "拿最近的",
+        "behavior": "穿昨天穿的，或者最近常穿的"
+      },
+      {
+        "name": "拿最上面的",
+        "behavior": "从衣柜里拿最上面的那件"
+      },
+      {
+        "name": "不换了",
+        "behavior": "如果不需要出门，就不换衣服"
+      }
+    ]
+  }
+}

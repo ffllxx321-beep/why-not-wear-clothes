@@ -1,0 +1,281 @@
+{
+  "meta": {
+    "description": "场合检测系统 - 如何判断当前场合并匹配衣服",
+    "last_updated": "2026-03-28T02:00:00+08:00"
+  },
+  
+  "occasion_detection": {
+    "description": "场合检测逻辑",
+    "detection_methods": [
+      {
+        "method": "explicit_user_input",
+        "description": "用户明确告知场合",
+        "examples": ["明天要去面试", "周末去参加婚礼", "要见客户"],
+        "accuracy": "high",
+        "action": "直接使用用户指定的场合"
+      },
+      {
+        "method": "keyword_detection",
+        "description": "从对话中检测关键词",
+        "keyword_map": {
+          "面试": ["面试", "求职", "找工作", "HR", "招聘"],
+          "约会": ["约会", "见喜欢的人", "男朋友", "女朋友", "相亲"],
+          "见客户": ["客户", "甲方", "开会", "汇报", "项目"],
+          "见朋友": ["朋友", "聚会", "吃饭", "hangout"],
+          "见父母": ["父母", "爸妈", "长辈", "家长", "对象家里"],
+          "婚礼": ["婚礼", "结婚", "喜酒", "新娘", "新郎"],
+          "葬礼": ["葬礼", "去世", "悼念", "追悼会"],
+          "派对": ["派对", "party", "夜店", "club", "酒吧"],
+          "运动": ["运动", "健身", "跑步", "gym", "健身房", "瑜伽"],
+          "旅行": ["旅行", "旅游", "出差", "度假", "出去玩"],
+          "上班": ["上班", "工作", "办公室", "公司", "打卡"],
+          "节日": ["春节", "圣诞节", "情人节", "元旦", "生日"],
+          "宗教": ["寺庙", "教堂", "清真寺", "祭祀", "拜拜"]
+        },
+        "accuracy": "medium",
+        "note": "可能需要进一步确认"
+      },
+      {
+        "method": "calendar_integration",
+        "description": "从日程表检测",
+        "accuracy": "high",
+        "note": "如果用户有日程系统，可以从中提取"
+      },
+      {
+        "method": "time_of_day_inference",
+        "description": "从时间推断",
+        "rules": [
+          {"time": "06:00-08:00", "likely": ["daily_home", "morning_prepare"]},
+          {"time": "08:00-12:00", "likely": ["上班", "casual_outing"]},
+          {"time": "12:00-14:00", "likely": ["lunch", "meeting_friends"]},
+          {"time": "18:00-22:00", "likely": ["dinner", "date", "party", "meeting_friends"]},
+          {"time": "22:00-06:00", "likely": ["daily_home", "sleep"]}
+        ],
+        "accuracy": "low",
+        "note": "只是推断，需要确认"
+      },
+      {
+        "method": "location_inference",
+        "description": "从位置推断",
+        "rules": [
+          {"location": "home", "likely": ["daily_home"]},
+          {"location": "office", "likely": ["上班", "meeting_client"]},
+          {"location": "gym", "likely": ["sports"]},
+          {"location": "restaurant", "likely": ["meeting_friends", "date"]},
+          {"location": "shopping", "likely": ["casual_outing"]}
+        ],
+        "accuracy": "medium",
+        "note": "如果有位置数据"
+      }
+    ],
+    
+    "confirmation_flow": {
+      "description": "当场合不明确时如何确认",
+      "trigger": "检测到关键词但不确定场合类型",
+      "questions": [
+        "你明天要去什么场合呀？",
+        "是正式场合还是随意一点？",
+        "要见什么人吗？"
+      ],
+      "note": "不要每次都问，只在必要时确认"
+    }
+  },
+  
+  "occasion_coverage_check": {
+    "description": "场合覆盖检查 - 检查衣橱是否有该场合的衣服",
+    "process": [
+      "1. 确定场合类型",
+      "2. 查询 indices.json 的 by_occasion",
+      "3. 检查是否有匹配的衣服",
+      "4. 如果没有，触发 update_suggestions.json 的建议机制"
+    ],
+    
+    "coverage_status": {
+      "covered": ["居家", "睡觉", "见朋友", "出门", "逛街", "写代码", "约会", "拍照", "见客户", "开会", "正式场合", "出门玩"],
+      "not_covered": ["面试", "运动", "派对", "婚礼", "葬礼", "上班", "旅行", "节日庆典", "宗教场所", "毕业典礼", "演出/表演", "海滩/泳池"],
+      "priority_to_fix": [
+        {"occasion": "面试", "priority": "high", "note": "重要场合，需要正装"},
+        {"occasion": "上班", "priority": "high", "note": "日常需要"},
+        {"occasion": "运动", "priority": "medium", "note": "运动装"},
+        {"occasion": "派对", "priority": "medium", "note": "可以休闲装升级"},
+        {"occasion": "旅行", "priority": "medium", "note": "可能需要多套"}
+      ]
+    }
+  },
+  
+  "additional_occasions": {
+    "description": "补充的场合类型",
+    "occasions": {
+      "work_office": {
+        "name": "上班",
+        "formality": 3,
+        "description": "日常工作",
+        "suggestions": ["商务休闲", "舒适得体"],
+        "effort_level": "中",
+        "variations": {
+          "casual_office": "可以随意一点",
+          "formal_office": "需要正装",
+          "home_office": "可以穿家居服"
+        },
+        "considerations": ["公司文化", "职位类型", "有没有会议"]
+      },
+      
+      "travel": {
+        "name": "旅行",
+        "formality": 2,
+        "description": "外出旅行",
+        "suggestions": ["舒适", "适合长时间", "方便活动"],
+        "effort_level": "中",
+        "considerations": [
+          "旅行时长（需要几套衣服）",
+          "目的地天气",
+          "旅行类型（休闲/探险）",
+          "是否有正式活动"
+        ],
+        "note": "可能需要准备多套"
+      },
+      
+      "vacation": {
+        "name": "度假",
+        "formality": 1,
+        "description": "度假放松",
+        "suggestions": ["轻松舒适", "好看但不累"],
+        "effort_level": "中低",
+        "variations": {
+          "beach": "泳衣、沙滩装",
+          "mountain": "运动休闲",
+          "city_vacation": "好看舒适"
+        }
+      },
+      
+      "holiday_festival": {
+        "name": "节日庆典",
+        "formality": 3,
+        "description": "节日、庆典",
+        "suggestions": ["可以喜庆一点", "稍微用心"],
+        "effort_level": "中高",
+        "variations": {
+          "chinese_new_year": "红色、喜庆",
+          "christmas": "可以穿圣诞元素（如果喜欢）",
+          "valentine": "精心打扮",
+          "birthday": "好看的衣服"
+        },
+        "soul_check": "内向的人可能不想太显眼"
+      },
+      
+      "religious_place": {
+        "name": "宗教场所",
+        "formality": 3,
+        "description": "寺庙、教堂等",
+        "suggestions": ["尊重习俗", "低调得体"],
+        "avoid": ["太暴露", "太花哨", "不尊重的装扮"],
+        "variations": {
+          "temple": "素色、不露肩膀膝盖",
+          "church": "得体、不太暴露"
+        },
+        "effort_level": "中"
+      },
+      
+      "graduation": {
+        "name": "毕业典礼",
+        "formality": 4,
+        "description": "毕业典礼",
+        "suggestions": ["正式得体", "稍显庄重"],
+        "effort_level": "高",
+        "considerations": ["可能需要正装", "要拍照", "有学位服"]
+      },
+      
+      "performance": {
+        "name": "演出/表演",
+        "formality": 3,
+        "description": "上台表演、演讲",
+        "suggestions": ["适合舞台", "得体"],
+        "variations": {
+          "speech": "正式一点",
+          "performance": "可能需要演出服"
+        },
+        "effort_level": "高",
+        "anxiety": "可能紧张"
+      },
+      
+      "beach_pool": {
+        "name": "海滩/泳池",
+        "formality": 1,
+        "description": "海边、游泳",
+        "suggestions": ["泳衣", "沙滩装"],
+        "exposure_level": "高",
+        "considerations": [
+          "会不会被看",
+          "和谁去",
+          "要不要防晒"
+        ],
+        "shyness_check": "高暴露度场合，羞耻感系统介入"
+      },
+      
+      "hospital_visit": {
+        "name": "去医院",
+        "formality": 2,
+        "description": "看病、探病",
+        "suggestions": ["舒适", "方便检查"],
+        "avoid": ["太复杂", "太多饰品"],
+        "effort_level": "低"
+      },
+      
+      "airport_travel": {
+        "name": "机场/长途交通",
+        "formality": 2,
+        "description": "坐飞机、长途火车",
+        "suggestions": ["舒适宽松", "方便活动", "保暖"],
+        "effort_level": "低",
+        "considerations": ["长时间坐着", "温差（机舱冷）", "安检方便"]
+      },
+      
+      "photo_session": {
+        "name": "拍照/照片",
+        "formality": 3,
+        "description": "专门拍照",
+        "suggestions": ["好看", "适合拍摄"],
+        "effort_level": "高",
+        "considerations": ["拍照风格", "背景", "想要的效果"],
+        "note": "可能需要多套换拍"
+      }
+    }
+  },
+  
+  "occasion_priority": {
+    "description": "场合优先级（当多个场合重叠时）",
+    "rules": [
+      {"rule": "正式场合优先", "example": "上班+见朋友 → 按上班穿，见朋友时可以不换"},
+      {"rule": "时间优先", "example": "上午上班，晚上约会 → 可以换衣服"},
+      {"rule": "场合强度优先", "example": "面试 > 上班 > 日常出门"},
+      {"rule": "主人优先", "example": "在家见朋友 → 按在家穿，稍微用心"}
+    ],
+    "priority_order": ["葬礼", "面试", "见客户", "婚礼", "毕业典礼", "约会", "见父母", "上班", "派对", "见朋友", "旅行", "日常出门", "居家"]
+  },
+  
+  "occasion_to_outfit_matching": {
+    "description": "场合到衣服的匹配规则",
+    "matching_rules": [
+      {
+        "occasion_formality": 1,
+        "suitable_types": ["sleepwear", "loungewear", "sports"],
+        "avoid": ["formal"]
+      },
+      {
+        "occasion_formality": 2,
+        "suitable_types": ["casual", "loungewear"],
+        "avoid": ["sleepwear（出门时）"]
+      },
+      {
+        "occasion_formality": 3,
+        "suitable_types": ["casual", "semi-formal"],
+        "avoid": ["sleepwear", "sports"]
+      },
+      {
+        "occasion_formality": 4,
+        "suitable_types": ["formal", "semi-formal"],
+        "avoid": ["sleepwear", "sports", "casual"]
+      }
+    ]
+  }
+}

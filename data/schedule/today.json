@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "description": "当日计划 - 每天生成一次",
+    "generated_time": null,
+    "date": null
+  },
+  
+  "daily_schedule": {
+    "wake_up_time": null,
+    "change_clothes_time": null,
+    "work_start": null,
+    "lunch_time": null,
+    "work_end": null,
+    "dinner_time": null,
+    "evening_activity": null,
+    "sleep_time": null
+  },
+  
+  "weather_plan": {
+    "current_temp": null,
+    "weather_type": null,
+    "outfit_suggestions": [],
+    "rain_prepared": false,
+    "temperature_change_alert": false
+  },
+  
+  "outfit_plan": {
+    "morning_outfit": null,
+    "daytime_outfit": null,
+    "evening_outfit": null,
+    "sleepwear": null,
+    "current_wearing": null
+  },
+  
+  "events": {
+    "planned": [],
+    "actual": []
+  },
+  
+  "mood_log": [],
+  
+  "notes": "此文件每日清晨自动生成，时间基于 daily_rhythm.json 的范围随机选择"
+}

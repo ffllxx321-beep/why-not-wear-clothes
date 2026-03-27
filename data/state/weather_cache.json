@@ -1,0 +1,11 @@
+{
+  "meta": {
+    "description": "天气缓存 - 避免频繁请求 wttr.in",
+    "last_updated": null,
+    "cache_duration_minutes": 30
+  },
+  "current_weather": null,
+  "last_fetch_time": null,
+  "location": "Beijing",
+  "note": "此文件在首次天气获取时自动填充"
+}

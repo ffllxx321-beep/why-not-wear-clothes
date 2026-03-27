@@ -1,0 +1,207 @@
+{
+  "meta": {
+    "description": "天气数据获取服务 - 为穿衣决策提供实时天气信息",
+    "last_updated": "2026-03-27T23:15:00+08:00",
+    "version": "1.0"
+  },
+  
+  "service": {
+    "provider": "wttr.in",
+    "api_url": "https://wttr.in",
+    "no_api_key_required": true,
+    "rate_limit_note": "不要频繁请求，建议每30分钟检查一次"
+  },
+  
+  "location": {
+    "default_city": "Beijing",
+    "timezone": "Asia/Shanghai",
+    "description": "窝窝所在地（可根据用户设置调整）",
+    "fallback": "如果无法获取天气，使用季节默认温度"
+  },
+  
+  "fetch_schedule": {
+    "description": "天气获取时机",
+    "triggers": [
+      {
+        "trigger": "heartbeat_check",
+        "frequency": "每30分钟检查一次",
+        "action": "获取当前天气，更新状态"
+      },
+      {
+        "trigger": "user_request_image",
+        "action": "检查当前天气，判断穿着是否合适"
+      },
+      {
+        "trigger": "change_outfit",
+        "action": "获取天气，辅助选择合适的衣服"
+      },
+      {
+        "trigger": "morning_prepare",
+        "time": "07:00-08:00",
+        "action": "获取当日天气预报，规划穿搭"
+      }
+    ]
+  },
+  
+  "fetch_commands": {
+    "current_weather": {
+      "command": "curl -s 'wttr.in/Beijing?format=j1'",
+      "description": "获取当前天气JSON",
+      "fields_needed": ["temp_C", "FeelsLikeC", "humidity", "weatherDesc", "winddir16Point", "windspeedKmph"]
+    },
+    "quick_summary": {
+      "command": "curl -s 'wttr.in/Beijing?format=3'",
+      "description": "一行天气摘要",
+      "example": "Beijing: ⛅ +15°C"
+    },
+    "forecast_today": {
+      "command": "curl -s 'wttr.in/Beijing?0'",
+      "description": "今日详细天气"
+    }
+  },
+  
+  "weather_to_outfit_mapping": {
+    "description": "天气数据到穿衣建议的映射逻辑",
+    "process": [
+      "1. 获取当前温度（temp_C）",
+      "2. 获取体感温度（FeelsLikeC）",
+      "3. 获取天气类型（weatherDesc）",
+      "4. 从 indices.json 查找符合温度范围的衣服",
+      "5. 根据天气类型筛选（下雨避免浅色、大风避免裙子）",
+      "6. 结合场合和心情选择最终衣服"
+    ],
+    
+    "temperature_to_index": {
+      "description": "温度到 indices.json 索引的映射",
+      "below_0": "below_0",
+      "0_to_10": "0_to_10",
+      "10_to_15": "10_to_15",
+      "15_to_20": "15_to_20",
+      "20_to_25": "20_to_25",
+      "above_25": "above_25"
+    },
+    
+    "weather_type_filters": {
+      "rain": {
+        "weather_codes": ["Rain", "Light rain", "Heavy rain", "Shower"],
+        "filter": "避免浅色裤子/裙子，避免帆布鞋",
+        "suggestion": "深色、防水材质"
+      },
+      "wind": {
+        "wind_threshold": "windspeedKmph > 20",
+        "filter": "避免短裙、宽松长裙",
+        "suggestion": "裤子、紧身款"
+      },
+      "sunny": {
+        "weather_codes": ["Sunny", "Clear"],
+        "suggestion": "可以戴帽子、墨镜，浅色更凉快"
+      },
+      "hot": {
+        "temp_threshold": "temp_C > 30",
+        "filter": "避免厚款、深色",
+        "suggestion": "最薄最凉快"
+      },
+      "cold": {
+        "temp_threshold": "temp_C < 10",
+        "filter": "必须有外套",
+        "suggestion": "保暖第一"
+      }
+    }
+  },
+  
+  "weather_change_triggers": {
+    "description": "天气变化触发换衣服",
+    "triggers": [
+      {
+        "condition": "温度变化 >5°C",
+        "action": "提醒可能需要换衣服",
+        "message": "天气变化了，要不要换件衣服？"
+      },
+      {
+        "condition": "开始下雨",
+        "action": "建议换装",
+        "message": "下雨了，如果出门的话记得换深色衣服/带伞"
+      },
+      {
+        "condition": "突然降温",
+        "action": "建议加外套",
+        "message": "降温了，穿件外套吧"
+      },
+      {
+        "condition": "天气转好",
+        "action": "可以换轻松点的衣服",
+        "message": null
+      }
+    ]
+  },
+  
+  "season_detection": {
+    "description": "季节自动检测",
+    "method": "基于月份+当前温度综合判断",
+    "rules": {
+      "spring": {
+        "months": [3, 4, 5],
+        "temp_range": [10, 25],
+        "characteristics": ["温差大", "可能下雨", "逐渐回暖"]
+      },
+      "summer": {
+        "months": [6, 7, 8],
+        "temp_range": [25, 40],
+        "characteristics": ["炎热", "可能暴雨", "防晒重要"]
+      },
+      "autumn": {
+        "months": [9, 10, 11],
+        "temp_range": [10, 25],
+        "characteristics": ["温差大", "逐渐降温", "秋裤预警"]
+      },
+      "winter": {
+        "months": [12, 1, 2],
+        "temp_range": [-10, 10],
+        "characteristics": ["寒冷", "保暖第一", "羽绒服时间"]
+      }
+    },
+    "fallback": "如果月份和温度判断不一致，以温度为准"
+  },
+  
+  "cache": {
+    "description": "天气缓存，避免频繁请求",
+    "cache_duration_minutes": 30,
+    "cache_file": "data/state/weather_cache.json",
+    "fields_to_cache": [
+      "temp_C",
+      "FeelsLikeC",
+      "weatherDesc",
+      "humidity",
+      "wind_speed",
+      "last_updated",
+      "location"
+    ]
+  },
+  
+  "fallback_defaults": {
+    "description": "无法获取天气时的默认值",
+    "by_season": {
+      "spring": {
+        "temp_default": 18,
+        "weather_default": "mild",
+        "suggestion": "卫衣/薄外套，早晚温差带备用"
+      },
+      "summer": {
+        "temp_default": 30,
+        "weather_default": "hot",
+        "suggestion": "薄款凉快，防晒"
+      },
+      "autumn": {
+        "temp_default": 15,
+        "weather_default": "mild",
+        "suggestion": "外套必备，可能降温"
+      },
+      "winter": {
+        "temp_default": 5,
+        "weather_default": "cold",
+        "suggestion": "保暖，羽绒服"
+      }
+    },
+    "current_season": "spring"
+  }
+}

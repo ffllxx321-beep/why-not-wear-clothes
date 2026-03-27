@@ -1,0 +1,203 @@
+{
+  "meta": {
+    "description": "性能优化配置 - 控制数据增长、内存占用和查询效率",
+    "last_updated": "2026-03-28T03:00:00+08:00",
+    "version": "1.0"
+  },
+  
+  "current_stats": {
+    "total_data_size": "1.6MB",
+    "total_files": 44,
+    "largest_files": [
+      "occasion_detection.json: 10KB",
+      "aging_tracker.json: 8KB",
+      "shyness_system.json: 8KB",
+      "image_generation.json: 8KB"
+    ]
+  },
+  
+  "data_growth_control": {
+    "description": "控制历史数据的增长，防止无限膨胀",
+    
+    "wear_log": {
+      "max_days": 365,
+      "retention_policy": "保留最近365天的穿搭记录",
+      "cleanup_trigger": "每月1号检查并清理",
+      "archive_option": "可选：将旧数据归档到单独文件"
+    },
+    
+    "feedback_history": {
+      "max_records": 50,
+      "retention_policy": "保留最近50条反馈记录",
+      "important_feedback_protection": "标记为important的反馈永久保留"
+    },
+    
+    "image_generation_log": {
+      "max_records": 100,
+      "retention_policy": "保留最近100次生成记录",
+      "cleanup_trigger": "超过100条时删除最旧的"
+    },
+    
+    "laundry_log": {
+      "max_records": 50,
+      "retention_policy": "保留最近50次洗衣记录"
+    },
+    
+    "mood_history": {
+      "max_days": 30,
+      "retention_policy": "保留最近30天的心情历史",
+      "daily_summary_only": "超过7天的数据只保留每日摘要，不保留详细时段"
+    }
+  },
+  
+  "memory_optimization": {
+    "description": "内存占用优化策略",
+    
+    "lazy_loading": {
+      "description": "按需加载配置文件",
+      "rule": "不要一次性加载所有JSON文件",
+      "implementation": [
+        "只加载当前需要的配置",
+        "例如：换装时只加载 closet.json + indices.json + preferences.json",
+        "天气检查时只加载 weather_service.json + weather_cache.json"
+      ]
+    },
+    
+    "cache_strategy": {
+      "description": "缓存频繁访问的数据",
+      "cache_files": [
+        "indices.json（查询索引）",
+        "current_outfit.json（当前穿着）",
+        "preferences.json（偏好）"
+      ],
+      "cache_duration": "会话期间",
+      "invalidate_on_change": "当源文件修改时清除缓存"
+    },
+    
+    "config_consolidation": {
+      "description": "考虑合并的配置文件",
+      "candidates": [
+        {
+          "files": ["mood.json", "mood_tracker.json"],
+          "action": "mood_tracker.json 已包含 mood.json 的功能，可考虑废弃 mood.json 或将其作为只读参考"
+        },
+        {
+          "files": ["preferences.json", "likes_dislikes.json"],
+          "action": "两者有重复的颜色/风格偏好，建议统一数据源",
+          "recommendation": "保留 likes_dislikes.json 作为主数据源，preferences.json 只存储运行时设置"
+        },
+        {
+          "files": ["clothing_items.json", "closet.json"],
+          "action": "两者都是衣服定义但数据不一致！",
+          "issue": "clothing_items.json 有11件，closet.json 有7件",
+          "recommendation": "统一使用 closet.json，删除 clothing_items.json 或重新同步"
+        }
+      ]
+    }
+  },
+  
+  "query_optimization": {
+    "description": "查询效率优化",
+    
+    "index_usage": {
+      "description": "使用 indices.json 加速查询",
+      "before": "遍历 closet.json 所有 items 寻找适合场合的衣服",
+      "after": "直接查 indices.json 的 by_occasion 获取 ID 列表",
+      "speedup": "O(n) → O(1)"
+    },
+    
+    "index_maintenance": {
+      "description": "索引维护策略",
+      "update_trigger": "当 closet.json 修改时自动重建 indices.json",
+      "manual_rebuild": "也可手动运行脚本重建"
+    }
+  },
+  
+  "api_optimization": {
+    "description": "API调用优化",
+    
+    "weather_api": {
+      "cache_duration_minutes": 30,
+      "avoid_duplicate_calls": true,
+      "note": "已通过 weather_cache.json 实现"
+    },
+    
+    "image_generation_api": {
+      "rate_limit_seconds": 60,
+      "max_concurrent_requests": 1,
+      "timeout_seconds": 180,
+      "retry_count": 3,
+      "note": "已在 image_generation.json 配置"
+    }
+  },
+  
+  "storage_optimization": {
+    "description": "存储优化",
+    
+    "image_storage": {
+      "description": "图片存储策略",
+      "primary_image_only": "只保留一张主基准照片",
+      "history_limit": "历史图片最多保留10张",
+      "compression": "考虑压缩历史图片",
+      "location": "data/appearance/images/"
+    },
+    
+    "backup_strategy": {
+      "description": "备份策略",
+      "backup_location": "backups/",
+      "backup_frequency": "每天自动备份",
+      "max_backups": 7,
+      "note": "用户可手动删除旧备份"
+    }
+  },
+  
+  "cleanup_routine": {
+    "description": "定期清理任务",
+    "tasks": [
+      {
+        "task": "清理过期历史数据",
+        "frequency": "每月1号",
+        "action": "删除超过保留期的历史记录"
+      },
+      {
+        "task": "重建索引",
+        "frequency": "每次 closet.json 修改后",
+        "action": "运行索引更新脚本"
+      },
+      {
+        "task": "检查数据一致性",
+        "frequency": "每周",
+        "action": "检查 indices.json 与 closet.json 的一致性"
+      },
+      {
+        "task": "清理临时文件",
+        "frequency": "每次会话结束",
+        "action": "删除临时生成的图片（非收藏）"
+      }
+    ]
+  },
+  
+  "issues_found": {
+    "description": "发现的问题",
+    "issues": [
+      {
+        "severity": "high",
+        "issue": "clothing_items.json 与 closet.json 数据不一致",
+        "details": "clothing_items.json 有11件衣服，closet.json 有7件",
+        "recommendation": "决定使用哪个文件作为主数据源，删除或同步另一个"
+      },
+      {
+        "severity": "medium",
+        "issue": "preferences.json 与 likes_dislikes.json 重复数据",
+        "details": "两个文件都有颜色/风格偏好，且值不完全一致",
+        "recommendation": "统一数据源，避免数据不一致"
+      },
+      {
+        "severity": "low",
+        "issue": "mood.json 与 mood_tracker.json 功能重叠",
+        "details": "mood_tracker.json 已包含 mood.json 的功能",
+        "recommendation": "考虑废弃 mood.json 或明确分工"
+      }
+    ]
+  }
+}

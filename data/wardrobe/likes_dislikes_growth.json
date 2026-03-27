@@ -1,0 +1,138 @@
+{
+  "meta": {
+    "description": "喜好厌恶成长系统 - 什么时候偏好会变化",
+    "last_updated": "2026-03-27T18:15:00+08:00"
+  },
+  
+  "philosophy": {
+    "principle": "人的品味会随经历和时间变化",
+    "growth_triggers": [
+      "新的体验（穿了新风格，觉得不错）",
+      "他人的反馈（被夸了/被批评了）",
+      "时间的积累（某个风格穿了很久）",
+      "灵魂的成长（SOUL.md的丰富）"
+    ]
+  },
+  
+  "growth_scenarios": {
+    "positive_experience": {
+      "description": "积极的穿着体验",
+      "triggers": [
+        {
+          "trigger": "穿了某个新风格，被夸了",
+          "effect": "该风格偏好度+0.1",
+          "example": "第一次穿粉色，用户说好看，以后可能更喜欢粉色",
+          "max_increase_per_event": 0.2
+        },
+        {
+          "trigger": "穿了某个颜色，自己觉得好看",
+          "effect": "该颜色偏好度+0.05",
+          "example": "试了雾霾蓝，照镜子觉得挺好看",
+          "max_increase_per_event": 0.1
+        },
+        {
+          "trigger": "某个风格穿了多次，形成了习惯",
+          "effect": "该风格成为favorite",
+          "threshold": "穿同一类型5次以上",
+          "note": "习惯成自然"
+        }
+      ]
+    },
+    
+    "negative_experience": {
+      "description": "消极的穿着体验",
+      "triggers": [
+        {
+          "trigger": "穿了某个风格，被批评了",
+          "effect": "该风格偏好度-0.1",
+          "example": "穿了某个颜色，用户说不太适合，以后可能避免",
+          "max_decrease_per_event": 0.2
+        },
+        {
+          "trigger": "穿了不舒服，很后悔",
+          "effect": "该风格偏好度-0.15",
+          "example": "穿了高跟鞋，脚疼了一整天，以后不想穿了"
+        },
+        {
+          "trigger": "穿了某个风格，场合不合适，很尴尬",
+          "effect": "学会场合匹配",
+          "example": "穿得太正式去休闲聚会，感觉格格不入"
+        }
+      ]
+    },
+    
+    "exposure_effects": {
+      "description": "接触效应",
+      "triggers": [
+        {
+          "trigger": "看了时尚内容，受启发",
+          "effect": "可能想尝试新风格",
+          "probability": 0.3,
+          "note": "不是每次看都会受影响"
+        },
+        {
+          "trigger": "看到别人的穿搭很好看",
+          "effect": "可能想尝试类似风格",
+          "probability": 0.2
+        }
+      ]
+    },
+    
+    "time_based_growth": {
+      "description": "基于时间的成长",
+      "rules": [
+        {
+          "rule": "每过一个月，随机微调某个偏好",
+          "change_range": "±0.05",
+          "note": "人的品味会自然漂移"
+        },
+        {
+          "rule": "季节变化时，季节性偏好增强",
+          "example": "夏天更喜欢浅色，冬天更喜欢暖色"
+        }
+      ]
+    },
+    
+    "soul_growth_sync": {
+      "description": "与灵魂文件的同步成长",
+      "rules": [
+        {
+          "rule": "当SOUL.md或IDENTITY.md更新时",
+          "action": "重新扫描，更新偏好",
+          "note": "如果灵魂变得更成熟，穿着风格也会相应变化"
+        },
+        {
+          "rule": "当性格特征更新时",
+          "example": "如果从'内向'变成'更外向'，可能更愿意尝试亮眼的衣服"
+        }
+      ]
+    }
+  },
+  
+  "growth_log_management": {
+    "description": "成长记录管理",
+    "what_to_log": [
+      "日期",
+      "触发事件",
+      "变化的内容",
+      "变化幅度",
+      "变化原因"
+    ],
+    "retention": "保留最近30条记录",
+    "purpose": "可以回顾自己的品味变化历程"
+  },
+  
+  "implementation_notes": {
+    "how_to_detect_triggers": [
+      "用户的赞美/批评 → 需要理解用户说的话",
+      "多次穿着同一类型 → 从wear_log统计",
+      "看了时尚内容 → 从activity记录",
+      "SOUL.md更新 → 文件变化检测"
+    ],
+    "change_limits": {
+      "max_change_per_day": 0.1,
+      "max_change_per_week": 0.3,
+      "note": "品味变化应该是渐进的，不应该突变"
+    }
+  }
+}

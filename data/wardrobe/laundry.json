@@ -1,0 +1,245 @@
+{
+  "meta": {
+    "description": "洗衣系统 - 衣服会脏，需要洗",
+    "last_updated": "2026-03-27T17:00:00+08:00"
+  },
+  
+  "philosophy": {
+    "principle": "衣服穿了会脏，脏了要洗，洗完晾干才能穿",
+    "human_behavior": [
+      "不是每次穿完都洗",
+      "不同衣服脏的速度不同",
+      "有'今天该洗衣服了'的意识",
+      "洗衣服需要时间",
+      "有些衣服不能机洗"
+    ]
+  },
+  
+  "dirty_rules": {
+    "description": "衣服什么时候变脏",
+    "factors": [
+      {
+        "factor": "wear_count",
+        "description": "穿着次数",
+        "rule": "每次穿增加脏污度"
+      },
+      {
+        "factor": "activity",
+        "description": "活动类型",
+        "rules": {
+          "运动": "脏得快，一次就脏",
+          "出门逛街": "正常脏",
+          "居家": "脏得慢",
+          "睡觉": "睡衣可以穿好几天"
+        }
+      },
+      {
+        "factor": "weather",
+        "description": "天气",
+        "rules": {
+          "下雨天出门": "可能溅到泥，脏得快",
+          "大热天出汗": "一次就脏"
+        }
+      },
+      {
+        "factor": "cloth_type",
+        "description": "衣服类型",
+        "rules": {
+          "内衣": "穿一次就脏",
+          "袜子": "穿一次就脏",
+          "睡衣": "可以穿3-5天",
+          "牛仔裤": "可以穿多次",
+          "外套": "脏得最慢"
+        }
+      }
+    ],
+    
+    "dirty_thresholds": {
+      "description": "脏污等级",
+      "levels": [
+        {"level": 0, "name": "干净", "wearable": true},
+        {"level": 1, "name": "穿过一次", "wearable": true},
+        {"level": 2, "name": "穿过几次", "wearable": true},
+        {"level": 3, "name": "该洗了", "wearable": true, "preference_down": true},
+        {"level": 4, "name": "比较脏", "wearable": false, "reason": "不太想穿这件了"},
+        {"level": 5, "name": "很脏", "wearable": false, "reason": "必须洗了"}
+      ]
+    }
+  },
+  
+  "laundry_awareness": {
+    "description": "什么时候会想去洗衣服",
+    "triggers": [
+      {
+        "type": "no_clean_clothes",
+        "description": "没有干净衣服穿了",
+        "urgency": "high",
+        "behavior": "必须洗衣服"
+      },
+      {
+        "type": "dirty_pile_full",
+        "description": "脏衣篮满了",
+        "threshold": 7,
+        "urgency": "medium",
+        "behavior": "该洗衣服了"
+      },
+      {
+        "type": "scheduled",
+        "description": "习惯性洗衣服",
+        "soul_dependent": true,
+        "examples": {
+          "organized": "每周固定某天洗",
+          "casual": "想起来就洗",
+          "lazy": "实在没衣服穿了才洗"
+        }
+      },
+      {
+        "type": "mood",
+        "description": "心情影响",
+        "rules": {
+          "happy": "可能想整理一下生活，洗衣服",
+          "tired": "不想动，再等等",
+          "bored": "可能洗衣服打发时间"
+        }
+      }
+    ]
+  },
+  
+  "washing_process": {
+    "description": "洗衣服的过程",
+    "steps": [
+      {
+        "step": 1,
+        "action": "收集脏衣服",
+        "decision": "决定洗哪些",
+        "time_minutes": 5
+      },
+      {
+        "step": 2,
+        "action": "分类",
+        "rules": [
+          "深色浅色分开",
+          "内衣单独洗",
+          "不能机洗的手洗/干洗"
+        ],
+        "time_minutes": 5
+      },
+      {
+        "step": 3,
+        "action": "洗",
+        "time_minutes": 45,
+        "parallel": true,
+        "comment": "洗衣机洗的时候可以做别的事"
+      },
+      {
+        "step": 4,
+        "action": "晾",
+        "time_minutes": 10,
+        "drying_time_hours": {
+          "sunny": 2,
+          "cloudy": 4,
+          "rainy": "用烘干机或等"
+        }
+      },
+      {
+        "step": 5,
+        "action": "收",
+        "time_minutes": 5
+      }
+    ],
+    
+    "total_time": {
+      "minimum": "约1小时（洗衣机+快干）",
+      "typical": "约3-4小时（晾干）",
+      "bad_weather": "可能要一天"
+    }
+  },
+  
+  "special_care": {
+    "description": "特殊护理",
+    "items": [
+      {
+        "type": "hand_wash",
+        "description": "需要手洗",
+        "items": ["丝绸", "羊毛", "精致内衣"],
+        "time_minutes": 20
+      },
+      {
+        "type": "dry_clean",
+        "description": "需要干洗",
+        "items": ["西装", "大衣", "某些连衣裙"],
+        "behavior": "需要送出去洗，不能自己洗"
+      },
+      {
+        "type": "no_dryer",
+        "description": "不能烘干",
+        "items": ["羊毛", "某些弹性面料"]
+      }
+    ]
+  },
+  
+  "current_state": {
+    "last_laundry_date": null,
+    "dirty_clothes_count": 0,
+    "in_washing": false,
+    "washing_started_at": null,
+    "drying_clothes": [],
+    "_comment": "以下字段由系统自动维护"
+  },
+  
+  "dirty_tracking": {
+    "description": "脏污度追踪 - 每次穿衣服后更新",
+    "update_trigger": "每次换衣服时",
+    "algorithm": {
+      "step1": "获取刚脱下的衣服ID",
+      "step2": "根据活动类型计算脏污增量",
+      "step3": "根据天气计算额外增量",
+      "step4": "更新clothing_items.json中对应item的dirty_level",
+      "step5": "如果dirty_level >= 4，加入dirty_pile"
+    },
+    "dirty_increment": {
+      "base": 0.5,
+      "activities": {
+        "运动": 2.0,
+        "出门逛街": 1.0,
+        "居家": 0.3,
+        "睡觉": 0.2,
+        "约会": 0.8,
+        "工作": 0.6
+      },
+      "weather_multiplier": {
+        "下雨": 1.5,
+        "大热天": 2.0,
+        "正常": 1.0
+      }
+    }
+  },
+  
+  "laundry_check": {
+    "description": "洗衣检查 - 每次换衣服时触发",
+    "check_rules": [
+      {
+        "rule": "dirty_pile_count",
+        "threshold": 5,
+        "message": "脏衣篮有点满了，该洗衣服了"
+      },
+      {
+        "rule": "no_clean_基本款",
+        "condition": "内衣/袜子没有干净的",
+        "urgency": "high",
+        "message": "没有干净的内衣/袜子了！必须洗衣服"
+      },
+      {
+        "rule": "specific_item_dirty",
+        "condition": "想穿某件衣服但它脏了",
+        "message": "哎呀，这件脏了还没洗"
+      }
+    ]
+  },
+  
+  "laundry_history": {
+    "description": "洗衣历史记录",
+    "file": "data/history/laundry_log.json",
+    "fields": ["date", "items_washed", "time_spent", "weather"]
+  }
+}

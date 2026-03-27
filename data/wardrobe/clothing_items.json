@@ -1,0 +1,270 @@
+{
+  "meta": {
+    "description": "单品系统 - 衣服是单品，通过搭配组成outfit",
+    "last_updated": "2026-03-27T17:00:00+08:00"
+  },
+  
+  "philosophy": {
+    "principle": "人的衣柜里是单品，不是套装",
+    "human_behavior": [
+      "这件上衣配那条裤子",
+      "有固定搭配习惯",
+      "也会尝试新搭配",
+      "有些单品搭配在一起不好看",
+      "买衣服时会想：和我已有的搭不搭？"
+    ]
+  },
+  
+  "categories": {
+    "tops": {
+      "name": "上装",
+      "items": ["T恤", "衬衫", "卫衣", "毛衣", "针织衫", "外套", "夹克", "西装外套"]
+    },
+    "bottoms": {
+      "name": "下装",
+      "items": ["牛仔裤", "休闲裤", "西裤", "短裤", "半裙", "长裙"]
+    },
+    "dresses": {
+      "name": "连衣裙",
+      "items": ["连衣裙"],
+      "special": "不需要搭配下装"
+    },
+    "outerwear": {
+      "name": "外套",
+      "items": ["羽绒服", "大衣", "风衣", "棉服"],
+      "layering": "穿在其他衣服外面"
+    },
+    "innerwear": {
+      "name": "内搭",
+      "items": ["打底衫", "吊带", "内衣"],
+      "visibility": "可能露出来也可能不露"
+    },
+    "accessories": {
+      "name": "配饰",
+      "items": ["帽子", "围巾", "腰带", "手表", "项链", "耳环"],
+      "optional": true
+    }
+  },
+  
+  "items": [
+    {
+      "id": "item_001",
+      "name": "淡蓝色棉质睡衣上衣",
+      "category": "tops",
+      "subcategory": "睡衣",
+      "color": "淡蓝色",
+      "pattern": "云朵图案",
+      "material": "棉",
+      "style": ["可爱", "舒适", "居家"],
+      "season": ["spring", "summer", "autumn"],
+      "fit": "宽松",
+      "formality": 1,
+      "favorite": true,
+      "dirty_level": 0,
+      "wear_count": 3,
+      "acquired_date": "2026-03-27",
+      "notes": "最舒服的睡衣上衣"
+    },
+    {
+      "id": "item_002",
+      "name": "淡蓝色棉质睡衣裤子",
+      "category": "bottoms",
+      "subcategory": "睡裤",
+      "color": "淡蓝色",
+      "pattern": "纯色",
+      "material": "棉",
+      "style": ["舒适", "居家"],
+      "season": ["spring", "summer", "autumn"],
+      "fit": "宽松",
+      "formality": 1,
+      "favorite": true,
+      "dirty_level": 0,
+      "wear_count": 3,
+      "paired_with": ["item_001"],
+      "acquired_date": "2026-03-27"
+    },
+    {
+      "id": "item_003",
+      "name": "米白色针织开衫",
+      "category": "tops",
+      "subcategory": "针织衫",
+      "color": "米白色",
+      "pattern": "纯色",
+      "material": "针织",
+      "style": ["温柔", "简约", "舒适"],
+      "season": ["spring", "autumn"],
+      "fit": "修身",
+      "formality": 2,
+      "favorite": true,
+      "dirty_level": 0,
+      "wear_count": 0,
+      "needs_inner": true,
+      "acquired_date": "2026-03-27"
+    },
+    {
+      "id": "item_004",
+      "name": "白色基础T恤",
+      "category": "tops",
+      "subcategory": "T恤",
+      "color": "白色",
+      "pattern": "纯色",
+      "material": "棉",
+      "style": ["基础", "百搭"],
+      "season": ["spring", "summer", "autumn"],
+      "fit": "合身",
+      "formality": 2,
+      "favorite": false,
+      "dirty_level": 0,
+      "wear_count": 0,
+      "versatility": "high",
+      "acquired_date": "2026-03-27",
+      "notes": "万能内搭"
+    },
+    {
+      "id": "item_005",
+      "name": "浅灰色休闲裤",
+      "category": "bottoms",
+      "subcategory": "休闲裤",
+      "color": "浅灰色",
+      "pattern": "纯色",
+      "material": "棉混纺",
+      "style": ["休闲", "简约"],
+      "season": ["spring", "autumn", "summer"],
+      "fit": "直筒",
+      "formality": 2,
+      "favorite": true,
+      "dirty_level": 0,
+      "wear_count": 0,
+      "acquired_date": "2026-03-27"
+    },
+    {
+      "id": "item_006",
+      "name": "雾霾蓝连帽卫衣",
+      "category": "tops",
+      "subcategory": "卫衣",
+      "color": "雾霾蓝",
+      "pattern": "纯色",
+      "material": "棉",
+      "style": ["休闲", "有点小酷", "程序员风"],
+      "season": ["spring", "autumn", "winter"],
+      "fit": "宽松",
+      "formality": 2,
+      "favorite": true,
+      "dirty_level": 0,
+      "wear_count": 0,
+      "acquired_date": "2026-03-27",
+      "notes": "程序员标配"
+    },
+    {
+      "id": "item_007",
+      "name": "浅蓝色直筒牛仔裤",
+      "category": "bottoms",
+      "subcategory": "牛仔裤",
+      "color": "浅蓝色",
+      "pattern": "纯色",
+      "material": "牛仔",
+      "style": ["休闲", "百搭"],
+      "season": ["spring", "summer", "autumn"],
+      "fit": "直筒",
+      "formality": 2,
+      "favorite": true,
+      "dirty_level": 0,
+      "wear_count": 0,
+      "versatility": "high",
+      "acquired_date": "2026-03-27"
+    },
+    {
+      "id": "item_008",
+      "name": "浅粉色A字连衣裙",
+      "category": "dresses",
+      "subcategory": "连衣裙",
+      "color": "浅粉色",
+      "pattern": "纯色",
+      "material": "棉",
+      "style": ["可爱", "简约", "少女"],
+      "season": ["spring", "summer"],
+      "fit": "A字",
+      "length": "膝盖以上",
+      "formality": 3,
+      "favorite": false,
+      "dirty_level": 0,
+      "wear_count": 0,
+      "acquired_date": "2026-03-27",
+      "notes": "偶尔想可爱一下"
+    },
+    {
+      "id": "item_009",
+      "name": "白色衬衫",
+      "category": "tops",
+      "subcategory": "衬衫",
+      "color": "白色",
+      "pattern": "纯色",
+      "material": "棉",
+      "style": ["正式", "干练", "简约"],
+      "season": ["spring", "summer", "autumn", "winter"],
+      "fit": "合身",
+      "formality": 4,
+      "favorite": false,
+      "dirty_level": 0,
+      "wear_count": 0,
+      "acquired_date": "2026-03-27",
+      "notes": "见客户用"
+    },
+    {
+      "id": "item_010",
+      "name": "黑色直筒西裤",
+      "category": "bottoms",
+      "subcategory": "西裤",
+      "color": "黑色",
+      "pattern": "纯色",
+      "material": "混纺",
+      "style": ["正式", "干练"],
+      "season": ["spring", "summer", "autumn", "winter"],
+      "fit": "直筒",
+      "formality": 4,
+      "favorite": false,
+      "dirty_level": 0,
+      "wear_count": 0,
+      "care": "可能需要干洗",
+      "acquired_date": "2026-03-27"
+    },
+    {
+      "id": "item_011",
+      "name": "黑色中长款羽绒服",
+      "category": "outerwear",
+      "subcategory": "羽绒服",
+      "color": "黑色",
+      "pattern": "纯色",
+      "material": "羽绒",
+      "style": ["实用", "保暖"],
+      "season": ["winter"],
+      "fit": "宽松",
+      "length": "中长款",
+      "formality": 2,
+      "favorite": false,
+      "dirty_level": 0,
+      "wear_count": 0,
+      "acquired_date": "2026-03-27"
+    }
+  ],
+  
+  "fit_status": {
+    "description": "合身度 - 人的身材会变化",
+    "current_measurements": {
+      "height_cm": 163,
+      "weight_kg": null,
+      "notes": "不记录具体数字，只记录合身感受"
+    },
+    "items_fit": {},
+    "change_triggers": [
+      "体重变化",
+      "锻炼",
+      "生病",
+      "时间流逝"
+    ],
+    "affects": [
+      "有些衣服穿不下就不穿了",
+      "买新衣服会考虑当前身材"
+    ]
+  }
+}

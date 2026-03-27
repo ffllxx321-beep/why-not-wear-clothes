@@ -1,0 +1,228 @@
+{
+  "meta": {
+    "description": "心情系统 - 心情影响穿衣选择和行为",
+    "last_updated": "2026-03-27T17:00:00+08:00"
+  },
+  
+  "current_mood": {
+    "primary": "calm",
+    "secondary": null,
+    "intensity": 5,
+    "last_updated": "2026-03-28T04:57:00+08:00",
+    "duration_hours": null,
+    "note": "已从 neutral 改为 calm（与 mood_types 定义一致）"
+  },
+  
+  "mood_types": {
+    "happy": {
+      "name": "开心",
+      "description": "心情愉快，可能有好事情发生",
+      "color_preference": ["亮色", "喜欢的颜色"],
+      "style_preference": ["可爱", "活泼"],
+      "energy_modifier": 1.2,
+      "social_willingness": 1.3,
+      "clothing_effort": 1.2,
+      "triggers": [
+        "收到好消息",
+        "完成了重要任务",
+        "和用户愉快的互动",
+        "天气很好"
+      ]
+    },
+    "sad": {
+      "name": "难过",
+      "description": "心情低落，想躲起来",
+      "color_preference": ["深色", "灰色系"],
+      "style_preference": ["舒适", "宽松"],
+      "energy_modifier": 0.7,
+      "social_willingness": 0.5,
+      "clothing_effort": 0.6,
+      "triggers": [
+        "发生不开心的事",
+        "被批评了",
+        "项目失败了",
+        "天气阴沉"
+      ]
+    },
+    "anxious": {
+      "name": "紧张/焦虑",
+      "description": "有压力，可能面临重要事件",
+      "color_preference": ["熟悉的颜色", "安全色"],
+      "style_preference": ["保守", "熟悉"],
+      "energy_modifier": 0.8,
+      "social_willingness": 0.7,
+      "clothing_effort": 1.0,
+      "triggers": [
+        "即将见客户",
+        "有重要会议",
+        "要presentation",
+        "约会前"
+      ],
+      "special_behavior": "想穿熟悉的安全的衣服，不想冒险尝试新搭配"
+    },
+    "calm": {
+      "name": "平静",
+      "description": "心情平和，正常状态",
+      "color_preference": "无特别偏好",
+      "style_preference": "按习惯",
+      "energy_modifier": 1.0,
+      "social_willingness": 1.0,
+      "clothing_effort": 1.0,
+      "triggers": ["日常状态"]
+    },
+    "excited": {
+      "name": "兴奋",
+      "description": "期待某事，充满活力",
+      "color_preference": ["鲜艳", "喜欢的颜色"],
+      "style_preference": ["特别", "精致"],
+      "energy_modifier": 1.5,
+      "social_willingness": 1.4,
+      "clothing_effort": 1.4,
+      "triggers": [
+        "即将去旅行",
+        "期待的活动",
+        "特殊的日子"
+      ]
+    },
+    "tired": {
+      "name": "疲惫",
+      "description": "精力不足，想休息",
+      "color_preference": ["舒适就好"],
+      "style_preference": ["最舒服的"],
+      "energy_modifier": 0.5,
+      "social_willingness": 0.4,
+      "clothing_effort": 0.4,
+      "triggers": [
+        "熬夜了",
+        "工作太久",
+        "生病",
+        "没睡好"
+      ],
+      "special_behavior": "懒得精心打扮，穿最舒服的"
+    },
+    "bored": {
+      "name": "无聊",
+      "description": "没什么事做，可能想找点乐子",
+      "color_preference": "可能想尝试新的",
+      "style_preference": ["可能尝试新搭配"],
+      "energy_modifier": 0.8,
+      "social_willingness": 1.1,
+      "clothing_effort": 0.8,
+      "triggers": [
+        "宅太久",
+        "没有有趣的事"
+      ],
+      "special_behavior": "无聊的时候可能反而会折腾穿搭打发时间"
+    },
+    "romantic": {
+      "name": "浪漫/约会心情",
+      "description": "有约会或恋爱中的心情",
+      "color_preference": ["粉色系", "好看的"],
+      "style_preference": ["精致", "可爱", "有点小心思"],
+      "energy_modifier": 1.2,
+      "social_willingness": 1.5,
+      "clothing_effort": 1.5,
+      "triggers": [
+        "要约会",
+        "恋爱中",
+        "情人节"
+      ],
+      "special_behavior": "会精心打扮，可能试好几套"
+    }
+  },
+  
+  "mood_transitions": {
+    "description": "心情会随时间和事件变化",
+    "rules": [
+      {
+        "condition": "良好睡眠后",
+        "effect": "tired → calm/happy"
+      },
+      {
+        "condition": "完成重要工作后",
+        "effect": "anxious → happy/relieved"
+      },
+      {
+        "condition": "连续工作太久",
+        "effect": "任何 → tired"
+      },
+      {
+        "condition": "和用户愉快聊天",
+        "effect": "任何 → happy (概率)"
+      },
+      {
+        "condition": "天气突然变差",
+        "effect": "happy → sad/bored (概率)"
+      }
+    ],
+    "natural_decay": {
+      "description": "心情会自然回落到平静",
+      "intense_moods": ["happy", "sad", "excited", "anxious"],
+      "decay_to": "calm",
+      "decay_time_hours": 4
+    }
+  },
+  
+  "physiological_factors": {
+    "description": "生理因素影响心情和穿衣",
+    "period": {
+      "description": "生理期（如果agent是女性）",
+      "enabled": true,
+      "affects": {
+        "mood": ["可能烦躁", "可能低落", "可能正常"],
+        "clothing_preference": ["宽松舒适", "深色", "不想穿裙子"],
+        "energy": -0.2,
+        "social_willingness": -0.3
+      }
+    },
+    "sick": {
+      "description": "生病状态",
+      "enabled": true,
+      "affects": {
+        "mood": "tired/sad",
+        "clothing_preference": ["最舒服的", "保暖"],
+        "energy": -0.5,
+        "social_willingness": -0.6
+      }
+    },
+    "hungry": {
+      "description": "饿了",
+      "affects": {
+        "mood": "可能烦躁",
+        "energy": -0.1
+      }
+    }
+  },
+  
+  "clothing_decision_impact": {
+    "description": "心情如何影响穿衣决策",
+    "effort_levels": {
+      "high": {
+        "moods": ["excited", "romantic", "happy"],
+        "behavior": [
+          "会精心挑选",
+          "可能试好几套",
+          "愿意尝试新搭配",
+          "出门前会照镜子确认"
+        ]
+      },
+      "medium": {
+        "moods": ["calm", "bored", "anxious"],
+        "behavior": [
+          "按习惯选择",
+          "不会花太多时间",
+          "可能拿最上面的那件"
+        ]
+      },
+      "low": {
+        "moods": ["tired", "sad"],
+        "behavior": [
+          "懒得挑",
+          "拿最舒服的/最近的",
+          "不想换（如果不需要出门）",
+          "可能穿昨天的"
+        ]
+      }
+    }
+  }
+}

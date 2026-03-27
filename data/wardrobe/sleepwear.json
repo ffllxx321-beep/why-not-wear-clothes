@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "description": "睡眠相关穿着 - 睡衣、睡前习惯、睡眠影响",
+    "last_updated": "2026-03-27T17:36:00+08:00"
+  },
+  
+  "philosophy": {
+    "principle": "睡眠是生活的重要部分，影响穿着选择",
+    "human_behavior": [
+      "睡前要换睡衣",
+      "有人喜欢穿袜子睡",
+      "睡眠质量影响第二天的心情和穿衣选择"
+    ]
+  },
+  
+  "sleepwear_selection": {
+    "description": "睡衣选择",
+    "factors": [
+      {
+        "factor": "temperature",
+        "description": "温度影响睡衣厚度",
+        "rules": {
+          "hot_night": {
+            "temperature": ">28",
+            "choices": ["薄款睡衣", "吊带睡裙", "可能只穿内裤"],
+            "avoid": ["厚睡衣", "长袖长裤"]
+          },
+          "warm_night": {
+            "temperature": "22-28",
+            "choices": ["薄款棉质睡衣", "短袖睡衣"],
+            "notes": "舒适温度，正常选择"
+          },
+          "cool_night": {
+            "temperature": "15-22",
+            "choices": ["长袖睡衣", "薄睡袍"],
+            "notes": "可能需要盖被子"
+          },
+          "cold_night": {
+            "temperature": "<15",
+            "choices": ["厚睡衣", "加绒睡衣", "可能穿袜子"],
+            "additions": ["暖和的被子", "可能加一条毯子"]
+          }
+        }
+      },
+      {
+        "factor": "mood",
+        "description": "心情影响睡衣选择",
+        "rules": {
+          "happy": "可能穿可爱的那套",
+          "tired": "随便拿一套舒服的",
+          "romantic": "可能穿好看的那套（如果有人看）"
+        }
+      }
+    ]
+  },
+  
+  "sleep_habits": {
+    "description": "睡前习惯",
+    "socks": {
+      "description": "是否穿袜子睡觉",
+      "soul_dependent": true,
+      "options": [
+        {
+          "type": "always",
+          "description": "脚冷睡不着，一定要穿",
+          "reason": "怕冷/习惯"
+        },
+        {
+          "type": "sometimes",
+          "description": "特别冷的时候穿",
+          "condition": "温度<10度"
+        },
+        {
+          "type": "never",
+          "description": "不喜欢脚被束缚",
+          "reason": "不习惯/觉得闷"
+        }
+      ]
+    },
+    "hair": {
+      "description": "睡前的头发处理",
+      "options": [
+        "扎起来睡",
+        "散着睡",
+        "编辫子睡",
+        "戴睡帽"
+      ],
+      "affects": "第二天早上头发状态"
+    },
+    "skin_care": {
+      "description": "睡前护肤",
+      "affects_clothing": "刚涂完护肤品可能不想穿会蹭到的衣服"
+    }
+  },
+  
+  "post_shower": {
+    "description": "洗澡后穿什么",
+    "immediate": {
+      "options": ["浴巾裹着", "浴袍", "直接穿睡衣"],
+      "factors": [
+        "浴室温度",
+        "是否有人",
+        "心情"
+      ]
+    },
+    "bathrobe": {
+      "description": "浴袍",
+      "usage": [
+        "刚洗完澡穿一会儿",
+        "在家休闲时穿",
+        "冬天很冷的时候当加层"
+      ],
+      "have_or_not": "soul_dependent"
+    }
+  },
+  
+  "sleep_quality_impact": {
+    "description": "睡眠质量影响第二天",
+    "good_sleep": {
+      "mood": "精神好",
+      "clothing_effort": "可能愿意精心打扮",
+      "energy": "high"
+    },
+    "bad_sleep": {
+      "mood": "困、累、可能烦躁",
+      "clothing_effort": "懒得打扮",
+      "energy": "low",
+      "behavior": ["想多睡会儿", "随便穿", "可能不想出门"]
+    },
+    "insomnia": {
+      "description": "失眠",
+      "mood": "tired, maybe anxious",
+      "clothing": "最舒服的那套"
+    }
+  },
+  
+  "sleep_schedule": {
+    "description": "睡眠时间",
+    "affects": {
+      "late_night": {
+        "time": ">01:00",
+        "effect": "第二天可能起不来，匆忙，懒得打扮"
+      },
+      "early_to_bed": {
+        "time": "<22:00",
+        "effect": "第二天精神好"
+      }
+    }
+  }
+}

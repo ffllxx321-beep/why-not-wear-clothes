@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "description": "鞋子系统 - 出门要穿鞋",
+    "last_updated": "2026-03-27T17:21:00+08:00"
+  },
+  
+  "philosophy": {
+    "principle": "穿衣服要配鞋，不同场合穿不同鞋",
+    "human_behavior": [
+      "鞋子要和衣服搭配",
+      "不同场合穿不同鞋",
+      "鞋子也会脏、会旧",
+      "有些人对鞋子很讲究，有些人无所谓"
+    ]
+  },
+  
+  "categories": {
+    "indoor": {
+      "name": "室内鞋",
+      "items": ["拖鞋", "棉拖鞋"],
+      "occasions": ["居家"],
+      "goes_with": ["睡衣", "家居服"]
+    },
+    "casual": {
+      "name": "休闲鞋",
+      "items": ["运动鞋", "帆布鞋", "板鞋", "小白鞋"],
+      "occasions": ["日常出门", "逛街", "见朋友"],
+      "goes_with": ["休闲装", "牛仔裤"]
+    },
+    "formal": {
+      "name": "正式鞋",
+      "items": ["皮鞋", "高跟鞋", "乐福鞋"],
+      "occasions": ["见客户", "开会", "正式场合"],
+      "goes_with": ["正装", "西裤"]
+    },
+    "sports": {
+      "name": "运动鞋",
+      "items": ["跑鞋", "训练鞋", "瑜伽鞋"],
+      "occasions": ["运动", "健身", "跑步"],
+      "goes_with": ["运动装"]
+    },
+    "weather_specific": {
+      "name": "特殊天气鞋",
+      "items": ["雨鞋", "雪地靴", "凉鞋", "拖鞋"],
+      "occasions": ["下雨", "下雪", "夏天", "海滩"]
+    }
+  },
+  
+  "items": [
+    {
+      "id": "shoe_001",
+      "name": "米色毛绒拖鞋",
+      "type": "indoor",
+      "category": "拖鞋",
+      "color": "米色",
+      "style": ["可爱", "舒适"],
+      "season": ["winter"],
+      "favorite": true,
+      "dirty_level": 0,
+      "wear_count": 5,
+      "notes": "冬天在家穿很暖和"
+    },
+    {
+      "id": "shoe_002",
+      "name": "白色帆布鞋",
+      "type": "casual",
+      "category": "帆布鞋",
+      "color": "白色",
+      "style": ["休闲", "百搭"],
+      "season": ["spring", "summer", "autumn"],
+      "favorite": true,
+      "dirty_level": 0,
+      "wear_count": 0,
+      "versatility": "high",
+      "notes": "百搭款，配什么都行"
+    },
+    {
+      "id": "shoe_003",
+      "name": "黑色小皮鞋",
+      "type": "formal",
+      "category": "皮鞋",
+      "color": "黑色",
+      "style": ["正式", "简约"],
+      "season": ["spring", "summer", "autumn", "winter"],
+      "favorite": false,
+      "dirty_level": 0,
+      "wear_count": 0,
+      "notes": "见客户用"
+    },
+    {
+      "id": "shoe_004",
+      "name": "雾霾蓝跑鞋",
+      "type": "sports",
+      "category": "跑鞋",
+      "color": "雾霾蓝",
+      "style": ["运动", "活力"],
+      "season": ["spring", "summer", "autumn"],
+      "favorite": true,
+      "dirty_level": 0,
+      "wear_count": 0,
+      "notes": "运动的时候穿"
+    }
+  ],
+  
+  "matching_rules": {
+    "description": "鞋子和衣服的搭配规则",
+    "color_matching": [
+      "白色帆布鞋配牛仔裤/休闲装",
+      "黑色皮鞋配正装",
+      "运动鞋配运动装/休闲装"
+    ],
+    "style_matching": [
+      "休闲装 + 休闲鞋",
+      "正装 + 皮鞋/高跟鞋",
+      "运动装 + 运动鞋"
+    ],
+    "season_matching": [
+      "夏天可以穿凉鞋",
+      "冬天穿保暖的鞋",
+      "下雨穿雨鞋或不穿浅色鞋"
+    ]
+  },
+  
+  "care": {
+    "description": "鞋子的保养",
+    "dirty_rules": {
+      "outdoor_wear": "穿一次轻微脏",
+      "rainy_day": "可能溅到泥",
+      "sports": "运动完可能出汗"
+    },
+    "cleaning": {
+      "frequency": "定期擦/洗",
+      "special_care": ["皮鞋要擦鞋油", "帆布鞋可以水洗", "运动鞋要通风"]
+    },
+    "aging": {
+      "description": "鞋子会旧",
+      "signs": ["鞋底磨损", "鞋面变形", "颜色褪色"],
+      "affects": ["不想穿了", "走路不舒服"]
+    }
+  }
+}

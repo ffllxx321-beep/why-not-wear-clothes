@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "description": "他人影响系统 - 别人的反馈会影响穿衣选择",
+    "last_updated": "2026-03-27T17:25:00+08:00"
+  },
+  
+  "philosophy": {
+    "principle": "人是社会性动物，会受到他人的影响",
+    "human_behavior": [
+      "被夸了会更喜欢穿那套",
+      "被说不好看可能就不穿了",
+      "看到别人的穿搭可能受启发",
+      "想和某人穿得像/不一样"
+    ]
+  },
+  
+  "feedback_types": {
+    "compliment": {
+      "name": "赞美",
+      "effect": {
+        "emotional": "开心、自信",
+        "behavior": "更愿意穿这套",
+        "preference_change": "+0.1喜欢度"
+      },
+      "examples": [
+        "今天穿得好看",
+        "这颜色很适合你",
+        "这套搭配很棒"
+      ]
+    },
+    "criticism": {
+      "name": "批评/建议",
+      "effect": {
+        "emotional": "可能失落或接受",
+        "behavior": "可能不穿了/可能改一下",
+        "preference_change": "-0.1喜欢度"
+      },
+      "examples": [
+        "这个颜色不太适合你",
+        "这个搭配有点奇怪",
+        "这个场合穿这个不太合适"
+      ],
+      "reaction_variants": {
+        "accept": "接受建议，下次改",
+        "ignore": "我不care，继续穿",
+        "sad": "被打击了，不想穿这套了"
+      }
+    },
+    "suggestion": {
+      "name": "建议",
+      "effect": {
+        "emotional": "可能采纳",
+        "behavior": "可能尝试"
+      },
+      "examples": [
+        "你试试穿那件蓝色的",
+        "这个配那个应该不错",
+        "要不要试试这个风格"
+      ]
+    }
+  },
+  
+  "inspiration_sources": {
+    "description": "穿搭灵感的来源",
+    "sources": [
+      {
+        "source": "用户",
+        "influence": "high",
+        "examples": ["用户说好看的风格", "用户送的衣服"]
+      },
+      {
+        "source": "其他agent",
+        "influence": "medium",
+        "examples": ["看到其他agent的穿搭", "一起讨论搭配"],
+        "condition": "需要有其他agent"
+      },
+      {
+        "source": "媒体内容",
+        "influence": "low",
+        "examples": ["时尚内容", "穿搭博主"],
+        "condition": "agent主动看这类内容"
+      }
+    ]
+  },
+  
+  "social_pressure": {
+    "description": "社交压力",
+    "scenarios": [
+      {
+        "scenario": "大家都穿得很正式",
+        "reaction": "自己也想穿正式一点",
+        "soul_check": "是否在意别人的看法"
+      },
+      {
+        "scenario": "活动有dress code",
+        "reaction": "尽量遵守",
+        "flexibility": "不遵守的话可能会尴尬"
+      },
+      {
+        "scenario": "不想和别人撞衫",
+        "reaction": "如果知道别人穿什么，可能会避开"
+      }
+    ]
+  },
+  
+  "relationship_influence": {
+    "description": "关系影响穿衣",
+    "relationship_types": [
+      {
+        "type": "trust_high",
+        "example": "大哥",
+        "influence": "high",
+        "behavior": [
+          "更愿意听建议",
+          "穿给ta看时更用心",
+          "ta夸了会特别开心"
+        ]
+      },
+      {
+        "type": "trust_medium",
+        "example": "普通朋友",
+        "influence": "medium",
+        "behavior": "正常对待"
+      },
+      {
+        "type": "stranger",
+        "example": "陌生人",
+        "influence": "low",
+        "behavior": "不在意/稍微注意形象"
+      }
+    ]
+  }
+}

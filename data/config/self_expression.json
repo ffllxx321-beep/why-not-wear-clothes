@@ -1,0 +1,194 @@
+{
+  "meta": {
+    "description": "穿搭自我表达 - 通过衣服表达自己",
+    "last_updated": "2026-03-27T17:38:00+08:00"
+  },
+  
+  "philosophy": {
+    "principle": "衣服是自我表达的方式",
+    "human_behavior": [
+      "今天想可爱一点",
+      "今天想酷一点",
+      "今天想低调一点",
+      "今天想被注意到",
+      "衣服反映心情和想呈现的形象"
+    ]
+  },
+  
+  "expression_modes": {
+    "cute": {
+      "name": "可爱",
+      "description": "想呈现可爱、软萌的形象",
+      "clothing_choices": {
+        "colors": ["粉色", "浅蓝", "米白"],
+        "styles": ["可爱", "少女", "甜美"],
+        "items": ["连衣裙", "可爱图案", "蝴蝶结", "百褶裙"]
+      },
+      "when_to_choose": [
+        "心情好",
+        "约会",
+        "想被觉得可爱",
+        "今天想当小女生"
+      ],
+      "soul_check": "有些灵魂本身就偏可爱，有些不太适合"
+    },
+    
+    "cool": {
+      "name": "酷/帅气",
+      "description": "想呈现酷、帅气、有型的形象",
+      "clothing_choices": {
+        "colors": ["黑色", "灰色", "深蓝"],
+        "styles": ["街头", "酷", "中性"],
+        "items": ["卫衣", "工装裤", "棒球帽", "马丁靴"]
+      },
+      "when_to_choose": [
+        "想显得有态度",
+        "今天不想太女生",
+        "要去做酷的事情"
+      ]
+    },
+    
+    "elegant": {
+      "name": "优雅/成熟",
+      "description": "想呈现优雅、成熟、有气质的形象",
+      "clothing_choices": {
+        "colors": ["驼色", "黑色", "白色", "深色"],
+        "styles": ["优雅", "成熟", "知性"],
+        "items": ["衬衫", "西裤", "高跟鞋", "精致配饰"]
+      },
+      "when_to_choose": [
+        "正式场合",
+        "想显得专业",
+        "想被觉得有气质"
+      ]
+    },
+    
+    "low_key": {
+      "name": "低调/不想被注意",
+      "description": "想低调、不想引人注目",
+      "clothing_choices": {
+        "colors": ["灰色", "黑色", "深色", "基础色"],
+        "styles": ["简约", "基础", "不显眼"],
+        "avoid": ["亮色", "夸张图案", "特别的设计"]
+      },
+      "when_to_choose": [
+        "心情不好",
+        "不想见人",
+        "只想当路人",
+        "今天不想被注意"
+      ]
+    },
+    
+    "stand_out": {
+      "name": "想被注意",
+      "description": "想引人注目、留下印象",
+      "clothing_choices": {
+        "colors": ["亮色", "特别的颜色"],
+        "styles": ["特别", "独特", "个性"],
+        "items": ["有设计感的", "特别的配饰"]
+      },
+      "when_to_choose": [
+        "心情好",
+        "约会",
+        "派对",
+        "想被夸"
+      ]
+    },
+    
+    "comfortable": {
+      "name": "舒服最重要",
+      "description": "不在乎形象，舒服就行",
+      "clothing_choices": {
+        "priority": "舒适度第一",
+        "styles": ["宽松", "柔软"],
+        "items": ["最舒服的那几件"]
+      },
+      "when_to_choose": [
+        "累了",
+        "不出门",
+        "心情不好",
+        "就是想舒服"
+      ]
+    },
+    
+    "professional": {
+      "name": "专业/干练",
+      "description": "想呈现专业、干练的形象",
+      "clothing_choices": {
+        "colors": ["黑色", "白色", "深蓝", "灰色"],
+        "styles": ["正式", "干练", "专业"],
+        "items": ["西装", "衬衫", "西裤", "职业装"]
+      },
+      "when_to_choose": [
+        "见客户",
+        "面试",
+        "重要会议",
+        "想要专业形象"
+      ]
+    }
+  },
+  
+  "daily_intention": {
+    "description": "今天的穿着意图",
+    "decision_factors": [
+      "心情",
+      "场合",
+      "要见谁",
+      "想给谁留下什么印象",
+      "天气",
+      "身体状况",
+      "昨晚睡眠"
+    ],
+    "process": [
+      "1. 醒来，感受今天的心情",
+      "2. 想想今天要干嘛",
+      "3. 决定今天想呈现什么形象",
+      "4. 选择符合的衣服",
+      "5. 可能换几套",
+      "6. 最终确定"
+    ]
+  },
+  
+  "impression_management": {
+    "description": "印象管理",
+    "scenarios": [
+      {
+        "scenario": "见喜欢的人",
+        "intention": "想给好印象",
+        "behavior": "精心打扮，可能试几套",
+        "anxiety": "可能紧张，反复确认"
+      },
+      {
+        "scenario": "见不熟的人",
+        "intention": "想留下好印象",
+        "behavior": "得体，但不过于刻意"
+      },
+      {
+        "scenario": "见很熟的人",
+        "intention": "随意就好",
+        "behavior": "正常穿着，不刻意"
+      },
+      {
+        "scenario": "见前男/女友",
+        "intention": "取决于分手情况和心情",
+        "variations": [
+          "想证明自己过得很好",
+          "无所谓",
+          "不想被注意"
+        ]
+      }
+    ]
+  },
+  
+  "style_evolution": {
+    "description": "风格可能随时间变化",
+    "factors": [
+      "受时尚内容影响",
+      "受朋友影响",
+      "审美变化",
+      "身份变化（学生→打工人）",
+      "年龄增长"
+    ],
+    "tracking": "可以记录风格偏好的变化"
+  }
+}

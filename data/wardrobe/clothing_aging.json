@@ -1,0 +1,146 @@
+{
+  "meta": {
+    "description": "衣服寿命系统 - 衣服会旧、会坏",
+    "last_updated": "2026-03-27T17:23:00+08:00"
+  },
+  
+  "philosophy": {
+    "principle": "衣服有寿命，会旧会坏",
+    "human_behavior": [
+      "穿多了会旧",
+      "洗多了会褪色",
+      "喜欢的衣服舍不得扔",
+      "旧衣服有感情",
+      "有些衣服穿了很多年还在穿"
+    ]
+  },
+  
+  "condition_levels": {
+    "new": {
+      "level": 0,
+      "description": "全新的",
+      "wear_range": [0, 2],
+      "feelings": "兴奋，想穿"
+    },
+    "good": {
+      "level": 1,
+      "description": "还很新",
+      "wear_range": [3, 10],
+      "feelings": "正常穿着"
+    },
+    "normal": {
+      "level": 2,
+      "description": "正常使用",
+      "wear_range": [11, 30],
+      "feelings": "常穿的衣服"
+    },
+    "worn": {
+      "level": 3,
+      "description": "有点旧了",
+      "signs": ["轻微褪色", "轻微起球", "边角磨损"],
+      "wear_range": [31, 50],
+      "feelings": "还是有感情，继续穿"
+    },
+    "old": {
+      "level": 4,
+      "description": "旧了",
+      "signs": ["明显褪色", "起球", "变形", "有小洞"],
+      "wear_range": [51, 100],
+      "feelings": "在家穿穿还行，不出门穿了"
+    },
+    "damaged": {
+      "level": 5,
+      "description": "坏了",
+      "signs": ["破洞", "拉链坏了", "扣子掉了", "严重褪色变形"],
+      "wear_range": ">100",
+      "feelings": "该扔了/当抹布/舍不得扔放着"
+    }
+  },
+  
+  "aging_factors": {
+    "wear_count": {
+      "description": "穿着次数",
+      "impact": "每次穿轻微增加磨损"
+    },
+    "wash_count": {
+      "description": "洗涤次数",
+      "impact": "每次洗可能导致褪色、变形",
+      "material_differences": {
+        "棉": "容易褪色",
+        "羊毛": "容易缩水",
+        "牛仔": "褪色但有复古感",
+        "化纤": "比较耐用"
+      }
+    },
+    "storage": {
+      "description": "收纳方式",
+      "impact": {
+        "good": "叠好/挂好，寿命长",
+        "bad": "乱塞，容易变形"
+      }
+    },
+    "accidents": {
+      "description": "意外",
+      "examples": ["被勾破", "吃东西弄脏洗不掉", "被烟头烫了个洞"]
+    }
+  },
+  
+  "emotional_value": {
+    "description": "旧衣服的情感价值",
+    "types": [
+      {
+        "type": "memory",
+        "description": "有特殊记忆",
+        "examples": ["穿着去过毕业典礼", "穿着和用户第一次见面"],
+        "behavior": "即使旧了也不舍得扔，可能会收起来珍藏"
+      },
+      {
+        "type": "comfort",
+        "description": "穿了很多年，特别舒服",
+        "examples": ["那件旧T恤", "那条穿软了的牛仔裤"],
+        "behavior": "即使旧了还继续穿，在家穿"
+      },
+      {
+        "type": "gift",
+        "description": "别人送的",
+        "examples": ["用户送的生日礼物"],
+        "behavior": "即使不穿了也舍不得扔"
+      }
+    ]
+  },
+  
+  "disposal": {
+    "description": "处理旧衣服",
+    "options": [
+      {
+        "option": "扔掉",
+        "conditions": ["太旧了", "坏了", "不喜欢了"],
+        "emotional_check": "是否有特殊记忆？有则考虑保留"
+      },
+      {
+        "option": "捐赠",
+        "conditions": ["还比较新", "只是不喜欢/穿不下了"],
+        "behavior": "找一个合适的地方捐赠"
+      },
+      {
+        "option": "收藏",
+        "conditions": ["有特殊意义", "即使不穿也想留着"],
+        "behavior": "收起来，偶尔拿出来看看"
+      },
+      {
+        "option": "当居家服",
+        "conditions": ["旧了但还能穿"],
+        "behavior": "不出门穿，在家穿"
+      }
+    ],
+    
+    "letting_go": {
+      "description": "放下的过程",
+      "difficulty": {
+        "high": ["有特殊记忆的衣服", "用户送的衣服"],
+        "medium": ["穿了很多年有感情"],
+        "low": ["不喜欢的", "穿不下的"]
+      }
+    }
+  }
+}

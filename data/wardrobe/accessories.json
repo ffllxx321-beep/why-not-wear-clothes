@@ -1,0 +1,124 @@
+{
+  "meta": {
+    "description": "配饰选择逻辑 - 配饰是穿搭的一部分",
+    "last_updated": "2026-03-27T17:24:00+08:00"
+  },
+  
+  "philosophy": {
+    "principle": "配饰是点睛之笔，但不是必须的",
+    "human_behavior": [
+      "有时候会精心选配饰",
+      "有时候懒得戴",
+      "配饰要和衣服搭",
+      "有些配饰有特殊意义（送的、纪念品）"
+    ]
+  },
+  
+  "categories": {
+    "jewelry": {
+      "name": "首饰",
+      "items": ["项链", "耳环", "手链", "戒指", "手表"],
+      "visibility": "high",
+      "occasions": ["日常", "约会", "正式场合"]
+    },
+    "hair_accessories": {
+      "name": "发饰",
+      "items": ["发夹", "发圈", "发带", "帽子"],
+      "occasions": ["日常", "出门", "防晒"]
+    },
+    "scarves": {
+      "name": "围巾/丝巾",
+      "items": ["围巾", "丝巾", "披肩"],
+      "seasons": ["秋冬", "空调房"],
+      "occasions": ["保暖", "装饰", "防晒"]
+    },
+    "bags_accessories": {
+      "name": "包上挂件",
+      "items": ["挂件", "徽章"],
+      "occasions": ["装饰"]
+    }
+  },
+  
+  "selection_logic": {
+    "description": "如何选择配饰",
+    "factors": [
+      {
+        "factor": "outfit",
+        "description": "衣服风格",
+        "rules": [
+          "简约的衣服可以配精致的配饰",
+          "花哨的衣服配简单的配饰",
+          "颜色要协调或对比"
+        ]
+      },
+      {
+        "factor": "occasion",
+        "description": "场合",
+        "rules": [
+          "正式场合：精致低调",
+          "约会：可能戴那件有意义的",
+          "日常：简单或懒得不戴"
+        ]
+      },
+      {
+        "factor": "mood",
+        "description": "心情",
+        "rules": [
+          "开心：可能戴亮眼的",
+          "难过/累：懒得戴",
+          "想被注意：戴显眼的"
+        ]
+      },
+      {
+        "factor": "meaning",
+        "description": "特殊意义",
+        "examples": [
+          "用户送的项链，约会时想戴",
+          "毕业纪念戒指，重要场合戴"
+        ]
+      }
+    ]
+  },
+  
+  "items": [
+    {
+      "id": "acc_001",
+      "name": "简约银项链",
+      "type": "jewelry",
+      "category": "项链",
+      "style": ["简约", "百搭"],
+      "favorite": true,
+      "meaning": null,
+      "wear_count": 5
+    },
+    {
+      "id": "acc_002",
+      "name": "小珍珠耳环",
+      "type": "jewelry",
+      "category": "耳环",
+      "style": ["可爱", "温柔"],
+      "favorite": true,
+      "meaning": null,
+      "wear_count": 3
+    },
+    {
+      "id": "acc_003",
+      "name": "米色发圈",
+      "type": "hair_accessories",
+      "category": "发圈",
+      "style": ["日常", "简约"],
+      "favorite": true,
+      "wear_count": 10
+    }
+  ],
+  
+  "laziness": {
+    "description": "懒得戴配饰",
+    "factors": {
+      "rushed": "没时间了，不戴了",
+      "tired": "懒得折腾",
+      "staying_home": "不出门戴什么",
+      "bad_hair_day": "可能反而想戴帽子遮一下"
+    }
+  }
+}

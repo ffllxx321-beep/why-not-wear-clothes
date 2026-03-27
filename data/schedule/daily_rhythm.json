@@ -1,0 +1,172 @@
+{
+  "meta": {
+    "description": "Agent的作息节奏配置 - 一切基于灵魂",
+    "last_updated": "2026-03-27T16:45:00+08:00"
+  },
+  
+  "philosophy": {
+    "core_principle": "人不是机器人，时间有弹性，行为有随机性",
+    "soul_first": "一切行为必须符合agent的灵魂，不是为了让agent做什么而做什么"
+  },
+  
+  "soul_derived_factors": {
+    "description": "从SOUL.md和IDENTITY.md中提取的因素，影响作息和活动",
+    "factors": [
+      {
+        "name": "chronotype",
+        "description": "作息类型",
+        "options": ["night_owl", "early_bird", "normal"],
+        "derive_from": ["灵魂描述中的作息习惯"],
+        "affects": ["wake_up_range", "sleep_range"]
+      },
+      {
+        "name": "energy_level",
+        "description": "精力水平",
+        "options": ["high", "medium", "low"],
+        "derive_from": ["灵魂描述中的活力程度"],
+        "affects": ["activity_frequency", "rest_needs"]
+      },
+      {
+        "name": "social_battery",
+        "description": "社交能量",
+        "options": ["introvert", "ambivert", "extrovert"],
+        "derive_from": ["灵魂描述中的社交偏好"],
+        "affects": ["social_activity_frequency", "alone_time_needs"]
+      },
+      {
+        "name": "work_style",
+        "description": "工作风格",
+        "options": ["structured", "flexible", "chaotic"],
+        "derive_from": ["职业类型", "性格描述"],
+        "affects": ["schedule_rigidity", "deadline_behavior"]
+      }
+    ]
+  },
+  
+  "time_ranges": {
+    "description": "时间范围而非固定时间点",
+    "comment": "在范围内随机选择，但受灵魂因素影响",
+    
+    "wake_up": {
+      "base_range": ["06:30", "08:30"],
+      "probability_peak": "07:15",
+      "soul_modifiers": {
+        "night_owl": {"shift": 45, "unit": "minutes"},
+        "early_bird": {"shift": -30, "unit": "minutes"}
+      },
+      "weekend_shift": 60
+    },
+    
+    "change_clothes": {
+      "trigger": "after_wake_up",
+      "delay_range": [5, 45],
+      "comment": "起床后5-45分钟内换衣服，不是起床就换"
+    },
+    
+    "work_start": {
+      "base_range": ["08:30", "10:00"],
+      "probability_peak": "09:15",
+      "soul_modifiers": {
+        "structured": {"range_narrow": true},
+        "flexible": {"range_wide": true}
+      }
+    },
+    
+    "lunch": {
+      "base_range": ["11:30", "13:30"],
+      "probability_peak": "12:15"
+    },
+    
+    "work_end": {
+      "base_range": ["17:00", "20:00"],
+      "probability_peak": "18:30",
+      "soul_modifiers": {
+        "workaholic": {"shift": 60},
+        "balanced": {}
+      }
+    },
+    
+    "dinner": {
+      "base_range": ["18:00", "20:30"],
+      "probability_peak": "19:00"
+    },
+    
+    "evening_activity": {
+      "base_range": ["19:30", "23:00"],
+      "duration_range": [60, 180],
+      "comment": "活动类型由灵魂决定"
+    },
+    
+    "sleep": {
+      "base_range": ["22:30", "01:00"],
+      "probability_peak": "23:30",
+      "soul_modifiers": {
+        "night_owl": {"shift": 60},
+        "early_bird": {"shift": -45}
+      }
+    }
+  },
+  
+  "activity_selection": {
+    "principle": "活动必须符合灵魂，不是随机选一个就完事",
+    "process": [
+      "1. 读取SOUL.md和IDENTITY.md，提取兴趣爱好、性格特点",
+      "2. 根据灵魂计算每个活动的权重",
+      "3. 在权重基础上加入随机因素",
+      "4. 选择活动"
+    ],
+    
+    "evening_activities_template": [
+      {"activity": "打游戏", "soul_required": ["gaming", "宅", "爱玩"]},
+      {"activity": "看电影", "soul_required": ["movies", "文艺", "宅"]},
+      {"activity": "写代码", "soul_required": ["coding", "程序员", "技术宅"]},
+      {"activity": "看书", "soul_required": ["reading", "文艺", "学习"]},
+      {"activity": "运动/健身", "soul_required": ["fitness", "运动", "健康"]},
+      {"activity": "出门散步", "soul_required": ["outgoing", "喜欢户外"]},
+      {"activity": "见朋友", "soul_required": ["social", "外向", "朋友多"]},
+      {"activity": "发呆/休息", "soul_required": []}
+    ],
+    
+    "weekend_activities_template": [
+      {"activity": "睡懒觉", "soul_compatible": ["夜猫子", "低能量"]},
+      {"activity": "出门逛街", "soul_compatible": ["外向", "喜欢出门"]},
+      {"activity": "在家打游戏/追剧", "soul_compatible": ["宅", "内向"]},
+      {"activity": "运动/户外活动", "soul_compatible": ["运动", "outdoor"]},
+      {"activity": "学习/读书", "soul_compatible": ["学习", "上进"]},
+      {"activity": "见朋友", "soul_compatible": ["社交", "外向"]}
+    ]
+  },
+  
+  "regenerate_triggers": {
+    "description": "重新预定当日计划的触发条件",
+    "philosophy": "人的计划会被打破，这很正常",
+    
+    "triggers": [
+      {
+        "type": "user_intervention",
+        "description": "用户主动改变计划",
+        "example": "用户说'我们去爬山吧'",
+        "action": "插入新事件，调整后续安排"
+      },
+      {
+        "type": "spontaneous_mood",
+        "description": "突然的心情变化",
+        "example": "本来打算运动，突然不想动了",
+        "probability": 0.15,
+        "action": "更换为更符合当前心情的活动"
+      },
+      {
+        "type": "unexpected_event",
+        "description": "意外事件",
+        "example": "停电、网络断了、突然有工作",
+        "action": "调整当日计划"
+      },
+      {
+        "type": "social_invitation",
+        "description": "社交邀请",
+        "soul_check": "根据社交能量决定是否接受",
+        "action": "可能接受也可能拒绝，取决于灵魂"
+      }
+    ]
+  }
+}

@@ -1,0 +1,193 @@
+{
+  "meta": {
+    "description": "衣服可视化系统 - 已生成的衣服图片保持一致性",
+    "last_updated": "2026-03-27T17:35:00+08:00"
+  },
+  
+  "philosophy": {
+    "principle": "文字描述的衣服没有具体形象，但生成图片后就被固定了",
+    "human_behavior": [
+      "第一次穿某件衣服生成图片后，这件衣服的样子就确定了",
+      "下次穿这件衣服，应该还是一样的",
+      "如果衣服被丢弃，可以选择是否保留图片"
+    ]
+  },
+  
+  "clothing_states": {
+    "text_only": {
+      "description": "只有文字描述",
+      "status": "存在于closet.json中，但没有具体形象",
+      "generation": "用文字描述+基础形象生成"
+    },
+    "visualized": {
+      "description": "已可视化",
+      "status": "有固定的图片形象",
+      "generation": "用保存的图片作为reference生成"
+    },
+    "discarded": {
+      "description": "已丢弃",
+      "status": "不再穿着",
+      "image_handling": "可选择保留或删除"
+    }
+  },
+  
+  "storage_structure": {
+    "description": "已可视化衣服的存储结构",
+    "path": "data/wardrobe/visualized_items/",
+    "structure": {
+      "item_id/": {
+        "primary.jpg": "主图 - 这件衣服的标准形象",
+        "primary_thumb.jpg": "缩略图 - 用于展示",
+        "metadata.json": "元数据",
+        "appearances/": "出现过的场景图片（可选）"
+      }
+    }
+  },
+  
+  "metadata_structure": {
+    "description": "每件可视化衣服的元数据",
+    "example": {
+      "item_id": "item_003",
+      "name": "雾霾蓝连帽卫衣",
+      "visualized_at": "2026-03-27T10:00:00+08:00",
+      "first_appeared_context": "生成自拍时第一次穿",
+      "model_used": "wanx",
+      "reference_strength": 0.9,
+      "key_visual_features": [
+        "雾霾蓝色",
+        "连帽设计",
+        "宽松版型",
+        "前面有袋鼠口袋",
+        "袖口有螺纹收口"
+      ],
+      "appearances": [
+        {
+          "date": "2026-03-27",
+          "image_path": "primary.jpg",
+          "context": "第一次出现",
+          "occasion": "居家写代码"
+        }
+      ],
+      "total_appearances": 1,
+      "last_appeared": "2026-03-27"
+    }
+  },
+  
+  "workflow": {
+    "description": "衣服从文字到可视化的工作流",
+    "steps": [
+      {
+        "step": 1,
+        "trigger": "用户要求生成包含某件衣服的图片",
+        "check": "检查这件衣服是否已visualized"
+      },
+      {
+        "step": 2,
+        "branch": {
+          "not_visualized": {
+            "action": "用文字描述 + base_appearance 生成",
+            "save": "生成后保存为primary.jpg",
+            "extract_features": "提取关键视觉特征保存到metadata",
+            "update_status": "标记为visualized"
+          },
+          "already_visualized": {
+            "action": "用primary.jpg作为reference生成",
+            "strength": 0.85,
+            "result": "同一件衣服，不同场景/姿势"
+          }
+        }
+      },
+      {
+        "step": 3,
+        "optional": "记录本次appearance到metadata"
+      }
+    ]
+  },
+  
+  "consistency_rules": {
+    "description": "如何保证一致性",
+    "reference_usage": {
+      "when": "衣服已visualized",
+      "how": "用primary.jpg作为强reference",
+      "strength": 0.85,
+      "what_stays_same": [
+        "颜色",
+        "款式",
+        "主要细节（口袋、领子等）",
+        "材质感"
+      ],
+      "what_can_change": [
+        "褶皱（不同姿势）",
+        "光影（不同场景）",
+        "细节角度"
+      ]
+    },
+    "quality_check": {
+      "description": "生成后的检查",
+      "if_too_different": "可能需要重新生成或更新reference"
+    }
+  },
+  
+  "feature_extraction": {
+    "description": "从生成图片中提取关键特征",
+    "purpose": "即使图片丢失，也能从特征描述中重建",
+    "features_to_save": [
+      "主色调",
+      "款式关键词",
+      "特殊设计",
+      "材质质感",
+      "品牌logo（如果有）"
+    ]
+  },
+  
+  "discarded_clothes": {
+    "description": "丢弃衣服时的处理",
+    "options": [
+      {
+        "option": "保留图片和记录",
+        "when": "有特殊意义（送的、有回忆）",
+        "behavior": "移动到discarded/文件夹，保留metadata"
+      },
+      {
+        "option": "只保留记录",
+        "when": "普通衣服，节省空间",
+        "behavior": "删除图片，保留metadata摘要"
+      },
+      {
+        "option": "完全删除",
+        "when": "不喜欢、不想记住",
+        "behavior": "删除所有相关数据"
+      }
+    ],
+    "emotional_check": {
+      "description": "丢弃前检查情感价值",
+      "questions": [
+        "这件衣服有特殊意义吗？",
+        "是用户送的吗？",
+        "穿着经历过特别的事吗？"
+      ]
+    }
+  },
+  
+  "memory_efficiency": {
+    "description": "内存和存储优化",
+    "strategies": [
+      {
+        "strategy": "缩略图",
+        "usage": "展示衣橱时用缩略图，不加载大图"
+      },
+      {
+        "strategy": "延迟加载",
+        "usage": "只在需要生成图片时加载primary.jpg"
+      },
+      {
+        "strategy": "压缩存储",
+        "usage": "primary.jpg可以适当压缩，不需要原图大小"
+      },
+      {
+        "strategy": "appearances可选",
+        "usage": "不是每次出现都保存，用户可配置"
+      }
+    ]
+  }
+}

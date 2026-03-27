@@ -1,47 +1,46 @@
 # Known Issues (V0.2.0)
 
-## 数据一致性问题 ⚠️
+## 数据一致性问题
 
-### 1. clothing_items.json 与 closet.json 设计差异
+### 1. clothing_items.json 与 closet.json 设计差异 ✅ 已澄清
 
 **问题描述**：
 - `clothing_items.json` 定义了**单品系统**（11件单品）
 - `closet.json` 定义了**成套衣服系统**（7套outfit）
-- 两者设计理念不同，可能造成使用时混淆
+- 两者设计理念不同
 
-**当前状态**：
-- 两个系统并存，实际使用的是 `closet.json`
-- `clothing_items.json` 是未来扩展的单品搭配系统的预留
+**当前状态**：两个系统并存，是**有意设计**
+- `closet.json` 用于快速选择成套搭配
+- `clothing_items.json` 是未来单品混搭系统的预留
 
-**解决方案**：
-- 明确文档说明两系统的区别
-- 或者在未来统一为单品系统（更灵活）
+**结论**：不是问题，是功能扩展预留
 
 ---
 
-### 2. preferences.json 与 likes_dislikes.json 重复数据
+### 2. preferences.json 与 likes_dislikes.json 数据差异 ✅ 已澄清
 
 **问题描述**：
-- 两个文件都有颜色/风格偏好
-- 值不完全一致：
-  - preferences.json: 淡蓝色、米白色、浅粉色、雾霾蓝、柔和的灰色
-  - likes_dislikes.json: 淡蓝色、米白色、雾霾蓝
+- `preferences.json` 列出：淡蓝色、米白色、浅粉色、雾霾蓝、柔和的灰色
+- `likes_dislikes.json` 分类：favorite（淡蓝、米白、雾霾蓝）+ liked（浅粉、灰色）
 
-**解决方案**：
-- 建议 `likes_dislikes.json` 作为主数据源
-- `preferences.json` 只存储运行时设置
+**结论**：不是冲突，是**不同层次的描述**
+- `preferences.json` = 快速参考列表（所有喜欢的）
+- `likes_dislikes.json` = 详细偏好层次（favorite > liked > neutral）
+
+两者互补，建议保持现状。
 
 ---
 
-### 3. mood.json 与 mood_tracker.json 功能重叠
+### 3. mood.json 与 mood_tracker.json 心情类型不一致 ✅ 已修复
 
 **问题描述**：
-- `mood.json` 定义心情类型和影响
-- `mood_tracker.json` 已包含追踪功能，且使用了 `calm` 而非 `neutral`
+- `mood.json` 的 `current_mood.primary` 曾为 `neutral`
+- `mood_types` 中只有 `calm`，没有 `neutral` 类型定义
 
-**解决方案**：
-- `mood.json` 作为参考文档保留
-- `mood_tracker.json` 作为实际使用的状态文件
+**修复时间**：2026-03-28 04:57
+**修复内容**：将 `current_mood.primary` 从 `neutral` 改为 `calm`
+
+**结论**：已修复，两文件现在一致
 
 ---
 

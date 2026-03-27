@@ -1,0 +1,234 @@
+{
+  "meta": {
+    "description": "图像生成模型配置",
+    "last_updated": "2026-03-27T16:45:00+08:00"
+  },
+  
+  "default_provider": "playground",
+  
+  "providers": {
+    "wanx": {
+      "name": "通义万相 (阿里云)",
+      "type": "api",
+      "endpoint": "https://dashscope.aliyuncs.com/api/v1/services/aigc/text2image/image-synthesis",
+      "cost": "paid",
+      "speed": "快",
+      "quality": "⭐⭐⭐⭐",
+      "api_key_env": "DASHSCOPE_API_KEY",
+      "recommended": false,
+      "note": "不支持参考图，人脸不一致"
+    },
+    "qwen-image-2.0-pro": {
+      "name": "Qwen-Image-2.0-Pro",
+      "type": "api",
+      "endpoint": "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
+      "cost": "paid",
+      "speed": "中等",
+      "quality": "⭐⭐⭐⭐⭐",
+      "api_key_env": "DASHSCOPE_API_KEY",
+      "recommended": true,
+      "supports_reference_image": true,
+      "note": "推荐！支持参考图，可保持人脸一致"
+    },
+    "ideogram": {
+      "name": "Ideogram (谷歌系)",
+      "type": "api",
+      "endpoint": "https://api.ideogram.ai/generate",
+      "cost": "paid",
+      "speed": "快",
+      "quality": "⭐⭐⭐⭐⭐",
+      "api_key_env": "IDEOGRAM_API_KEY",
+      "recommended": true,
+      "note": "强烈推荐，人物生成效果极佳"
+    },
+    "seedream": {
+      "name": "即梦 (字节跳动)",
+      "type": "api",
+      "endpoint": "https://api.bytedance.com/...",
+      "cost": "paid",
+      "speed": "快",
+      "quality": "⭐⭐⭐⭐",
+      "api_key_env": "BYTEDANCE_API_KEY",
+      "recommended": true,
+      "note": "推荐，国内访问友好"
+    },
+    "dalle": {
+      "name": "DALL-E 3 (OpenAI)",
+      "type": "api",
+      "endpoint": "https://api.openai.com/v1/images/generations",
+      "cost": "paid",
+      "speed": "中等",
+      "quality": "⭐⭐⭐⭐⭐",
+      "api_key_env": "OPENAI_API_KEY",
+      "recommended": true,
+      "note": "推荐，效果好"
+    },
+    "local": {
+      "name": "本地部署",
+      "type": "local",
+      "cost": "free",
+      "requires_gpu": true,
+      "models": ["SDXL", "FLUX", "Kandinsky"],
+      "recommended": false,
+      "note": "适合有GPU的用户，完全免费且隐私安全"
+    }
+  },
+  
+  "initial_setup_flow": {
+    "description": "初始形象生成时的模型选择流程",
+    "steps": [
+      "1. 检查是否有用户配置的API key",
+      "2. 如果有，询问用户是否使用该模型",
+      "3. 如果没有，提示免费选项和推荐选项",
+      "4. 建议用户提供自己的API key以获得更好效果"
+    ],
+    "prompt_template": "生成初始形象时，需要选择图像生成模型。\n\n免费的选项：{free_providers}\n推荐的选项（需要API key）：{recommended_providers}\n\n建议您使用推荐的模型以获得更好的效果。您想使用哪个模型？如果选择推荐的模型，请提供您的API key。"
+  },
+  
+  "generation_settings": {
+    "default_size": "1024x1024",
+    "reference_strength": 0.85,
+    "quality": "high",
+    "face_consistency": {
+      "enabled": true,
+      "strength": 0.9,
+      "comment": "强参考基准照片，确保脸一致"
+    }
+  },
+  
+  "error_handling": {
+    "retry": {
+      "enabled": true,
+      "max_retries": 3,
+      "retry_delay_seconds": 5,
+      "retry_on_errors": [
+        "Throttling.RateQuota",
+        "InternalServerError",
+        "ServiceUnavailable",
+        "timeout"
+      ],
+      "exponential_backoff": true,
+      "comment": "限流或服务不可用时自动重试"
+    },
+    "timeout": {
+      "connection_seconds": 30,
+      "generation_seconds": 180,
+      "comment": "连接超时30s，生成超时3分钟"
+    },
+    "rate_limit": {
+      "min_interval_seconds": 60,
+      "comment": "两次生成请求之间至少间隔60秒，避免触发限流"
+    },
+    "fallback": {
+      "enabled": true,
+      "strategy": "use_alternative_model",
+      "fallback_order": ["qwen-image-2.0-pro", "wanx"],
+      "comment": "首选模型失败时自动尝试备选模型"
+    }
+  },
+  
+  "logging": {
+    "enabled": true,
+    "log_file": "data/history/image_generation_log.json",
+    "log_fields": [
+      "timestamp",
+      "model",
+      "prompt",
+      "reference_image",
+      "success",
+      "error_message",
+      "result_url",
+      "generation_time_seconds"
+    ],
+    "comment": "记录每次生成的详细信息，便于问题追踪"
+  },
+  
+  "api_usage": {
+    "description": "不同模型的API调用方式",
+    "qwen-image-2.0-pro": {
+      "endpoint": "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
+      "method": "POST",
+      "supports_reference_image": true,
+      "reference_image_formats": {
+        "url": "https://example.com/image.jpg",
+        "base64": "data:image/jpeg;base64,{base64_data}"
+      },
+      "example_without_reference": {
+        "model": "qwen-image-2.0-pro",
+        "input": {
+          "messages": [
+            {
+              "role": "user",
+              "content": [
+                {"text": "Generate an image of..."}
+              ]
+            }
+          ]
+        }
+      },
+      "example_with_reference": {
+        "model": "qwen-image-2.0-pro",
+        "input": {
+          "messages": [
+            {
+              "role": "user",
+              "content": [
+                {"image": "data:image/jpeg;base64,{base64_data}"},
+                {"text": "Generate an image of this same person wearing..."}
+              ]
+            }
+          ]
+        }
+      },
+      "notes": [
+        "推荐使用base64格式传递参考图，避免URL过期问题",
+        "prompt中要强调 'same person', 'same face', 'maintain same features'",
+        "模型会尝试保持人脸一致性"
+      ]
+    },
+    "wanx2.1-t2i-turbo": {
+      "endpoint": "https://dashscope.aliyuncs.com/api/v1/services/aigc/text2image/image-synthesis",
+      "method": "POST",
+      "supports_reference_image": false,
+      "notes": [
+        "不支持参考图",
+        "每次生成都是独立的，人脸会变化",
+        "不推荐用于需要人脸一致的场景"
+      ]
+    }
+  },
+  
+  "primary_image_generation": {
+    "description": "初始基准照片的生成规则",
+    "principle": "初始形象应该是以脸为主要对象的特写",
+    "purpose": [
+      "作为强参考图，确保脸一致",
+      "不同场景/姿势的衣服可以换，但脸不变",
+      "特写能最大程度保留面部特征"
+    ],
+    "prompt_template": {
+      "structure": "[base_appearance描述] + close-up portrait + neutral background + natural lighting",
+      "focus": "面部特征清晰可见",
+      "composition": "肩部以上或胸部以上的特写",
+      "background": "简单纯色或模糊背景，不分散注意力",
+      "expression": "自然表情或微微微笑",
+      "clothing": "简单的基础款，不抢眼",
+      "example": "25 year old East Asian woman, close-up portrait, black shoulder-length wavy hair, round brown eyes, small beauty mark under right eye, gentle smile, simple white top, soft natural lighting, blurred background"
+    },
+    "usage": {
+      "when_generating_other_images": "用这张特写作为reference，配合场景prompt",
+      "reference_strength": 0.85,
+      "what_changes": ["衣服", "姿势", "场景", "角度"],
+      "what_stays_same": ["脸型", "五官", "发型（可微调）", "气质"]
+    },
+    "regeneration_rules": {
+      "when_to_regenerate": [
+        "用户不满意初始形象",
+        "想要完全改变外貌（需要用户确认）",
+        "形象决定要更新（如换发型）"
+      ],
+      "save_old": true,
+      "reason": "旧的形象可能有纪念意义"
+    }
+  }
+}

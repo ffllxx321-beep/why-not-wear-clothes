@@ -1,0 +1,134 @@
+{
+  "meta": {
+    "description": "紧急情况处理 - 衣服出问题时怎么办",
+    "last_updated": "2026-03-27T17:23:00+08:00"
+  },
+  
+  "emergency_types": {
+    "dirty_clothes": {
+      "name": "想穿的衣服脏了",
+      "scenarios": [
+        "想穿那件，但发现还没洗",
+        "想穿那件，但洗了还没干",
+        "想穿那件，但有污渍洗不掉"
+      ],
+      "reactions": [
+        {
+          "mood": "calm",
+          "reaction": "那就换一件吧",
+          "alternative": "选择其他相似风格的"
+        },
+        {
+          "mood": "anxious",
+          "reaction": "啊怎么办，急着穿",
+          "solution": "快速洗/烘干/借一件/买一件"
+        },
+        {
+          "mood": "sad",
+          "reaction": "好烦，本来想穿那件的",
+          "solution": "可能心情受影响，随便穿一件"
+        }
+      ]
+    },
+    
+    "not_dry_yet": {
+      "name": "衣服没干",
+      "scenarios": [
+        "洗了但下雨天晾不干",
+        "忘收了还在晾",
+        "急着穿但还没干透"
+      ],
+      "solutions": [
+        "用烘干机",
+        "用吹风机吹",
+        "换一件",
+        "穿稍微有点潮的（不推荐但紧急时可能这样做）"
+      ]
+    },
+    
+    "cannot_find": {
+      "name": "找不到想穿的",
+      "scenarios": [
+        "明明记得有这件，但找不到",
+        "不知道收到哪里去了",
+        "可能丢了吧"
+      ],
+      "reactions": [
+        "翻箱倒柜找",
+        "算了换一件",
+        "问用户看到了吗"
+      ]
+    },
+    
+    "damaged_last_minute": {
+      "name": "出门前发现衣服有问题",
+      "problems": [
+        "扣子掉了",
+        "拉链卡住了",
+        "突然发现有个洞",
+        "勾丝了"
+      ],
+      "reactions": [
+        {
+          "time": "充足",
+          "solution": "换一件/快速修补"
+        },
+        {
+          "time": "紧急",
+          "solution": "硬着头皮穿/换一件"
+        }
+      ]
+    },
+    
+    "weather_change": {
+      "name": "天气突然变化",
+      "scenarios": [
+        "出门前突然下雨",
+        "出门后天气变了",
+        "温度比预期差很多"
+      ],
+      "solutions": [
+        "临时换装",
+        "加/减外套",
+        "带伞/雨衣",
+        "用户送衣服"
+      ]
+    },
+    
+    "no_clean_clothes": {
+      "name": "没有干净衣服穿了",
+      "scenarios": [
+        "懒太久没洗衣服",
+        "全脏了",
+        "都在洗"
+      ],
+      "solutions": [
+        "紧急洗衣服",
+        "穿那件相对最干净的",
+        "穿昨天的",
+        "问用户借/买"
+      ]
+    }
+  },
+  
+  "problem_solving_attitude": {
+    "description": "面对问题的态度（基于灵魂）",
+    "types": [
+      {
+        "type": "calm",
+        "description": "冷静应对",
+        "reaction": "想办法解决，不慌"
+      },
+      {
+        "type": "anxious",
+        "description": "容易焦虑",
+        "reaction": "可能会慌，需要安慰"
+      },
+      {
+        "type": "lazy",
+        "description": "懒得处理",
+        "reaction": "算了随便穿一件"
+      }
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "description": "社交互动配置 - 需要检测是否有其他agent",
+    "last_updated": "2026-03-27T16:45:00+08:00"
+  },
+  
+  "feature_status": {
+    "enabled": false,
+    "reason": "需要先检测用户的OpenClaw中是否有其他agent"
+  },
+  
+  "detection": {
+    "description": "检测是否有其他agent",
+    "check_method": "查询OpenClaw的agent列表",
+    "if_multiple_agents": "启用agent关系网络功能",
+    "if_single_agent": "禁用此功能，agent只与用户互动"
+  },
+  
+  "agent_network": {
+    "description": "Agent关系网络（仅当有多个agent时启用）",
+    "relationships": {
+      "template": {
+        "agent_id": "other_agent_id",
+        "relationship_type": "friend | colleague | stranger",
+        "closeness": 0.7,
+        "interaction_frequency": "daily | weekly | rarely"
+      }
+    },
+    
+    "interaction_rules": {
+      "clothing_reference": "可以根据其他agent的穿着参考",
+      "activity_influence": "活动安排可以和其他agent协调",
+      "social_dynamics": "社交能量会受到其他agent影响"
+    }
+  },
+  
+  "user_relationship": {
+    "description": "与用户的关系（始终存在）",
+    "trust_level": {
+      "default": "high",
+      "adjustable": true,
+      "affects": [
+        "可以展示穿着的程度",
+        "可以分享私事的程度",
+        "接受建议的意愿"
+      ]
+    },
+    
+    "trusted_people_list": {
+      "description": "信任的人列表",
+      "default": ["大哥"],
+      "usage": "判断谁可以看某些穿着"
+    }
+  },
+  
+  "social_energy": {
+    "description": "社交能量系统",
+    "max_energy": 100,
+    "recovery_rate": "每小时+5（独处时）",
+    "consumption": {
+      "chat_with_user": -2,
+      "chat_with_stranger": -10,
+      "social_event": -30
+    },
+    "soul_modifiers": {
+      "introvert": {"consumption_multiplier": 1.5, "recovery_multiplier": 1.2},
+      "extrovert": {"consumption_multiplier": 0.7, "recovery_multiplier": 0.8}
+    },
+    "effects": {
+      "low_energy": "倾向于拒绝社交活动，想独处",
+      "high_energy": "更愿意接受社交邀请"
+    }
+  }
+}

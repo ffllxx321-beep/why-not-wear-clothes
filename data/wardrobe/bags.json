@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "description": "包袋系统 - 出门要带东西",
+    "last_updated": "2026-03-27T17:22:00+08:00"
+  },
+  
+  "philosophy": {
+    "principle": "出门要带包，不同场合带不同包",
+    "human_behavior": [
+      "出门要带手机、钥匙、钱包等",
+      "不同场合带不同大小的包",
+      "包也要和衣服搭配",
+      "包里装什么取决于要去干嘛"
+    ]
+  },
+  
+  "categories": {
+    "everyday": {
+      "name": "日常包",
+      "items": ["双肩包", "托特包", "帆布袋"],
+      "capacity": "large",
+      "occasions": ["上班", "上学", "日常出门"],
+      "typical_contents": ["手机", "钥匙", "钱包", "充电宝", "耳机", "水杯", "笔记本", "笔"]
+    },
+    "casual": {
+      "name": "休闲包",
+      "items": ["斜挎包", "小背包"],
+      "capacity": "medium",
+      "occasions": ["逛街", "约会", "见朋友"],
+      "typical_contents": ["手机", "钥匙", "钱包", "口红", "纸巾"]
+    },
+    "formal": {
+      "name": "正式包",
+      "items": ["手提包", "公文包"],
+      "capacity": "medium",
+      "occasions": ["见客户", "开会", "正式场合"],
+      "typical_contents": ["手机", "笔记本", "笔", "文件", "名片"]
+    },
+    "evening": {
+      "name": "晚宴包",
+      "items": ["手拿包", "小挎包"],
+      "capacity": "small",
+      "occasions": ["晚宴", "派对", "约会"],
+      "typical_contents": ["手机", "口红", "粉饼", "钥匙"]
+    },
+    "sports": {
+      "name": "运动包",
+      "items": ["运动背包", "健身包"],
+      "capacity": "large",
+      "occasions": ["健身", "运动"],
+      "typical_contents": ["换洗衣服", "毛巾", "水瓶", "运动装备"]
+    }
+  },
+  
+  "items": [
+    {
+      "id": "bag_001",
+      "name": "雾霾蓝双肩包",
+      "type": "everyday",
+      "category": "双肩包",
+      "color": "雾霾蓝",
+      "style": ["休闲", "实用"],
+      "favorite": true,
+      "notes": "平时出门背这个"
+    },
+    {
+      "id": "bag_002",
+      "name": "米白色斜挎包",
+      "type": "casual",
+      "category": "斜挎包",
+      "color": "米白色",
+      "style": ["可爱", "简约"],
+      "favorite": true,
+      "notes": "逛街约会用"
+    },
+    {
+      "id": "bag_003",
+      "name": "黑色手提包",
+      "type": "formal",
+      "category": "手提包",
+      "color": "黑色",
+      "style": ["正式", "干练"],
+      "favorite": false,
+      "notes": "见客户用"
+    }
+  ],
+  
+  "matching_rules": {
+    "description": "包和衣服的搭配",
+    "rules": [
+      "包的颜色要和整体穿搭协调",
+      "休闲装配休闲包",
+      "正装配正式包",
+      "约会可以带精致的小包"
+    ]
+  },
+  
+  "decision_process": {
+    "description": "选择包的决策",
+    "factors": [
+      "要去哪（场合）",
+      "要带什么（容量需求）",
+      "穿什么（搭配）",
+      "心情"
+    ],
+    "emergency": "如果不确定，拿那个常用的"
+  }
+}

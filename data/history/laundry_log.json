@@ -1,0 +1,9 @@
+{
+  "description": "洗衣历史记录",
+  "records": [],
+  "stats": {
+    "total_laundry_sessions": 0,
+    "total_items_washed": 0,
+    "average_items_per_session": 0
+  }
+}

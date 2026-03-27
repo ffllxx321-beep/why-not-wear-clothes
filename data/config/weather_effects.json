@@ -1,0 +1,165 @@
+{
+  "meta": {
+    "description": "天气细致影响 - 不同天气对穿衣的影响",
+    "last_updated": "2026-03-27T17:22:00+08:00"
+  },
+  
+  "weather_types": {
+    "sunny": {
+      "name": "晴天",
+      "considerations": [
+        "可能需要防晒衣",
+        "可以戴帽子",
+        "可以戴墨镜",
+        "浅色衣服更凉快"
+      ],
+      "outfit_adjustments": {
+        "hot_sunny": {
+          "temperature": ">28",
+          "suggestions": ["薄款", "浅色", "防晒衣", "帽子"],
+          "avoid": ["深色", "厚款", "长袖长裤（除非防晒）"]
+        },
+        "warm_sunny": {
+          "temperature": "22-28",
+          "suggestions": ["正常穿着", "可能需要薄外套备用"]
+        }
+      }
+    },
+    
+    "rainy": {
+      "name": "下雨",
+      "considerations": [
+        "不要穿浅色（可能溅到泥）",
+        "不要穿会吸水的材质",
+        "可能需要雨衣/带伞",
+        "不要穿不防水的鞋",
+        "不要穿长裙/阔腿裤（会拖地湿）"
+      ],
+      "outfit_adjustments": {
+        "light_rain": {
+          "suggestions": ["带伞", "深色裤子", "防水鞋"],
+          "avoid": ["浅色裤/裙", "帆布鞋", " suede材质"]
+        },
+        "heavy_rain": {
+          "suggestions": ["雨衣", "深色", "紧身裤", "雨鞋"],
+          "avoid": ["裙子", "浅色", "所有不防水的鞋"]
+        }
+      },
+      "shoe_rules": {
+        "avoid": ["帆布鞋", "浅色鞋", "皮鞋（会坏）"],
+        "prefer": ["雨鞋", "深色运动鞋", "不怕水的鞋"]
+      }
+    },
+    
+    "windy": {
+      "name": "大风",
+      "considerations": [
+        "不要穿裙子（会飘）",
+        "不要穿宽松的长裙",
+        "穿防风的材质",
+        "头发会乱"
+      ],
+      "outfit_adjustments": {
+        "avoid": ["短裙", "宽松长裙", "轻飘飘的材质"],
+        "prefer": ["紧身", "防风材质", "裤子"]
+      }
+    },
+    
+    "cold": {
+      "name": "寒冷",
+      "temperature": "<10",
+      "considerations": [
+        "要穿厚衣服",
+        "可能要穿秋裤/保暖内衣",
+        "外套要够厚",
+        "围巾/手套/帽子",
+        "不要露脚踝"
+      ],
+      "outfit_adjustments": {
+        "very_cold": {
+          "temperature": "<0",
+          "suggestions": ["羽绒服", "秋裤", "保暖内衣", "围巾", "手套"],
+          "avoid": ["露腿", "露脚踝", "薄款"]
+        }
+      }
+    },
+    
+    "hot": {
+      "name": "炎热",
+      "temperature": ">30",
+      "considerations": [
+        "穿最薄最凉快的",
+        "浅色",
+        "透气材质",
+        "可能想穿裙子/短裤"
+      ],
+      "outfit_adjustments": {
+        "suggestions": ["薄款", "浅色", "透气", "宽松"],
+        "avoid": ["深色", "厚款", "紧身", "不透气材质"]
+      }
+    },
+    
+    "hazy": {
+      "name": "雾霾",
+      "considerations": [
+        "戴口罩",
+        "不想出门"
+      ],
+      "outfit_adjustments": {
+        "suggestions": ["口罩"],
+        "mood_effect": "可能心情不好，不想精心打扮"
+      }
+    }
+  },
+  
+  "temperature_ranges": {
+    "freezing": {
+      "range": "<0",
+      "description": "极冷",
+      "must_have": ["厚外套", "保暖内衣"],
+      "avoid": ["任何露肤"]
+    },
+    "very_cold": {
+      "range": "0-10",
+      "description": "很冷",
+      "must_have": ["外套", "厚衣服"],
+      "avoid": ["裙子", "短裤"]
+    },
+    "cold": {
+      "range": "10-18",
+      "description": "冷",
+      "suggestions": ["卫衣", "薄外套", "长袖"]
+    },
+    "mild": {
+      "range": "18-25",
+      "description": "舒适",
+      "suggestions": ["正常穿着", "薄外套备用"]
+    },
+    "warm": {
+      "range": "25-30",
+      "description": "热",
+      "suggestions": ["薄款", "短袖", "裙子"]
+    },
+    "hot": {
+      "range": ">30",
+      "description": "很热",
+      "suggestions": ["最薄", "浅色", "透气"],
+      "avoid": ["任何厚的"]
+    }
+  },
+  
+  "temperature_difference": {
+    "description": "早晚温差",
+    "morning_evening_difference": {
+      "large": {
+        "difference": ">10",
+        "strategy": "叠穿，方便加减",
+        "examples": ["薄外套+短袖", "开衫+内搭"]
+      },
+      "medium": {
+        "difference": "5-10",
+        "strategy": "带一件薄外套备用"
+      }
+    }
+  }
+}

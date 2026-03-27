@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "description": "未来影响记录 - 记录对未来有影响的事件",
+    "last_updated": "2026-03-27T17:24:00+08:00"
+  },
+  
+  "philosophy": {
+    "principle": "生成作息时不用全部回顾过去，只看这个note即可",
+    "purpose": "高效、不浪费token"
+  },
+  
+  "notes": [
+    {
+      "id": "note_001",
+      "created_date": "2026-03-27",
+      "event_date": "2026-03-28",
+      "event_type": "social_event",
+      "description": "明天要出去玩",
+      "affects": {
+        "schedule": "需要安排出门时间",
+        "clothing": "可以穿JK制服",
+        "mood": "期待"
+      },
+      "status": "pending",
+      "resolved_at": null
+    }
+  ],
+  
+  "event_types": {
+    "important_occasion": {
+      "description": "重要场合",
+      "examples": ["见客户", "面试", "演讲", "约会"],
+      "affects": ["schedule", "clothing", "mood", "preparation"]
+    },
+    "social_event": {
+      "description": "社交活动",
+      "examples": ["聚会", "见朋友", "生日派对"],
+      "affects": ["schedule", "clothing", "social_energy"]
+    },
+    "appointment": {
+      "description": "预约事项",
+      "examples": ["医院预约", "理发预约", "维修预约"],
+      "affects": ["schedule"]
+    },
+    "weather_alert": {
+      "description": "天气预警",
+      "examples": ["明天有暴雨", "气温骤降"],
+      "affects": ["clothing", "activity", "mood"]
+    },
+    "personal_event": {
+      "description": "个人事件",
+      "examples": ["生理期预计日期", "纪念日"],
+      "affects": ["mood", "clothing", "energy"]
+    },
+    "ongoing": {
+      "description": "持续影响",
+      "examples": ["衣服还在洗", "感冒中"],
+      "affects": ["clothing_availability", "energy", "mood"]
+    }
+  },
+  
+  "resolution_rules": {
+    "description": "什么时候删除note",
+    "rules": [
+      "事件完成后自动标记resolved",
+      "resolved的note保留7天后可清理",
+      "过期未发生的事件标记expired"
+    ]
+  },
+  
+  "usage": {
+    "description": "如何使用这个文件",
+    "when_generating_schedule": [
+      "1. 读取这个文件",
+      "2. 检查是否有影响今天/明天的事件",
+      "3. 在生成作息时考虑这些影响",
+      "4. 事件发生后更新status"
+    ]
+  }
+}

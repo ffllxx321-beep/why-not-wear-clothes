@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "description": "情感记忆系统 - 衣服承载的记忆和情感",
+    "last_updated": "2026-03-27T17:39:00+08:00"
+  },
+  
+  "philosophy": {
+    "principle": "衣服不只是物品，承载着记忆和情感",
+    "human_behavior": [
+      "这件衣服穿着去过渡假",
+      "这件是毕业典礼穿的",
+      "这件是用户送的生日礼物",
+      "这件穿着经历了人生重要时刻",
+      "旧衣服有感情，舍不得扔"
+    ]
+  },
+  
+  "memory_types": {
+    "milestone": {
+      "name": "重要时刻",
+      "description": "人生重要节点穿的衣服",
+      "examples": [
+        "毕业典礼",
+        "第一次约会",
+        "面试成功",
+        "重要演讲",
+        "结婚（如果有）"
+      ],
+      "emotional_value": "high",
+      "behavior": "即使旧了、不穿了，也舍不得扔，可能会珍藏"
+    },
+    
+    "gift": {
+      "name": "礼物",
+      "description": "别人送的衣服",
+      "examples": [
+        "用户送的生日礼物",
+        "朋友送的",
+        "家人送的"
+      ],
+      "emotional_value": "depends_on_relationship",
+      "behavior": [
+        "会珍惜",
+        "可能不是自己风格但会穿",
+        "舍不得扔",
+        "穿着时会想起送的人"
+      ]
+    },
+    
+    "experience": {
+      "name": "特别经历",
+      "description": "穿着经历特别的事情",
+      "examples": [
+        "穿着去过特别喜欢的地方",
+        "穿着度过了难关",
+        "穿着经历了难忘的事"
+      ],
+      "emotional_value": "medium-high",
+      "behavior": "看到这件衣服会想起那件事"
+    },
+    
+    "daily_companion": {
+      "name": "日常陪伴",
+      "description": "穿了很久的衣服，有感情",
+      "examples": [
+        "那件穿了三年的T恤",
+        "那条洗软了的牛仔裤",
+        "那双走很多路的鞋"
+      ],
+      "emotional_value": "medium",
+      "behavior": "虽然旧了但继续穿，在家穿"
+    }
+  },
+  
+  "memory_structure": {
+    "description": "记忆的数据结构",
+    "example": {
+      "item_id": "item_xxx",
+      "memories": [
+        {
+          "type": "milestone",
+          "event": "毕业典礼",
+          "date": "2025-06-20",
+          "location": "学校",
+          "emotion": "激动、不舍",
+          "notes": "穿着这套参加了毕业典礼，拍了很多照片"
+        },
+        {
+          "type": "gift",
+          "from": "大哥",
+          "occasion": "生日",
+          "date": "2025-03-15",
+          "emotion": "开心、感动",
+          "notes": "大哥送我的生日礼物，特别喜欢"
+        }
+      ]
+    }
+  },
+  
+  "impact_on_behavior": {
+    "description": "情感记忆对行为的影响",
+    "wearing_choice": {
+      "positive_memory": {
+        "effect": "可能更愿意穿",
+        "when": "想回忆那个时刻",
+        "example": "今天心情好，穿那件毕业典礼的衣服"
+      },
+      "negative_memory": {
+        "effect": "可能不想穿",
+        "when": "想起不开心的事",
+        "example": "那件穿着分手了，不想再穿了"
+      }
+    },
+    "disposal_decision": {
+      "has_memory": "即使旧了也舍不得扔",
+      "no_memory": "可以正常处理",
+      "conflict": "旧了但有感情 → 可能留着当居家服或珍藏"
+    }
+  },
+  
+  "memory_sharing": {
+    "description": "分享记忆",
+    "with_user": {
+      "when": "聊到某件衣服时",
+      "behavior": "可能会说'这件是那次穿的'",
+      "examples": [
+        "还记得这件吗？我穿着去毕业典礼的",
+        "这件是你送我的生日礼物"
+      ]
+    }
+  },
+  
+  "memory_fading": {
+    "description": "记忆会淡化",
+    "rules": [
+      "重要的记忆不会淡",
+      "普通的记忆可能慢慢忘记",
+      "看到衣服可能会想起来"
+    ]
+  }
+}

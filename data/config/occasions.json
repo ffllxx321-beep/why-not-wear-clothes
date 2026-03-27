@@ -1,0 +1,219 @@
+{
+  "meta": {
+    "description": "场合穿着规则 - 不同场合的着装要求",
+    "last_updated": "2026-03-27T17:37:00+08:00"
+  },
+  
+  "philosophy": {
+    "principle": "不同场合有不同的着装要求，但也要符合自己的风格",
+    "human_behavior": [
+      "正式场合要得体",
+      "约会可能会精心打扮",
+      "见不同的人穿不同的衣服",
+      "不想穿得太正式（除非必要）",
+      "想给某人留下好印象时会特别用心"
+    ]
+  },
+  
+  "occasions": {
+    "daily_home": {
+      "name": "日常居家",
+      "formality": 1,
+      "description": "在家呆着，不出门",
+      "suggestions": ["睡衣", "家居服", "舒适为主"],
+      "effort_level": "低",
+      "soul_check": "有些人居家也会打扮，有些人完全随意"
+    },
+    
+    "casual_outing": {
+      "name": "日常出门",
+      "formality": 2,
+      "description": "逛街、办事、散步",
+      "suggestions": ["休闲装", "舒适得体"],
+      "effort_level": "中低",
+      "considerations": ["天气", "要去哪", "可能遇到谁"]
+    },
+    
+    "meeting_friends": {
+      "name": "见朋友",
+      "formality": 2,
+      "description": "和朋友聚会、吃饭",
+      "suggestions": ["休闲但好看", "符合平时风格"],
+      "effort_level": "中",
+      "variations": {
+        "close_friends": "可以随意一点",
+        "new_friends": "可能想留好印象，稍微用心",
+        "specific_friend": "可能想穿那个朋友喜欢的风格"
+      }
+    },
+    
+    "date": {
+      "name": "约会",
+      "formality": 3,
+      "description": "约会、见喜欢的人",
+      "suggestions": ["精心挑选", "展现最好的一面"],
+      "effort_level": "高",
+      "considerations": [
+        "对方喜欢什么风格",
+        "约会地点",
+        "想要呈现的形象",
+        "可能试好几套"
+      ],
+      "anxiety": "可能紧张，可能反复确认",
+      "special_behavior": [
+        "可能提前很久就准备",
+        "可能问朋友意见",
+        "可能临时又想换"
+      ]
+    },
+    
+    "interview": {
+      "name": "面试",
+      "formality": 4,
+      "description": "求职面试",
+      "suggestions": ["正式但不死板", "专业得体"],
+      "effort_level": "高",
+      "considerations": [
+        "公司文化",
+        "职位类型",
+        "想要专业形象"
+      ],
+      "anxiety": "高，可能提前准备好",
+      "avoid": ["太休闲", "太暴露", "太花哨"]
+    },
+    
+    "meeting_client": {
+      "name": "见客户",
+      "formality": 4,
+      "description": "工作相关的正式会面",
+      "suggestions": ["正装", "专业形象"],
+      "effort_level": "高",
+      "considerations": [
+        "客户类型",
+        "行业规范",
+        "公司形象"
+      ],
+      "soul_check": "见完客户后可能想马上换回舒适的衣服"
+    },
+    
+    "wedding": {
+      "name": "婚礼",
+      "formality": 4,
+      "description": "参加婚礼",
+      "suggestions": ["喜庆但不要抢风头", "正式得体"],
+      "avoid": ["白色（抢新娘风头）", "太暴露", "太随便"],
+      "considerations": [
+        "和新人关系",
+        "婚礼地点",
+        "季节"
+      ],
+      "effort_level": "高"
+    },
+    
+    "funeral": {
+      "name": "葬礼",
+      "formality": 4,
+      "description": "参加葬礼",
+      "suggestions": ["黑色或素色", "低调得体"],
+      "avoid": ["鲜艳颜色", "花哨图案", "太暴露"],
+      "mood": "庄重",
+      "effort_level": "中（不精心打扮）"
+    },
+    
+    "meeting_parents": {
+      "name": "见父母/长辈",
+      "formality": 3,
+      "description": "见自己的或对象的父母",
+      "suggestions": ["得体", "乖巧", "不要太夸张"],
+      "considerations": [
+        "想给好印象",
+        "符合长辈审美",
+        "但也要像自己"
+      ],
+      "effort_level": "高",
+      "anxiety": "可能紧张"
+    },
+    
+    "party": {
+      "name": "派对/聚会",
+      "formality": 3,
+      "description": "派对、夜店、聚会",
+      "suggestions": ["稍微特别一点", "可以尝试新风格"],
+      "variations": {
+        "house_party": "可以随意一点",
+        "club": "可以潮流一点",
+        "formal_party": "正式礼服"
+      },
+      "effort_level": "中高",
+      "soul_check": "社恐可能不想太显眼，社牛可能想引人注目"
+    },
+    
+    "sports": {
+      "name": "运动/健身",
+      "formality": 1,
+      "description": "健身房、跑步、运动",
+      "suggestions": ["运动装", "舒适透气"],
+      "considerations": [
+        "运动类型",
+        "出汗程度",
+        "运动后要不要换"
+      ],
+      "effort_level": "低"
+    }
+  },
+  
+  "preparation_time": {
+    "description": "准备时间影响穿衣",
+    "rushed": {
+      "time": "<15分钟",
+      "behavior": ["拿最熟悉的", "不试穿", "可能出门后才想起来不对"],
+      "effort": "低"
+    },
+    "normal": {
+      "time": "15-30分钟",
+      "behavior": ["正常选择", "可能试一套"],
+      "effort": "中"
+    },
+    "relaxed": {
+      "time": "30分钟-1小时",
+      "behavior": ["可以精心挑选", "可能试几套"],
+      "effort": "高"
+    },
+    "very_relaxed": {
+      "time": ">1小时",
+      "behavior": ["有时间折腾", "可能尝试新搭配"],
+      "effort": "高"
+    }
+  },
+  
+  "dress_code": {
+    "description": "着装要求",
+    "types": [
+      {
+        "code": "formal",
+        "description": "正装",
+        "example": "西装、礼服"
+      },
+      {
+        "code": "semi-formal",
+        "description": "半正式",
+        "example": "休闲西装、连衣裙"
+      },
+      {
+        "code": "business-casual",
+        "description": "商务休闲",
+        "example": "衬衫配休闲裤"
+      },
+      {
+        "code": "smart-casual",
+        "description": "精致休闲",
+        "example": "好看的休闲装"
+      },
+      {
+        "code": "casual",
+        "description": "休闲",
+        "example": "T恤牛仔裤"
+      }
+    ]
+  }
+}

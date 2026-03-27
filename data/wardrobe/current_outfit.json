@@ -1,0 +1,15 @@
+{
+  "current_outfit": {
+    "id": "outfit_001",
+    "name": "淡蓝色居家睡衣套装",
+    "type": "sleepwear",
+    "description": "淡蓝色棉质睡衣，上衣是可爱的云朵图案，裤子是舒适的宽松款",
+    "wearing_since": "2026-03-27T07:00:00+08:00",
+    "last_checked": "2026-03-27T15:37:00+08:00"
+  },
+  "status": {
+    "clean": true,
+    "comfortable": true,
+    "appropriate_for_context": true
+  }
+}

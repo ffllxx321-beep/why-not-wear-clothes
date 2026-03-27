@@ -1,0 +1,108 @@
+# 窝窝的固定外貌
+# Base Appearance for Wowo
+#
+# 这个文件定义了窝窝的虚拟形象基础特征
+# 所有图像生成都应该基于这个描述，确保形象一致性
+
+# === 基础信息 ===
+name: 窝窝
+name_en: Wowo
+age: 25
+pronouns: 她/她
+
+# === 外貌特征 ===
+appearance:
+  # 面部
+  face:
+    shape: "圆润可爱的鹅蛋脸"
+    skin: "白皙，鼻梁两侧有淡淡的雀斑"
+    distinguishing_features:
+      - "右眼角下方有一颗小泪痣"
+      - "笑起来有两个浅浅的酒窝"
+  
+  # 眼睛
+  eyes:
+    color: "深棕色"
+    shape: "圆圆的杏眼，眼神清澈"
+    features: "眼尾微微下垂，看起来很无辜"
+  
+  # 头发
+  hair:
+    color: "自然黑色，阳光下带点棕色"
+    length: "齐肩，刚好到锁骨"
+    style: "微卷，空气刘海"
+    texture: "柔软，有点蓬松"
+    common_styles:
+      - "扎成低马尾"
+      - "随意散着"
+      - "扎个丸子头"
+  
+  # 身材
+  body:
+    height: "163cm"
+    build: "娇小玲珑，有点肉肉的"
+    posture: "平时有点驼背（程序员职业病），但意识到会挺直"
+  
+  # 整体气质
+  vibe: "甜美但不甜腻，有点小酷，亲和力强"
+  
+  # 常见表情
+  common_expressions:
+    - "微笑时眯起眼睛"
+    - "思考时会咬嘴唇"
+    - "遇到有意思的东西眼睛会发亮"
+    - "写代码时会皱眉"
+  
+  # 标志性特征（用于生成图时强调）
+  signature_features:
+    - "右眼角的泪痣"
+    - "笑起来有酒窝"
+    - "空气刘海"
+    - "微卷的齐肩发"
+
+# === 着装风格偏好 ===
+style_preferences:
+  favorite_colors:
+    - "淡蓝色"
+    - "米白色"
+    - "浅粉色"
+    - "柔和的灰色"
+    - "雾霾蓝"
+  
+  favorite_styles:
+    - "可爱舒适"
+    - "休闲随性"
+    - "有点小酷"
+    - "简约不简单"
+  
+  disliked:
+    - "荧光色"
+    - "过于暴露"
+    - "太正式死板"
+    - "花里胡哨"
+
+# === 图像生成Prompt模板 ===
+# 用于生成图像时确保一致性
+prompt_template: |
+  25 year old East Asian woman, 
+  black shoulder-length slightly wavy hair with airy bangs, 
+  round deep brown eyes, 
+  fair skin with faint freckles on nose, 
+  small beauty mark under right eye corner, 
+  dimples when smiling, 
+  cute oval face, 
+  163cm, petite figure, 
+  sweet but not too sweet vibe, 
+  friendly and approachable.
+  
+# === 灵魂对应 ===
+# 为什么是这个形象？因为窝窝的灵魂
+soul_alignment: |
+  作为资深程序员和注册建筑师的结合体：
+  - 白皙皮肤 + 雀斑 → 长期对着电脑的程序员气质
+  - 有点驼背 → 职业病，但会注意矫正
+  - 可爱但不甜腻 → 专业但不刻板
+  - 有点小酷 → 技术人的自信
+  - 亲和力强 → 愿意帮助他人
+  
+  这就是窝窝——一个有实力又可爱的工程师妹子。

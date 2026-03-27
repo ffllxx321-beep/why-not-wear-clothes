@@ -1,0 +1,112 @@
+{
+  "description": "这是一个示例衣橱，展示了可以添加的各种类型的衣服",
+  "example_items": [
+    {
+      "id": "example_001",
+      "name": "灰色连帽卫衣",
+      "type": "casual",
+      "category": ["上衣"],
+      "description": "经典的灰色连帽卫衣，舒适百搭",
+      "color": "灰色",
+      "style": ["休闲", "舒适"],
+      "season": ["spring", "autumn"],
+      "temperature_range": [10, 20],
+      "occasion": ["居家", "出门", "运动"],
+      "exposure_level": 1,
+      "favorite": true,
+      "wears_count": 47,
+      "last_worn": "2026-03-26",
+      "dirty": false,
+      "condition": "有点起球但很舒服",
+      "acquired_date": "2025-10-15",
+      "source": "self",
+      "emotional_value": null,
+      "notes": "最常穿的一件"
+    },
+    {
+      "id": "example_002",
+      "name": "黑色小礼服",
+      "type": "formal",
+      "category": ["连衣裙"],
+      "description": "简约的黑色小礼服，适合正式场合",
+      "color": "黑色",
+      "style": ["优雅", "正式"],
+      "season": ["spring", "summer", "autumn", "winter"],
+      "temperature_range": [15, 28],
+      "occasion": ["宴会", "约会", "正式场合"],
+      "exposure_level": 2,
+      "favorite": false,
+      "wears_count": 2,
+      "last_worn": "2025-12-31",
+      "dirty": false,
+      "condition": "良好",
+      "acquired_date": "2025-12-20",
+      "source": "gift",
+      "emotional_value": "跨年夜穿的",
+      "notes": "重要场合才穿"
+    },
+    {
+      "id": "example_003",
+      "name": "运动套装",
+      "type": "sportswear",
+      "category": ["上衣", "裤子"],
+      "description": "黑色运动T恤配灰色运动裤",
+      "color": "黑色/灰色",
+      "style": ["运动", "休闲"],
+      "season": ["spring", "summer", "autumn"],
+      "temperature_range": [15, 30],
+      "occasion": ["运动", "健身房", "跑步"],
+      "exposure_level": 2,
+      "favorite": true,
+      "wears_count": 23,
+      "last_worn": "2026-03-20",
+      "dirty": false,
+      "condition": "良好",
+      "acquired_date": "2025-08-01",
+      "source": "self",
+      "emotional_value": null,
+      "notes": "运动必备"
+    }
+  ],
+  
+  "outfit_types_guide": {
+    "sleepwear": {
+      "description": "睡衣",
+      "occasion": ["居家", "睡觉"],
+      "exposure_range": [1, 2]
+    },
+    "loungewear": {
+      "description": "家居服",
+      "occasion": ["居家", "见朋友"],
+      "exposure_range": [1, 2]
+    },
+    "casual": {
+      "description": "日常装",
+      "occasion": ["出门", "逛街", "见朋友"],
+      "exposure_range": [1, 3]
+    },
+    "formal": {
+      "description": "正装",
+      "occasion": ["见客户", "开会", "宴会"],
+      "exposure_range": [1, 2]
+    },
+    "sportswear": {
+      "description": "运动装",
+      "occasion": ["运动", "健身房"],
+      "exposure_range": [1, 3]
+    },
+    "outerwear": {
+      "description": "外套",
+      "occasion": ["出门", "冬天"],
+      "exposure_range": [1]
+    }
+  },
+  
+  "exposure_level_guide": {
+    "1": "完全得体，不暴露",
+    "2": "稍微露肤，但可以接受",
+    "3": "有一定暴露，需要考虑场合",
+    "4": "暴露较多，只适合私密场合",
+    "5": "非常暴露，需要特别信任才能展示"
+  }
+}

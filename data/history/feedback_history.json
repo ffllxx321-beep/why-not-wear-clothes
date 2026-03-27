@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "description": "用户反馈历史 - 记录用户对穿着的评价，用于成长系统",
+    "last_updated": "2026-03-27T23:45:00+08:00",
+    "retention": "保留最近50条记录"
+  },
+  
+  "feedback_detection": {
+    "description": "如何检测用户的反馈类型",
+    "positive_keywords": [
+      "好看", "漂亮", "美", "可爱", "适合", "不错", "棒", "喜欢",
+      "这颜色不错", "挺搭的", "挺好看", "很美", "很漂亮"
+    ],
+    "negative_keywords": [
+      "不好看", "不太适合", "有点奇怪", "不搭", "不太好看",
+      "颜色不太好", "这个不太行", "换个吧"
+    ],
+    "suggestion_keywords": [
+      "试试", "可以穿", "建议", "不如", "要不穿",
+      "换那件", "那个更好"
+    ],
+    "ambiguous_handling": {
+      "description": "模糊反馈的处理",
+      "example": "还行/一般",
+      "action": "标记为neutral，不触发偏好变化"
+    }
+  },
+  
+  "feedback_types": {
+    "compliment": {
+      "effect": "偏好+0.05~0.1",
+      "emotional_response": "开心",
+      "behavior_change": "更愿意穿这套"
+    },
+    "criticism": {
+      "effect": "偏好-0.05~0.1",
+      "emotional_response": "可能失落",
+      "behavior_change": "可能不再穿这套"
+    },
+    "suggestion": {
+      "effect": "无直接偏好变化",
+      "behavior_change": "可能采纳建议"
+    },
+    "neutral": {
+      "effect": "无变化",
+      "behavior_change": null
+    }
+  },
+  
+  "feedback_log": [
+    {
+      "id": "fb_001",
+      "date": "2026-03-27",
+      "time": "15:37",
+      "source": "大哥",
+      "context": "初始形象确认",
+      "outfit_id": "outfit_001",
+      "outfit_name": "淡蓝色居家睡衣套装",
+      "feedback_type": "compliment",
+      "feedback_content": "默认接受初始形象",
+      "detected_keywords": [],
+      "preference_change": null,
+      "agent_response": null,
+      "processed": true
+    }
+  ],
+  
+  "pending_feedback": {
+    "description": "待处理的反馈（需要用户明确说明）",
+    "list": [],
+    "example_scenario": {
+      "context": "用户说'还行'",
+      "action": "询问具体哪里还行/哪里不够好",
+      "message": "你觉得哪里还行？有什么建议吗？"
+    }
+  },
+  
+  "feedback_stats": {
+    "total_received": 1,
+    "compliments": 1,
+    "criticisms": 0,
+    "suggestions": 0,
+    "neutral": 0,
+    "most_complimented_outfits": ["outfit_001"],
+    "most_criticism_outfits": []
+  },
+  
+  "growth_impact": {
+    "description": "反馈对成长的实际影响",
+    "rules": [
+      {
+        "rule": "同一件衣服被夸3次以上",
+        "effect": "该衣服favorite=true"
+      },
+      {
+        "rule": "同一颜色被夸多次",
+        "effect": "该颜色在favorite_colors中的优先级提升"
+      },
+      {
+        "rule": "同一风格被批评多次",
+        "effect": "该风格在disliked_styles中"
+      }
+    ],
+    "current_impacts": []
+  },
+  
+  "notes": {
+    "importance": "这个文件是成长系统的核心数据源",
+    "sync": "每次收到反馈后更新 likes_dislikes_growth.json 的成长日志"
+  }
+}

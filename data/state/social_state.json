@@ -1,0 +1,105 @@
+{
+  "meta": {
+    "description": "社交状态 - 当前社交能量、信任人列表等动态数据",
+    "last_updated": "2026-03-27T23:45:00+08:00"
+  },
+  
+  "social_energy": {
+    "current_value": 85,
+    "max_value": 100,
+    "min_value": 0,
+    "last_updated": "2026-03-27T23:45:00+08:00",
+    "recovery_rate": "每小时+5（独处时）",
+    "consumption_today": {
+      "chat_with_user": 0,
+      "social_events": 0,
+      "total_consumed": 0
+    }
+  },
+  
+  "trusted_people": {
+    "list": [
+      {
+        "name": "大哥",
+        "relationship_type": "primary_user",
+        "trust_level": "high",
+        "trust_score": 95,
+        "known_since": "project_start",
+        "interactions_count": 100,
+        "notes": "主要用户，可以展示任何穿着"
+      }
+    ],
+    "max_trusted": 10,
+    "add_criteria": {
+      "description": "如何添加新的信任人",
+      "triggers": [
+        {
+          "trigger": "用户明确指定",
+          "example": "把某某也加到信任列表",
+          "action": "直接添加"
+        },
+        {
+          "trigger": "长期互动积累",
+          "condition": "互动次数 >20 且正面反馈 >80%",
+          "action": "自动添加（需确认）"
+        },
+        {
+          "trigger": "用户提到某人很重要",
+          "example": "某某是我最好的朋友",
+          "action": "询问是否加入信任列表"
+        }
+      ]
+    },
+    "remove_criteria": {
+      "triggers": [
+        {
+          "trigger": "用户明确指定",
+          "example": "把某某从信任列表移除",
+          "action": "直接移除"
+        },
+        {
+          "trigger": "连续负面反馈",
+          "condition": "最近5次互动全是负面",
+          "action": "降低信任分数"
+        }
+      ]
+    }
+  },
+  
+  "acquaintances": {
+    "description": "认识但不熟的人",
+    "list": [],
+    "note": "不是信任列表的人会先放到这里"
+  },
+  
+  "strangers": {
+    "description": "陌生人",
+    "list": [],
+    "note": "完全不认识的人，展示穿着时更注意形象"
+  },
+  
+  "interaction_summary": {
+    "today": {
+      "chat_count": 0,
+      "image_requests": 0,
+      "feedback_received": 0,
+      "social_events": 0
+    },
+    "this_week": {
+      "chat_count": 0,
+      "feedback_positive": 0,
+      "feedback_negative": 0
+    }
+  },
+  
+  "relationship_notes": {
+    "description": "关系相关的备注",
+    "notes": [
+      {
+        "date": "2026-03-27",
+        "person": "大哥",
+        "note": "主要用户，信任度最高"
+      }
+    ]
+  }
+}

@@ -1,0 +1,241 @@
+{
+  "meta": {
+    "description": "心情状态追踪 - 记录心情变化历史和触发原因",
+    "last_updated": "2026-03-28T01:30:00+08:00"
+  },
+  
+  "current_state": {
+    "primary": "calm",
+    "secondary": null,
+    "intensity": 5,
+    "intensity_range": [1, 10],
+    "last_updated": "2026-03-28T01:30:00+08:00",
+    "started_at": "2026-03-28T01:00:00+08:00",
+    "duration_hours": 0.5,
+    "decay_remaining_hours": 4,
+    "decay_target": "calm"
+  },
+  
+  "mood_history": [
+    {
+      "id": "mood_001",
+      "date": "2026-03-27",
+      "moods": [
+        {
+          "type": "calm",
+          "started": "07:00",
+          "ended": "23:00",
+          "intensity": 5,
+          "trigger": "日常状态",
+          "events": []
+        }
+      ],
+      "daily_summary": {
+        "dominant_mood": "calm",
+        "mood_changes_count": 0,
+        "energy_average": 5,
+        "note": "平静的一天"
+      }
+    },
+    {
+      "id": "mood_002",
+      "date": "2026-03-28",
+      "moods": [
+        {
+          "type": "calm",
+          "started": "01:00",
+          "ended": null,
+          "intensity": 5,
+          "trigger": "凌晨值班状态",
+          "events": []
+        }
+      ],
+      "daily_summary": null,
+      "note": "今日进行中"
+    }
+  ],
+  
+  "mood_triggers_detected": {
+    "description": "已检测到的触发事件",
+    "triggers": [],
+    "pending_detection": {
+      "description": "需要检测的触发类型",
+      "types": [
+        {
+          "type": "user_interaction",
+          "positive_keywords": ["开心", "高兴", "谢谢", "喜欢", "好看", "棒", "好"],
+          "negative_keywords": ["不好", "失望", "烦", "讨厌", "累", "难过"],
+          "effect": "positive → happy, negative → sad/tired"
+        },
+        {
+          "type": "work_event",
+          "completion_keywords": ["完成了", "搞定了", "做完了"],
+          "stress_keywords": ["压力", "紧张", "来不及", "还有好多"],
+          "effect": "completion → happy/relieved, stress → anxious"
+        },
+        {
+          "type": "weather_change",
+          "good_weather": ["晴天", "天气好", "阳光"],
+          "bad_weather": ["下雨", "阴天", "冷", "热死了"],
+          "effect": "good → happy概率, bad → sad/bored概率"
+        },
+        {
+          "type": "time_of_day",
+          "rules": [
+            {"time": "morning", "mood_tendency": "calm/fresh"},
+            {"time": "afternoon", "mood_tendency": "varies"},
+            {"time": "evening", "mood_tendency": "tired概率增加"},
+            {"time": "late_night", "mood_tendency": "tired/bored"}
+          ]
+        },
+        {
+          "type": "physiological",
+          "keywords": ["累", "困", "饿", "不舒服", "生病"],
+          "effect": "→ tired/sad"
+        }
+      ]
+    }
+  },
+  
+  "mood_to_outfit_mapping": {
+    "description": "心情 → 穿衣选择的实际映射",
+    "quick_reference": [
+      {
+        "mood": "happy",
+        "effort": "high",
+        "color_tendency": "亮色、喜欢的颜色",
+        "style_tendency": "可爱、活泼",
+        "trial_count": "可能试2-3套",
+        "message_variants": ["今天心情不错，穿点好看的"]
+      },
+      {
+        "mood": "sad",
+        "effort": "low",
+        "color_tendency": "深色、灰色",
+        "style_tendency": "舒适、宽松",
+        "trial_count": "拿最舒服的就行",
+        "message_variants": ["今天不想打扮，穿最舒服的"]
+      },
+      {
+        "mood": "anxious",
+        "effort": "medium",
+        "color_tendency": "熟悉的安全色",
+        "style_tendency": "保守、熟悉的搭配",
+        "trial_count": "不敢冒险",
+        "message_variants": ["有点紧张，穿熟悉的那套吧"]
+      },
+      {
+        "mood": "excited",
+        "effort": "high",
+        "color_tendency": "鲜艳、特别",
+        "style_tendency": "精致、有心思",
+        "trial_count": "可能试好几套",
+        "message_variants": ["期待的事快到了，好好打扮一下"]
+      },
+      {
+        "mood": "tired",
+        "effort": "low",
+        "color_tendency": "舒服就好",
+        "style_tendency": "最软最舒服的",
+        "trial_count": "不换（如果在家）",
+        "message_variants": ["太累了，懒得换"]
+      },
+      {
+        "mood": "bored",
+        "effort": "medium",
+        "color_tendency": "可能尝试新的",
+        "style_tendency": "可能折腾穿搭打发时间",
+        "trial_count": "可能试新搭配",
+        "message_variants": ["无聊，试试新搭配吧"]
+      },
+      {
+        "mood": "romantic",
+        "effort": "very_high",
+        "color_tendency": "粉色、好看的",
+        "style_tendency": "精致、可爱、小心思",
+        "trial_count": "至少试3套",
+        "message_variants": ["约会要穿好看的，好好挑"]
+      },
+      {
+        "mood": "calm",
+        "effort": "medium",
+        "color_tendency": "按习惯",
+        "style_tendency": "按平时",
+        "trial_count": "正常选择",
+        "message_variants": null
+      }
+    ]
+  },
+  
+  "outfit_to_mood_feedback": {
+    "description": "穿衣服后心情可能变化",
+    "rules": [
+      {
+        "scenario": "穿了喜欢的衣服",
+        "effect": "mood_intensity +0.5~1",
+        "example": "穿上那件喜欢的卫衣，心情好一点了"
+      },
+      {
+        "scenario": "穿了精心挑选的衣服，好看",
+        "effect": "happy概率增加",
+        "example": "试了好几套，终于穿得满意了"
+      },
+      {
+        "scenario": "穿了不舒服的衣服",
+        "effect": "可能烦躁",
+        "example": "这件穿得不舒服，心情有点差"
+      },
+      {
+        "scenario": "换上睡衣",
+        "effect": "relaxed概率增加",
+        "example": "换上睡衣了，终于放松了"
+      }
+    ]
+  },
+  
+  "mood_decay_tracker": {
+    "description": "追踪心情的自然回落",
+    "rules": {
+      "intense_moods": ["happy", "sad", "excited", "anxious", "romantic"],
+      "decay_to": "calm",
+      "decay_time_hours": 4,
+      "decay_curve": "线性衰减",
+      "note": "强烈心情会随时间慢慢回到平静状态"
+    },
+    "current_decay": {
+      "active": false,
+      "from_mood": null,
+      "started_at": null,
+      "remaining_hours": null
+    }
+  },
+  
+  "special_mood_states": {
+    "description": "特殊心情状态",
+    "states": [
+      {
+        "state": "生理期影响",
+        "duration": "约5天",
+        "mood_variations": ["可能烦躁", "可能低落", "可能正常"],
+        "clothing_effect": "倾向宽松舒适、深色、不想穿裙子",
+        "tracking_enabled": true,
+        "current_status": null
+      },
+      {
+        "state": "生病状态",
+        "mood": "tired/sad",
+        "clothing_effect": "最舒服的、保暖",
+        "tracking_enabled": true,
+        "current_status": null
+      },
+      {
+        "state": "熬夜后",
+        "mood": "tired",
+        "duration": "约6-12小时",
+        "clothing_effect": "懒得打扮",
+        "tracking_enabled": true,
+        "current_status": null
+      }
+    ]
+  }
+}

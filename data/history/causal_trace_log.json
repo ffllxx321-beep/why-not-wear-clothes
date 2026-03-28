@@ -1,0 +1,61 @@
+{
+  "meta": {
+    "description": "因果追溯日志 - 记录每个决策的因果链",
+    "created": "2026-03-28T19:10:00+08:00",
+    "retention": "保留30天"
+  },
+  
+  "traces": [],
+  
+  "trace_template": {
+    "decision_id": "dec_xxx",
+    "timestamp": "决策时间",
+    "decision": "做什么决定",
+    "context": {
+      "routine_phase": "作息节点",
+      "trigger": "触发原因"
+    },
+    "input_variables": [
+      {
+        "variable": "变量名",
+        "value": "当前值",
+        "weight": "影响权重",
+        "influence": "对结果的影响方向"
+      }
+    ],
+    "causal_chain": [
+      {
+        "step": 1,
+        "cause": "原因变量",
+        "effect": "产生的影响",
+        "probability_modifier": "+/-概率值"
+      }
+    ],
+    "possible_outcomes": [
+      {
+        "outcome": "可能的结果",
+        "probability": "计算概率",
+        "cumulative_probability": "累积概率"
+      }
+    ],
+    "selected_outcome": "最终选择的结果",
+    "random_value": "随机值",
+    "result_record": {
+      "action_taken": "实际执行的动作",
+      "files_updated": ["更新的文件"],
+      "variables_changed": ["变化的变量"]
+    }
+  },
+  
+  "statistics": {
+    "total_decisions": 0,
+    "by_type": {
+      "outfit_choice": 0,
+      "proactive_chat": 0,
+      "learning": 0,
+      "diary": 0,
+      "reflection": 0
+    },
+    "variable_usage": {}
+  }
+}

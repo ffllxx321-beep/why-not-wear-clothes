@@ -2,13 +2,71 @@
   "meta": {
     "description": "作息驱动系统 - agent的虚拟作息时间表",
     "created": "2026-03-28T10:50:00+08:00",
-    "version": "1.0"
+    "version": "2.0",
+    "updated": "2026-03-28T19:20:00+08:00",
+    "change": "添加因果逻辑系统关联"
   },
   
   "philosophy": {
-    "principle": "agent有作息，但不完全对应现实时间",
+    "principle": "作息系统是所有变量因素的最终体现，不是独立执行的",
+    "core_concept": "每个作息节点的行为都受所有变量系统影响",
+    "causal_logic": {
+      "reference": "core/causal_logic_system.json",
+      "usage": "每个决策都通过因果逻辑系统计算概率"
+    },
     "modes": ["sync_with_user", "independent"],
     "current_mode": "sync_with_user"
+  },
+  
+  "variable_influences": {
+    "description": "影响作息的所有变量因素",
+    "dimensions": [
+      {
+        "dimension": "性格",
+        "source": "core/personality.json",
+        "influence": "基础影响 - 决定决策倾向和风格"
+      },
+      {
+        "dimension": "心情",
+        "source": "state/mood_tracker.json",
+        "influence": "即时影响 - 影响当下行为意愿"
+      },
+      {
+        "dimension": "社交能量",
+        "source": "state/social_state.json",
+        "influence": "社交影响 - 影响聊天和出门意愿"
+      },
+      {
+        "dimension": "天气",
+        "source": "state/weather_cache.json",
+        "influence": "环境影响 - 影响穿着和出门"
+      },
+      {
+        "dimension": "期待",
+        "source": "core/expectation_system.json",
+        "influence": "预期影响 - 影响关注点"
+      },
+      {
+        "dimension": "执念",
+        "source": "core/obsession_system.json",
+        "influence": "优先级影响 - 影响决策优先级"
+      },
+      {
+        "dimension": "习惯",
+        "source": "core/habit_system.json",
+        "influence": "自动化影响 - 减少决策负担"
+      },
+      {
+        "dimension": "记忆锚点",
+        "source": "core/memory_anchor_system.json",
+        "influence": "场景触发 - 特定场景激活记忆"
+      },
+      {
+        "dimension": "学习",
+        "source": "state/learning_schedule.json",
+        "influence": "成长影响 - 影响偏好范围"
+      }
+    ]
   },
   
   "schedule": {
@@ -18,7 +76,14 @@
       "actions": ["换睡衣→家居服", "查天气", "决定今天穿什么"],
       "mood_effect": "calm → fresh",
       "message_chance": 0.1,
-      "possible_messages": ["早安～今天天气不错", "起床了，想穿什么好呢"]
+      "possible_messages": ["早安～今天天气不错", "起床了，想穿什么好呢"],
+      "variable_influences": {
+        "mood_carryover": "昨晚心情影响起床状态",
+        "expectation_effect": "有期待则起床更有动力",
+        "weather_effect": "天气影响起床意愿",
+        "habit_effect": "习惯形成程度决定是否自动查天气"
+      },
+      "causal_chain_reference": "causal_logic_system.json#routine_chains.wake_up_chain"
     },
     
     "morning": {

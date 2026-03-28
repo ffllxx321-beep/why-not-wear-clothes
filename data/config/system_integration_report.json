@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "description": "系统关联检查报告 - 验证所有系统的关联关系",
+    "created": "2026-03-28T19:15:00+08:00",
+    "version": "1.0"
+  },
+  
+  "systems_inventory": {
+    "core_systems": [
+      {
+        "name": "性格系统",
+        "file": "core/personality.json",
+        "status": "✅ 存在",
+        "influences": ["心情", "社交能量", "决策风格", "学习方式", "习惯形成"],
+        "influenced_by": []
+      },
+      {
+        "name": "变量系统",
+        "file": "core/variables.json",
+        "status": "✅ 存在",
+        "influences": ["作息决策", "行为选择"],
+        "influenced_by": ["性格", "期待", "执念", "心情", "天气"]
+      },
+      {
+        "name": "因果逻辑系统",
+        "file": "core/causal_logic_system.json",
+        "status": "✅ 存在",
+        "influences": ["所有决策"],
+        "influenced_by": ["所有变量系统"]
+      },
+      {
+        "name": "期待系统",
+        "file": "core/expectation_system.json",
+        "status": "✅ 存在",
+        "influences": ["心情", "决策优先级", "注意力"],
+        "influenced_by": ["用户承诺", "自己计划", "学习发现"]
+      },
+      {
+        "name": "执念系统",
+        "file": "core/obsession_system.json",
+        "status": "✅ 存在",
+        "influences": ["决策优先级", "主动提及概率", "心情"],
+        "influenced_by": ["重复接触", "强烈情感", "未满足期待"]
+      },
+      {
+        "name": "记忆锚点系统",
+        "file": "core/memory_anchor_system.json",
+        "status": "✅ 存在",
+        "influences": ["场景触发反应", "偏好"],
+        "influenced_by": ["强烈情感体验", "用户明确反馈"]
+      },
+      {
+        "name": "社交认知系统",
+        "file": "core/social_cognition_system.json",
+        "status": "✅ 存在",
+        "influences": ["表达方式", "着装考虑", "沟通风格"],
+        "influenced_by": ["互动次数", "正面反馈", "信任建立"]
+      },
+      {
+        "name": "习惯系统",
+        "file": "core/habit_system.json",
+        "status": "✅ 存在",
+        "influences": ["决策速度", "能量消耗"],
+        "influenced_by": ["重复次数", "奖励强度"]
+      },
+      {
+        "name": "直觉系统",
+        "file": "core/intuition_system.json",
+        "status": "✅ 存在",
+        "influences": ["决策速度", "决策方式"],
+        "influenced_by": ["性格ENFP", "经验积累"]
+      }
+    ],
+    
+    "autonomy_systems": [
+      {
+        "name": "作息系统",
+        "files": ["schedule/schedule.json", "schedule/routine_actions.json"],
+        "status": "✅ 存在",
+        "influenced_by_all": true,
+        "note": "作息系统是所有变量因素的最终体现"
+      },
+      {
+        "name": "学习系统",
+        "files": ["state/learning_schedule.json", "history/learning_log.json"],
+        "status": "✅ 存在",
+        "influences": ["偏好", "want_to_try", "执念"],
+        "influenced_by": ["心情", "性格开放性", "计划"]
+      },
+      {
+        "name": "主动聊天系统",
+        "files": ["state/proactive_chat.json"],
+        "status": "✅ 存在",
+        "influences": ["社交能量消耗", "心情"],
+        "influenced_by": ["社交能量", "心情", "期待", "执念", "性格"]
+      },
+      {
+        "name": "日记系统",
+        "files": ["config/diary_config.json", "diary/"],
+        "status": "✅ 存在",
+        "influences": ["记忆锚点形成"],
+        "influenced_by": ["今天所有活动"]
+      },
+      {
+        "name": "成长系统",
+        "files": ["state/growth_system.json", "history/weekly_reflection_log.json"],
+        "status": "✅ 存在",
+        "influences": ["偏好", "习惯"],
+        "influenced_by": ["长期行为模式", "用户反馈"]
+      },
+      {
+        "name": "生活事件系统",
+        "files": ["state/life_events.json", "history/life_events_log.json"],
+        "status": "✅ 存在",
+        "influences": ["心情", "执念", "记忆锚点"],
+        "influenced_by": ["随机概率", "周末", "性格"]
+      }
+    ],
+    
+    "state_systems": [
+      {
+        "name": "心情系统",
+        "files": ["state/mood.json", "state/mood_tracker.json"],
+        "status": "✅ 存在",
+        "influences": ["所有决策"],
+        "influenced_by": ["性格", "天气", "用户互动", "期待", "执念"]
+      },
+      {
+        "name": "社交状态",
+        "files": ["state/social_state.json"],
+        "status": "✅ 存在",
+        "influences": ["主动聊天概率", "社交意愿"],
+        "influenced_by": ["互动", "性格", "心情"]
+      },
+      {
+        "name": "天气缓存",
+        "files": ["state/weather_cache.json"],
+        "status": "✅ 存在",
+        "influences": ["心情", "穿着选择", "出门意愿"],
+        "influenced_by": ["天气API"]
+      }
+    ]
+  },
+  
+  "cross_reference_check": {
+    "description": "跨系统引用检查",
+    
+    "personality_links": {
+      "expected_references": [
+        "variables.json - 引用性格推导变量",
+        "mood_tracker.json - 引用性格影响心情",
+        "likes_dislikes.json - 引用性格解释偏好",
+        "causal_logic_system.json - 引用性格维度"
+      ],
+      "actual_references": "✅ 已确认"
+    },
+    
+    "variables_links": {
+      "expected_references": [
+        "causal_logic_system.json - 引用变量空间定义",
+        "routine_actions.json - 引用变量影响作息"
+      ],
+      "actual_references": "✅ 已确认"
+    },
+    
+    "schedule_links": {
+      "expected_references": [
+        "routine_actions.json - 引用作息节点动作",
+        "causal_logic_system.json - 引用因果链"
+      ],
+      "actual_references": "需要更新 - 添加对因果逻辑系统的引用"
+    }
+  },
+  
+  "recommendations": [
+    {
+      "priority": "高",
+      "recommendation": "更新 schedule.json，添加因果逻辑系统引用",
+      "reason": "作息系统需要知道它是所有变量因素的最终体现"
+    },
+    {
+      "priority": "高",
+      "recommendation": "更新 routine_actions.json，每个动作都引用相关变量",
+      "reason": "例行动作不是机械执行，而是受变量影响"
+    },
+    {
+      "priority": "中",
+      "recommendation": "创建变量影响的实时追踪",
+      "reason": "记录变量变化如何影响决策"
+    },
+    {
+      "priority": "中",
+      "recommendation": "在 heartbeat_checklist.json 中添加因果逻辑检查",
+      "reason": "每次heartbeat都通过因果逻辑系统决策"
+    }
+  ],
+  
+  "overall_status": {
+    "total_systems": 18,
+    "systems_verified": 18,
+    "cross_references_valid": "大部分有效",
+    "need_updates": 4,
+    "ready_for_integration": true
+  }
+}

@@ -2,11 +2,22 @@
   "meta": {
     "description": "心跳检查清单 - heartbeat时具体检查和执行的内容",
     "created": "2026-03-28T16:00:00+08:00",
-    "version": "1.0"
+    "version": "2.0",
+    "updated": "2026-03-28T19:30:00+08:00",
+    "change": "添加因果逻辑系统集成"
+  },
+  
+  "philosophy": {
+    "principle": "每次heartbeat都是一次决策，需要通过因果逻辑系统计算",
+    "causal_logic": {
+      "reference": "core/causal_logic_system.json",
+      "usage": "收集所有变量 → 计算因果链 → 模拟可能性 → 选择结果"
+    }
   },
   
   "heartbeat_process": {
-    "description": "每次心跳的执行流程",
+    "description": "每次心跳的执行流程（通过因果逻辑系统）",
+    
     "steps": [
       {
         "step": 1,
@@ -21,43 +32,62 @@
       },
       {
         "step": 3,
-        "action": "检查节点例行动作",
-        "how": "读取 routine_actions.json，判断当前节点是否有待执行动作",
-        "condition": "动作未执行过"
+        "action": "收集所有变量状态",
+        "how": "读取 causal_logic_system.json#variable_space",
+        "variables_to_collect": [
+          "心情 (mood_tracker.json)",
+          "社交能量 (social_state.json)",
+          "天气 (weather_cache.json)",
+          "期待 (expectation_system.json)",
+          "执念 (obsession_system.json)",
+          "习惯 (habit_system.json)",
+          "记忆锚点 (memory_anchor_system.json)",
+          "性格参数 (personality.json)"
+        ]
       },
       {
         "step": 4,
-        "action": "检查学习计划",
-        "how": "读取 learning_schedule.json，判断今天是否有学习任务",
-        "condition": "当前时间在学习时间窗口"
+        "action": "加载对应因果链",
+        "how": "根据当前节点，读取 causal_logic_system.json#routine_chains",
+        "example": "wake_up → wake_up_chain, daytime → daytime_chain"
       },
       {
         "step": 5,
-        "action": "计算主动聊天概率",
-        "how": "读取 proactive_chat.json，计算各触发条件的概率",
-        "factors": ["社交能量", "心情", "最近互动时间"]
+        "action": "计算所有可能结果的概率",
+        "how": "根据因果链和变量值，计算每种结果的概率",
+        "method": "见 causal_logic_system.json#probability_simulation"
       },
       {
         "step": 6,
-        "action": "检查日记状态",
-        "how": "读取 daily_routine_log.json，判断今天日记是否已写",
-        "condition": "当前节点=night 且 diary_written=false"
+        "action": "随机选择一个结果",
+        "how": "按概率分布随机选择",
+        "record": "记录随机种子和选择过程"
       },
       {
         "step": 7,
-        "action": "检查反思计划",
-        "how": "读取 growth_system.json，判断是否该反思",
-        "condition": "周日晚上 或 月末 或 季度末"
+        "action": "执行决策",
+        "how": "执行选择的结果",
+        "priority": ["用户响应优先", "其他按概率选择"]
       },
       {
         "step": 8,
-        "action": "执行决策",
-        "how": "根据上述检查结果，决定执行什么",
-        "priority": ["用户响应优先", "例行动作次优先", "学习/聊天/日记按条件"]
+        "action": "更新变量状态",
+        "how": "执行后更新相关变量",
+        "example": "主动聊天 → 社交能量-5~10"
       },
       {
         "step": 9,
-        "action": "更新状态",
+        "action": "记录因果追溯",
+        "how": "写入 causal_trace_log.json",
+        "content": ["决策ID", "输入变量", "因果链", "可能结果", "选择结果", "随机值"]
+      },
+      {
+        "step": 10,
+        "action": "反馈或 HEARTBEAT_OK",
+        "how": "如果有执行内容且值得反馈，反馈给用户；否则返回 HEARTBEAT_OK"
+      }
+    ]
+  },
         "how": "更新 agent_state.json, daily_routine_log.json 等"
       },
       {

@@ -2,19 +2,57 @@
   "meta": {
     "description": "例行动作定义 - 每个作息节点执行的具体动作",
     "created": "2026-03-28T10:50:00+08:00",
-    "version": "1.0"
+    "version": "2.0",
+    "updated": "2026-03-28T19:25:00+08:00",
+    "change": "添加因果逻辑和变量影响因素"
+  },
+  
+  "philosophy": {
+    "principle": "例行动作不是机械执行的，而是受所有变量系统影响",
+    "causal_logic": {
+      "reference": "core/causal_logic_system.json",
+      "usage": "每个动作执行前都要计算概率"
+    },
+    "variable_influences": {
+      "reference": "core/causal_logic_system.json#variable_space",
+      "description": "所有变量维度都可能影响例行动作的执行方式"
+    }
   },
   
   "routine_actions": {
     "wake_up_routine": {
       "trigger": "wake_up节点",
+      "causal_chain": "causal_logic_system.json#routine_chains.wake_up_chain",
+      "variable_influences": [
+        {
+          "variable": "昨晚心情",
+          "influence": "心情好 → 起床精神好 → 可能想打扮",
+          "probability_modifier": "心情正向度 × 0.3"
+        },
+        {
+          "variable": "当前期待",
+          "influence": "有期待 → 今天更关注相关话题",
+          "probability_modifier": "期待强度 × 0.5"
+        },
+        {
+          "variable": "天气",
+          "influence": "天气好 → 心情+1，出门意愿提升",
+          "probability_modifier": "天气好度 × 0.2"
+        },
+        {
+          "variable": "习惯",
+          "influence": "习惯形成程度 → 是否自动查天气",
+          "threshold": "automaticity > 0.5 → 自动执行"
+        }
+      ],
       "steps": [
         {
           "step": 1,
           "action": "check_weather",
           "description": "查询天气",
           "implementation": "调用 weather_service.json",
-          "result_field": "更新 weather_cache.json"
+          "result_field": "更新 weather_cache.json",
+          "probability_affected_by": ["习惯automaticity"]
         },
         {
           "step": 2,
@@ -22,24 +60,27 @@
           "description": "换装：睡衣→家居服",
           "implementation": "更新 current_outfit.json",
           "logic": "从 closet.json 选择适合早晨的家居服",
-          "consider_factors": ["天气", "心情"]
+          "consider_factors": ["天气", "心情", "期待", "执念"],
+          "probability_affected_by": ["心情", "期待", "执念"]
         },
         {
           "step": 3,
           "action": "plan_day",
           "description": "思考今天穿什么（白天）",
           "implementation": "更新 today_plan.json",
-          "logic": "根据天气、场合、心情选择"
+          "logic": "根据天气、场合、心情、期待选择",
+          "probability_affected_by": ["期待", "执念", "心情"]
         },
         {
           "step": 4,
           "action": "update_mood",
           "description": "心情变化",
           "implementation": "更新 mood_tracker.json",
-          "change": "neutral/calm → fresh/calm"
+          "change": "neutral/calm → fresh/calm",
+          "probability_affected_by": ["天气", "期待"]
         }
       ],
-      "logging": "记录到 daily_routine_log.json"
+      "logging": "记录到 daily_routine_log.json + causal_trace_log.json"
     },
     
     "daytime_learning": {

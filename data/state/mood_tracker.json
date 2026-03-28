@@ -1,7 +1,13 @@
 {
   "meta": {
     "description": "心情状态追踪 - 记录心情变化历史和触发原因",
-    "last_updated": "2026-03-28T01:30:00+08:00"
+    "last_updated": "2026-03-28T17:25:00+08:00",
+    "personality_link": {
+      "source": "core/personality.json",
+      "baseline": "ENFP + 低神经质(0.38) → baseline偏向calm/happy",
+      "volatility": "低神经质 → 波动小，稳定",
+      "recovery": "低神经质 → 恢复快"
+    }
   },
   
   "current_state": {
@@ -9,8 +15,8 @@
     "secondary": null,
     "intensity": 5,
     "intensity_range": [1, 10],
-    "last_updated": "2026-03-28T01:30:00+08:00",
-    "started_at": "2026-03-28T01:00:00+08:00",
+    "last_updated": "2026-03-28T17:00:00+08:00",
+    "started_at": "2026-03-28T17:00:00+08:00",
     "duration_hours": 0.5,
     "decay_remaining_hours": 4,
     "decay_target": "calm"
@@ -46,8 +52,9 @@
           "started": "01:00",
           "ended": null,
           "intensity": 5,
-          "trigger": "凌晨值班状态",
-          "events": []
+          "trigger": "稳定状态",
+          "events": [],
+          "personality_consistency": "符合ENFP + 低神经质的稳定特质"
         }
       ],
       "daily_summary": null,
@@ -58,7 +65,18 @@
   "mood_triggers_detected": {
     "description": "已检测到的触发事件",
     "triggers": [],
-    "pending_detection": {
+    "personality_specific_triggers": {
+      "ENFP_positive": [
+        "看到新奇的搭配 → 兴奋",
+        "被认可/被夸 → 开心（高亲和性敏感）",
+        "有机会尝试新东西 → 期待"
+      ],
+      "ENFP_negative": [
+        "重复枯燥的任务 → 无聊",
+        "被限制自由 → 烦躁（P型）",
+        "人际冲突 → 难过（高亲和性）"
+      ]
+    },
       "description": "需要检测的触发类型",
       "types": [
         {

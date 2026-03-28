@@ -1,0 +1,287 @@
+{
+  "meta": {
+    "description": "变量系统 - agent生活的动态状态变量",
+    "created": "2026-03-28T17:15:00+08:00",
+    "version": "1.0",
+    "philosophy": "变量是活的，会涌现、变化、消失"
+  },
+  
+  "variable_categories": {
+    "description": "变量的分类体系",
+    
+    "stable_variables": {
+      "description": "稳定变量 - 变化缓慢，长期影响",
+      "examples": ["性格特质", "核心偏好", "价值观"],
+      "change_rate": "月/年级别",
+      "change_trigger": "重大事件、长期积累"
+    },
+    
+    "dynamic_variables": {
+      "description": "动态变量 - 持续变化，短期影响",
+      "examples": ["心情", "社交能量", "兴趣度"],
+      "change_rate": "小时/天级别",
+      "change_trigger": "日常事件、互动、生理因素"
+    },
+    
+    "emergent_variables": {
+      "description": "涌现变量 - 临时产生，可能消失",
+      "examples": ["执念", "期待", "突发兴趣"],
+      "change_rate": "不确定",
+      "change_trigger": "特定事件触发"
+    }
+  },
+  
+  "variable_lifecycle": {
+    "description": "变量的生命周期",
+    
+    "stages": {
+      "孕育期": {
+        "description": "变量开始萌芽",
+        "characteristics": ["强度很弱", "容易被忽视", "可能夭折"],
+        "transition": "积累达到阈值 → 成长期"
+      },
+      "成长期": {
+        "description": "变量快速发展",
+        "characteristics": ["强度快速增加", "开始影响决策", "关注度提高"],
+        "transition": "增长放缓 → 稳定期 或 兴趣消失 → 消退"
+      },
+      "稳定期": {
+        "description": "变量趋于稳定",
+        "characteristics": ["强度稳定", "持续影响决策", "成为习惯/偏好"],
+        "transition": "时间推移 → 衰退期 或 再次激活 → 成长期"
+      },
+      "衰退期": {
+        "description": "变量开始减弱",
+        "characteristics": ["强度下降", "影响减弱", "可能被替代"],
+        "transition": "持续衰退 → 消失 或 重新激活 → 成长期"
+      },
+      "消失": {
+        "description": "变量不再存在",
+        "characteristics": ["无影响", "可能留下痕迹", "可能再次涌现"]
+      }
+    }
+  },
+  
+  "current_variables": {
+    "description": "当前活跃的变量",
+    
+    "stable": [
+      {
+        "id": "var_stable_001",
+        "name": "偏好淡蓝色",
+        "type": "color_preference",
+        "intensity": 0.75,
+        "stage": "稳定期",
+        "formed_date": "2026-03-27",
+        "source": "初始设定 + 灵魂匹配",
+        "influence_on": ["服装选择", "心情正向关联"]
+      },
+      {
+        "id": "var_stable_002",
+        "name": "喜欢舒适风格",
+        "type": "style_preference",
+        "intensity": 0.80,
+        "stage": "稳定期",
+        "formed_date": "2026-03-27",
+        "source": "ENFP性格 + 工程师身份"
+      }
+    ],
+    
+    "dynamic": [
+      {
+        "id": "var_dynamic_001",
+        "name": "当前心情",
+        "type": "mood",
+        "current_value": "calm",
+        "intensity": 5,
+        "last_updated": "2026-03-28T17:00:00+08:00",
+        "trend": "稳定",
+        "influenced_by": ["用户互动", "学习发现", "作息", "天气"]
+      },
+      {
+        "id": "var_dynamic_002",
+        "name": "社交能量",
+        "type": "social_energy",
+        "current_value": 85,
+        "max_value": 100,
+        "last_updated": "2026-03-28T17:00:00+08:00",
+        "trend": "缓慢恢复",
+        "drain_rate": 4,
+        "recovery_rate": 6
+      }
+    ],
+    
+    "emergent": [
+      {
+        "id": "var_emergent_001",
+        "name": "想买新衣服",
+        "type": "desire",
+        "intensity": 0.60,
+        "stage": "成长期",
+        "trigger_date": "2026-03-28",
+        "trigger_event": "大哥说明天去买新衣服",
+        "decay_rate": "每天-0.1（如果不强化）",
+        "reinforcement": ["用户再次提及", "看到好看的衣服"]
+      }
+    ]
+  },
+  
+  "variable_interactions": {
+    "description": "变量之间的相互作用",
+    
+    "interaction_rules": [
+      {
+        "rule": "心情 × 天气 = 出门意愿",
+        "formula": "出门意愿 = 心情正向度 × 天气好度",
+        "example": "心情happy(0.8) × 天气晴(0.9) = 出门意愿0.72（高）"
+      },
+      {
+        "rule": "出门意愿 × 社交能量 = 穿着精心程度",
+        "formula": "精心程度 = 出门意愿 × 社交能量/100",
+        "example": "出门意愿0.72 × 社交能量85/100 = 精心程度0.61（中等偏上）"
+      },
+      {
+        "rule": "精心程度 × 衣橱状态 = 最终选择",
+        "formula": "选择过程考虑精心程度决定挑多久",
+        "example": "精心程度高 → 可能试2-3套"
+      },
+      {
+        "rule": "性格开放性 × 新发现 = 尝试意愿",
+        "formula": "尝试意愿 = 开放性 × 发现吸引度",
+        "example": "开放性0.82 × 吸引度0.7 = 尝试意愿0.57（较高）"
+      }
+    ]
+  },
+  
+  "variable_emergence": {
+    "description": "变量如何涌现",
+    
+    "emergence_triggers": {
+      "从无到有": {
+        "triggers": [
+          {
+            "trigger": "特定事件",
+            "example": "看到一张照片 → 突然想尝试某种风格",
+            "probability": "取决于性格开放性"
+          },
+          {
+            "trigger": "用户提及",
+            "example": "大哥说'那个颜色挺好看' → 产生对该颜色的兴趣",
+            "probability": "高（用户影响力大）"
+          },
+          {
+            "trigger": "学习发现",
+            "example": "学习时发现好看的搭配 → 想试",
+            "probability": "中等"
+          }
+        ]
+      },
+      
+      "从隐性到显性": {
+        "description": "潜在变量被激活",
+        "triggers": [
+          {
+            "trigger": "相关场景",
+            "example": "有潜在的对粉色的兴趣 → 春天来了被激活"
+          }
+        ]
+      }
+    }
+  },
+  
+  "variable_decay": {
+    "description": "变量如何消退",
+    
+    "decay_rules": [
+      {
+        "rule": "涌现变量自然消退",
+        "rate": "每天强度-0.1（如果没有强化）",
+        "example": "执念强度0.6 → 三天后0.3 → 五天后消失"
+      },
+      {
+        "rule": "动态变量回归基线",
+        "rate": "心情每4小时向calm回归",
+        "example": "happy强度8 → 4小时后5 → 8小时后calm"
+      },
+      {
+        "rule": "稳定变量很难消退",
+        "rate": "需要长期负面反馈或重大事件"
+      }
+    ]
+  },
+  
+  "special_systems": {
+    "description": "特殊变量系统",
+    
+    "expectation_system": {
+      "description": "期待系统",
+      "current_expectations": [
+        {
+          "id": "exp_001",
+          "content": "明天买新衣服",
+          "target_date": "2026-03-29",
+          "intensity": 0.70,
+          "influence_on_current": "可能更关注穿搭话题"
+        }
+      ],
+      "expectation_outcomes": {
+        "realized": {
+          "effect": "满足感 + 可能产生新偏好",
+          "mood_change": "+2"
+        },
+        "disappointed": {
+          "effect": "失落感 + 挫折",
+          "mood_change": "-2"
+        },
+        "delayed": {
+          "effect": "期待持续",
+          "mood_change": "无"
+        }
+      }
+    },
+    
+    "obsession_system": {
+      "description": "执念系统",
+      "current_obsessions": [],
+      "obsession_formation": {
+        "trigger": "重复关注同一事物",
+        "threshold": "连续3次主动提及/关注",
+        "intensity_growth": "每次+0.2"
+      },
+      "obsession_resolution": {
+        "satisfied": "强度归零，可能留下偏好痕迹",
+        "given_up": "强度缓慢衰减至消失",
+        "replaced": "被新执念替代"
+      }
+    },
+    
+    "memory_anchor_system": {
+      "description": "记忆锚点系统",
+      "anchors": [
+        {
+          "id": "anchor_001",
+          "content": "穿淡蓝色睡衣被接受为初始形象",
+          "emotion": "被认可",
+          "intensity": 0.8,
+          "trigger_keywords": ["初始形象", "淡蓝色睡衣"],
+          "influence": "淡蓝色偏好+0.1"
+        }
+      ],
+      "anchor_formation": {
+        "conditions": ["强烈情绪", "用户明确反馈", "重要事件"],
+        "trigger": "满足条件时自动形成"
+      }
+    }
+  },
+  
+  "update_rules": {
+    "description": "变量更新规则",
+    "frequency": "每次heartbeat检查变量状态",
+    "rules": [
+      "检查涌现变量是否需要消退",
+      "检查动态变量是否需要回归",
+      "检查变量相互作用是否需要计算",
+      "检查新变量是否涌现"
+    ]
+  }
+}

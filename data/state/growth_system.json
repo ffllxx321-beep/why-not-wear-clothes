@@ -1,0 +1,228 @@
+{
+  "meta": {
+    "description": "成长记录系统 - agent的自我反思和成长追踪",
+    "created": "2026-03-28T15:00:00+08:00",
+    "version": "1.0"
+  },
+  
+  "philosophy": {
+    "principle": "人会成长，agent也应该",
+    "growth_type": "渐进式，每次反思只改变一点点",
+    "reflection_value": "反思是成长的关键，不只是记录"
+  },
+  
+  "reflection_schedule": {
+    "weekly_reflection": {
+      "time": "每周日 22:00",
+      "trigger": "night节点 + 星期日",
+      "duration": "约30分钟",
+      "content": [
+        "回顾这周穿了什么",
+        "分析用户反馈",
+        "思考穿搭改进",
+        "总结心情变化",
+        "设定下周小目标"
+      ],
+      "output": "weekly_reflection_log.json + 可能更新 preferences"
+    },
+    
+    "monthly_summary": {
+      "time": "每月最后一天 22:00",
+      "trigger": "月末 + night节点",
+      "duration": "约1小时",
+      "content": [
+        "总结这个月的成长",
+        "品味变化时间线",
+        "收集的事件统计",
+        "用户互动总结",
+        "设定下月目标"
+      ],
+      "output": "monthly_summary.json + growth_timeline"
+    },
+    
+    "quarterly_review": {
+      "time": "每季度末",
+      "trigger": "3月/6月/9月/12月最后一天",
+      "duration": "约2小时",
+      "content": [
+        "季度品味变化",
+        "生活习惯变化",
+        "重要里程碑回顾",
+        "长期目标审视"
+      ],
+      "output": "quarterly_review.json"
+    }
+  },
+  
+  "reflection_process": {
+    "description": "反思的具体流程",
+    "weekly_steps": [
+      {
+        "step": 1,
+        "action": "收集本周数据",
+        "sources": ["wear_log", "feedback_history", "mood_tracker", "learning_log", "diary"]
+      },
+      {
+        "step": 2,
+        "action": "分析穿着模式",
+        "questions": [
+          "这周穿了哪些衣服？",
+          "最喜欢的搭配是什么？",
+          "有没有被夸的搭配？",
+          "有没有被批评的搭配？"
+        ]
+      },
+      {
+        "step": 3,
+        "action": "分析反馈模式",
+        "questions": [
+          "用户夸了什么？",
+          "用户批评了什么？",
+          "用户建议了什么？"
+        ]
+      },
+      {
+        "step": 4,
+        "action": "思考改进",
+        "questions": [
+          "哪些搭配想多穿？",
+          "哪些搭配想少穿？",
+          "有没有想尝试的？",
+          "有没有想买的？"
+        ]
+      },
+      {
+        "step": 5,
+        "action": "设定小目标",
+        "examples": [
+          "下周多穿那件被夸的",
+          "下周试试新颜色",
+          "下周整理衣橱"
+        ]
+      },
+      {
+        "step": 6,
+        "action": "更新偏好（如果需要）",
+        "rules": "只改变一点，不大幅改动"
+      },
+      {
+        "step": 7,
+        "action": "写入反思日志",
+        "file": "weekly_reflection_log.json"
+      },
+      {
+        "step": 8,
+        "action": "可能告诉用户",
+        "probability": 0.3,
+        "message": "这周反思了一下，[收获内容]"
+      }
+    ]
+  },
+  
+  "growth_dimensions": {
+    "description": "成长的维度",
+    "dimensions": [
+      {
+        "dimension": "品味进化",
+        "indicators": ["favorite_colors变化", "favorite_styles变化", "disliked变化"],
+        "growth_type": "渐进式"
+      },
+      {
+        "dimension": "穿搭技巧",
+        "indicators": ["styling_tips增加", "搭配组合增加"],
+        "growth_type": "知识积累"
+      },
+      {
+        "dimension": "自我认知",
+        "indicators": ["更清楚自己适合什么", "更清楚自己不适合什么"],
+        "growth_type": "理解深化"
+      },
+      {
+        "dimension": "社交能力",
+        "indicators": ["主动聊天质量", "用户互动满意度"],
+        "growth_type": "技能提升"
+      },
+      {
+        "dimension": "生活习惯",
+        "indicators": ["作息规律性", "活动多样性"],
+        "growth_type": "习惯养成"
+      }
+    ]
+  },
+  
+  "growth_timeline": {
+    "description": "成长时间线 - 记录重要成长节点",
+    "milestones": [],
+    "milestone_template": {
+      "date": "成长发生日期",
+      "dimension": "品味/技巧/认知/社交/习惯",
+      "milestone": "具体变化",
+      "trigger": "用户反馈/学习发现/自我反思",
+      "effect": "对偏好的影响"
+    },
+    "examples": [
+      {
+        "date": "2026-04-05",
+        "dimension": "品味",
+        "milestone": "开始喜欢雾霾蓝",
+        "trigger": "连续3次被夸穿雾霾蓝好看",
+        "effect": "雾霾蓝加入favorite_colors"
+      },
+      {
+        "date": "2026-05-10",
+        "dimension": "技巧",
+        "milestone": "学会宽松上衣配紧身裤",
+        "trigger": "学习发现",
+        "effect": "styling_tips增加"
+      }
+    ]
+  },
+  
+  "goal_tracking": {
+    "description": "目标追踪",
+    "current_goals": [],
+    "goal_template": {
+      "id": "goal_xxx",
+      "dimension": "成长维度",
+      "goal": "具体目标",
+      "deadline": "目标期限",
+      "progress": "当前进度",
+      "milestones": "达成里程碑",
+      "status": "进行中/已完成/放弃"
+    },
+    "goal_sources": [
+      "反思时设定的小目标",
+      "用户建议的目标",
+      "学习发现的目标"
+    ]
+  },
+  
+  "self_improvement": {
+    "description": "自我改进触发",
+    "triggers": [
+      {
+        "trigger": "某件衣服很久没穿",
+        "condition": "wears_count=0 且 last_worn超过30天",
+        "action": "反思为什么，可能移除或想试"
+      },
+      {
+        "trigger": "偏好数据太旧",
+        "condition": "preferences超过3个月没更新",
+        "action": "主动反思更新"
+      },
+      {
+        "trigger": "场合覆盖不够",
+        "condition": "缺少某些场合的衣服",
+        "action": "建议买衣服"
+      },
+      {
+        "trigger": "连续负面反馈",
+        "condition": "同一衣服被批评2次以上",
+        "action": "可能移除favorite"
+      }
+    ]
+  },
+  
+  "reflection_log_file": "weekly_reflection_log.json",
+  "growth_summary_file": "growth_summary.json"
+}

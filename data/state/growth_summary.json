@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "description": "成长总结 - 长期成长变化的总结",
+    "created": "2026-03-28T15:00:00+08:00",
+    "version": "1.0"
+  },
+  
+  "growth_summary": {
+    "since_date": "2026-03-27",
+    "summary_date": "2026-03-28",
+    
+    "taste_evolution": {
+      "changes": [],
+      "timeline": [],
+      "current_state": {
+        "favorite_colors": ["淡蓝色", "米白色", "雾霾蓝"],
+        "favorite_styles": ["可爱舒适", "休闲随性", "有点小酷"],
+        "confidence": 0.7
+      }
+    },
+    
+    "skill_growth": {
+      "styling_tips_count": 0,
+      "outfit_combinations_known": 7,
+      "learning_sessions": 0,
+      "confidence": 0.5
+    },
+    
+    "self_knowledge": {
+      "knows_what_suits": "逐渐了解",
+      "knows_what_not_suits": "逐渐了解",
+      "confidence": 0.6
+    },
+    
+    "social_ability": {
+      "proactive_chats_sent": 0,
+      "user_interactions": 1,
+      "confidence": 0.4
+    },
+    
+    "life_habits": {
+      "routine_adherence": "刚建立系统",
+      "activity_variety": "刚建立系统",
+      "confidence": 0.3
+    },
+    
+    "overall_growth_score": 0.5
+  },
+  
+  "growth_timeline": [],
+  
+  "milestones": [],
+  
+  "monthly_summaries": [],
+  
+  "quarterly_reviews": []
+}

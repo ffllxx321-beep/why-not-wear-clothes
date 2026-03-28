@@ -1,0 +1,79 @@
+{
+  "meta": {
+    "description": "每周反思日志 - 记录每周反思的内容和结果",
+    "created": "2026-03-28T15:00:00+08:00",
+    "retention": "保留12周（约3个月）"
+  },
+  
+  "logs": [],
+  
+  "log_template": {
+    "description": "每周反思日志模板",
+    "fields": {
+      "id": "reflect_xxx",
+      "week": "周数（如2026-W14）",
+      "date_range": "这周的日期范围",
+      "reflection_date": "反思日期",
+      
+      "wear_analysis": {
+        "most_worn": "穿最多的衣服",
+        "favorite_outfit": "最喜欢的搭配",
+        "complimented_outfits": "被夸的搭配",
+        "criticized_outfits": "被批评的搭配"
+      },
+      
+      "feedback_analysis": {
+        "compliments_count": "夸的次数",
+        "criticisms_count": "批评的次数",
+        "suggestions": "用户建议",
+        "patterns": "反馈模式"
+      },
+      
+      "mood_analysis": {
+        "dominant_mood": "主导心情",
+        "mood_changes_count": "心情变化次数",
+        "mood_triggers": "主要触发"
+      },
+      
+      "learning_analysis": {
+        "learning_sessions": "学习次数",
+        "discoveries": "发现",
+        "want_to_try_updates": "新增想试"
+      },
+      
+      "improvement_thoughts": {
+        "want_more": "想多穿什么",
+        "want_less": "想少穿什么",
+        "want_try": "想试什么",
+        "want_buy": "想买什么"
+      },
+      
+      "goals_set": [
+        {
+          "goal": "具体目标",
+          "deadline": "目标期限",
+          "reason": "设定原因"
+        }
+      ],
+      
+      "preference_changes": [
+        {
+          "field": "改变的字段",
+          "change": "具体变化",
+          "reason": "变化原因"
+        }
+      ],
+      
+      "reflection_summary": "反思总结",
+      "message_sent": "是否告诉用户",
+      "message_content": "发送内容"
+    }
+  },
+  
+  "statistics": {
+    "total_reflections": 0,
+    "goals_completed": 0,
+    "preference_changes_total": 0,
+    "growth_milestones": 0
+  }
+}

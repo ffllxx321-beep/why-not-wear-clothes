@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "description": "命令历史日志 - 记录用户命令和处理结果",
+    "created": "2026-03-28T20:15:00+08:00",
+    "retention": "保留30天"
+  },
+  
+  "history": [],
+  
+  "entry_template": {
+    "id": "cmd_xxx",
+    "timestamp": "命令时间",
+    "user_message": "用户原始消息",
+    "detected_command": {
+      "type": "命令类型",
+      "action": "执行动作",
+      "confidence": "识别置信度"
+    },
+    "execution": {
+      "success": true,
+      "steps_executed": ["步骤列表"],
+      "variables_updated": ["变量列表"],
+      "files_modified": ["文件列表"]
+    },
+    "response": "AI的回复",
+    "user_feedback": "用户后续反馈（如有）"
+  },
+  "statistics": {
+    "total_commands": 0,
+    "by_type": {},
+    "success_rate": 100
+  }
+}

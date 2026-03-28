@@ -1,0 +1,204 @@
+{
+  "meta": {
+    "description": "系统健康检查器 - 监控所有系统是否正常运行",
+    "created": "2026-03-28T20:10:00+08:00",
+    "version": "1.0"
+  },
+  
+  "philosophy": {
+    "principle": "主动发现问题，不要等用户遇到",
+    "approach": "定期检查 + 发现异常自动处理或报告"
+  },
+  
+  "health_checks": {
+    "description": "各项健康检查",
+    
+    "file_integrity": {
+      "description": "文件完整性检查",
+      "check_items": [
+        {
+          "item": "所有JSON文件语法正确",
+          "method": "jq解析测试",
+          "frequency": "每次启动时"
+        },
+        {
+          "item": "关键文件存在",
+          "files": [
+            "core/personality.json",
+            "core/variables.json",
+            "core/causal_logic_system.json",
+            "schedule/schedule.json",
+            "wardrobe/closet.json",
+            "state/mood.json"
+          ],
+          "frequency": "每次启动时"
+        },
+        {
+          "item": "文件引用有效",
+          "method": "检查所有log_file、reference引用的文件是否存在",
+          "frequency": "每次启动时"
+        }
+      ]
+    },
+    
+    "data_consistency": {
+      "description": "数据一致性检查",
+      "check_items": [
+        {
+          "item": "current_outfit引用的衣服存在于closet",
+          "method": "ID匹配检查",
+          "frequency": "每次换装时"
+        },
+        {
+          "item": "mood类型存在于mood_types",
+          "method": "枚举值检查",
+          "frequency": "每次心情变化时"
+        },
+        {
+          "item": "social_energy在有效范围(0-100)",
+          "method": "范围检查",
+          "frequency": "每次更新时"
+        },
+        {
+          "item": "变量强度在有效范围(0-1)",
+          "method": "范围检查",
+          "frequency": "每次更新时"
+        }
+      ]
+    },
+    
+    "logic_consistency": {
+      "description": "逻辑一致性检查",
+      "check_items": [
+        {
+          "item": "因果链引用的变量都存在",
+          "method": "引用完整性检查",
+          "frequency": "启动时"
+        },
+        {
+          "item": "性格参数影响的行为参数都定义了",
+          "method": "推导完整性检查",
+          "frequency": "启动时"
+        },
+        {
+          "item": "所有系统的关联关系正确",
+          "method": "交叉引用检查",
+          "frequency": "启动时"
+        }
+      ]
+    },
+    
+    "runtime_health": {
+      "description": "运行时健康检查",
+      "check_items": [
+        {
+          "item": "最近一次heartbeat是否正常执行",
+          "method": "检查daily_routine_log更新时间",
+          "threshold": "超过2小时未更新 → 异常"
+        },
+        {
+          "item": "变量是否合理变化",
+          "method": "检查变量变化历史",
+          "alert": "单次变化超过阈值 → 可能异常"
+        },
+        {
+          "item": "决策执行成功率",
+          "method": "统计因果追溯日志",
+          "threshold": "成功率<90% → 需要检查"
+        }
+      ]
+    }
+  },
+  
+  "check_schedule": {
+    "description": "检查时间表",
+    
+    "on_startup": {
+      "description": "启动时检查",
+      "checks": ["file_integrity", "data_consistency", "logic_consistency"]
+    },
+    
+    "on_heartbeat": {
+      "description": "心跳时检查",
+      "checks": ["runtime_health"]
+    },
+    
+    "daily": {
+      "description": "每日检查",
+      "time": "每天00:10",
+      "checks": ["file_integrity", "data_consistency", "logic_consistency"],
+      "report": "生成健康报告"
+    }
+  },
+  
+  "issue_handling": {
+    "description": "问题处理方式",
+    
+    "critical": {
+      "description": "严重问题",
+      "examples": ["核心文件缺失", "JSON语法错误"],
+      "handling": {
+        "immediate": "尝试恢复默认",
+        "if_fail": "报告用户，请求帮助"
+      }
+    },
+    
+    "warning": {
+      "description": "警告问题",
+      "examples": ["引用不一致", "数据范围越界"],
+      "handling": {
+        "immediate": "尝试修复",
+        "log": "记录到error_log.json",
+        "continue": "继续运行"
+      }
+    },
+    
+    "info": {
+      "description": "信息级别",
+      "examples": ["很久没有互动", "变量变化缓慢"],
+      "handling": {
+        "log": "记录日志",
+        "optional_notify": "可能通知用户"
+      }
+    }
+  },
+  
+  "health_report": {
+    "description": "健康报告格式",
+    "template": {
+      "timestamp": "检查时间",
+      "overall_status": "healthy/warning/error",
+      "checks_passed": 10,
+      "checks_failed": 0,
+      "issues": [
+        {
+          "level": "critical/warning/info",
+          "item": "问题描述",
+          "handling": "处理方式"
+        }
+      ],
+      "recommendations": ["建议操作"]
+    }
+  },
+  
+  "recovery_actions": {
+    "description": "恢复动作",
+    
+    "restore_defaults": {
+      "trigger": "关键文件损坏",
+      "action": "从默认模板恢复",
+      "source": "defaults/*.json"
+    },
+    
+    "rebuild_cache": {
+      "trigger": "缓存数据不一致",
+      "action": "重新计算缓存"
+    },
+    
+    "reset_state": {
+      "trigger": "状态严重异常",
+      "action": "重置到初始状态",
+      "using": "initialization_flow.json"
+    }
+  }
+}

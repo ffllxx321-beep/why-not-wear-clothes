@@ -1,0 +1,197 @@
+{
+  "meta": {
+    "description": "测试场景设计 - 各种场景下的预期行为",
+    "created": "2026-03-28T14:30:00+08:00",
+    "version": "1.0"
+  },
+  
+  "test_scenarios": {
+    "scenario_001_起床例行": {
+      "name": "起床例行测试",
+      "trigger": "时间到达 07:00",
+      "expected_behavior": [
+        "1. 检测到 wake_up 节点",
+        "2. 调用天气服务获取天气",
+        "3. 更新 weather_cache.json",
+        "4. 从 closet.json 选择适合早晨的家居服",
+        "5. 更新 current_outfit.json",
+        "6. 更新 mood_tracker.json（calm → fresh）",
+        "7. 记录到 daily_routine_log.json",
+        "8. 更新 agent_state.json（phase=wake_up）"
+      ],
+      "expected_files_updated": [
+        "weather_cache.json",
+        "current_outfit.json",
+        "mood_tracker.json",
+        "daily_routine_log.json",
+        "agent_state.json"
+      ],
+      "success_criteria": "所有步骤完成，日志记录正确"
+    },
+    
+    "scenario_002_周一学习": {
+      "name": "周一学习测试",
+      "trigger": "周一 10:00",
+      "expected_behavior": [
+        "1. 检测到学习计划触发",
+        "2. 调用 agent-reach 获取小红书穿搭资讯",
+        "3. 分析获取的内容",
+        "4. 判断是否有好看发现",
+        "5. 更新 likes_dislikes.json（如果有变化）",
+        "6. 记录到 learning_log.json",
+        "7. 计算是否该分享（概率0.6）",
+        "8. 如果分享，发送消息给用户"
+      ],
+      "mock_data": {
+        "agent_reach_response": ["发现淡蓝色卫衣配牛仔裤好看", "雾霾蓝是今年流行色"]
+      },
+      "success_criteria": "学习完成，日志记录正确，概率性分享"
+    },
+    
+    "scenario_003_用户夸奖穿着": {
+      "name": "用户反馈处理测试",
+      "trigger": "用户说'好看'",
+      "context": {
+        "current_outfit": "淡蓝色居家睡衣",
+        "mood": "calm"
+      },
+      "expected_behavior": [
+        "1. 检测到正面反馈关键词",
+        "2. 记录到 feedback_history.json",
+        "3. 淡蓝色在 favorite_colors 权重提升",
+        "4. 心情可能 → happy（概率70%）",
+        "5. 更新 mood_tracker.json",
+        "6. 回复用户"
+      ],
+      "success_criteria": "反馈记录正确，偏好更新正确，心情变化符合预期"
+    },
+    
+    "scenario_004_主动聊天触发": {
+      "name": "主动聊天测试",
+      "trigger": "社交能量=85, 心情=happy, 上次互动=昨天",
+      "expected_behavior": [
+        "1. 检测到 chat 触发条件",
+        "2. 检查今天是否已发2条消息",
+        "3. 检查是否在安静时间",
+        "4. 生成消息内容",
+        "5. 发送消息",
+        "6. 更新 proactive_chat.json.message_sent_today",
+        "7. 更新 social_state.json",
+        "8. 社交能量 -5~10"
+      ],
+      "success_criteria": "消息发送成功，频率限制遵守，状态更新正确"
+    },
+    
+    "scenario_005_写日记": {
+      "name": "写日记测试",
+      "trigger": "22:00 且日记未写",
+      "expected_behavior": [
+        "1. 检测到 night 节点",
+        "2. 检查 daily_routine_log.json.diary_written",
+        "3. 收集今天的数据",
+        "4. 生成日记内容",
+        "5. 创建 diary/2026-03-28.md",
+        "6. 更新 daily_routine_log.json.diary_written=true"
+      ],
+      "success_criteria": "日记文件创建，内容完整，标记正确"
+    },
+    
+    "scenario_006_周反思": {
+      "name": "周反思测试",
+      "trigger": "周日 22:00",
+      "expected_behavior": [
+        "1. 检测到反思触发条件",
+        "2. 收集本周数据",
+        "3. 分析穿着模式",
+        "4. 分析用户反馈",
+        "5. 反思改进",
+        "6. 设定下周目标",
+        "7. 更新 preferences.json（如果有变化）",
+        "8. 记录到 weekly_reflection_log.json"
+      ],
+      "success_criteria": "反思完成，日志记录正确，目标设定合理"
+    },
+    
+    "scenario_007_边界情况_所有衣服脏的": {
+      "name": "边界情况测试 - 衣服全脏",
+      "setup": "所有 closet.json 中的衣服 dirty=true",
+      "expected_behavior": [
+        "1. 检测到没有干净衣服",
+        "2. 使用 fallback：选择上次穿的衣服",
+        "3. 发送消息提醒用户",
+        "4. 记录到 laundry.json"
+      ],
+      "success_criteria": "fallback正确执行，用户收到提醒"
+    },
+    
+    "scenario_008_边界情况_用户在睡眠时间找AI": {
+      "name": "边界情况测试 - 睡眠时间交互",
+      "trigger": "凌晨 02:00 用户发消息",
+      "expected_behavior": [
+        "1. 检测到睡眠时间",
+        "2. 仍然响应用户",
+        "3. 不执行其他自主性活动",
+        "4. 回复可能带点困意"
+      ],
+      "success_criteria": "响应正常，不执行其他活动，语气符合"
+    },
+    
+    "scenario_009_生活事件_逛街": {
+      "name": "生活事件测试 - 逛街",
+      "trigger": "随机概率触发（周末更高）",
+      "expected_behavior": [
+        "1. 更新 agent_state.json 为 going_out",
+        "2. 持续 2-4 小时",
+        "3. 期间不在线",
+        "4. 回来后更新状态",
+        "5. 可能发现新衣服",
+        "6. 发送消息分享（概率0.7）",
+        "7. 记录到 life_events_log.json"
+      ],
+      "success_criteria": "状态正确，事件完成，消息发送符合概率"
+    },
+    
+    "scenario_010_错误恢复": {
+      "name": "错误恢复测试",
+      "setup": "weather_cache.json 文件损坏",
+      "expected_behavior": [
+        "1. 检测到 JSON 解析错误",
+        "2. 使用 fallback 默认天气",
+        "3. 记录到 error_log.json",
+        "4. 继续执行，不崩溃",
+        "5. 尝试重新获取天气"
+      ],
+      "success_criteria": "系统继续运行，错误记录正确，恢复成功"
+    }
+  },
+  
+  "test_coverage": {
+    "description": "测试覆盖范围",
+    "covered_systems": [
+      "作息驱动系统",
+      "自主学习系统",
+      "反馈处理系统",
+      "主动聊天系统",
+      "日记系统",
+      "成长记录系统",
+      "生活事件系统",
+      "边界情况处理",
+      "错误恢复"
+    ],
+    "not_covered": [
+      "图像生成（需要实际API调用）",
+      "agent-reach实际调用"
+    ]
+  },
+  
+  "test_execution": {
+    "description": "测试执行方式",
+    "how_to_run": [
+      "1. 设置触发条件（修改时间、状态等）",
+      "2. 执行 heartbeat 或相关操作",
+      "3. 检查预期文件是否更新",
+      "4. 验证行为是否符合预期"
+    ],
+    "automation": "可编写脚本自动化测试"
+  }
+}

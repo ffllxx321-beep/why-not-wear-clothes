@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "description": "错误日志 - 记录系统运行中的错误和异常",
+    "created": "2026-03-28T13:00:00+08:00",
+    "retention": "保留30天"
+  },
+  
+  "errors": [],
+  
+  "error_template": {
+    "id": "error_xxx",
+    "timestamp": "发生时间",
+    "type": "数据缺失/时间边界/社交边界/穿着边界/学习边界/系统错误",
+    "severity": "low/medium/high/critical",
+    "description": "错误描述",
+    "context": {
+      "file": "相关文件",
+      "operation": "正在执行的操作",
+      "expected": "期望的结果",
+      "actual": "实际的结果"
+    },
+    "fallback_used": "使用的fallback方案",
+    "resolved": false,
+    "resolution": "如何解决的",
+    "notes": "备注"
+  },
+  
+  "statistics": {
+    "total_errors": 0,
+    "by_severity": {
+      "low": 0,
+      "medium": 0,
+      "high": 0,
+      "critical": 0
+    },
+    "by_type": {}
+  }
+}

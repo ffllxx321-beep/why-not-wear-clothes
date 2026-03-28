@@ -1,9 +1,9 @@
 {
   "name": "Why Not Wear Clothes",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "release_date": "2026-03-28",
   "status": "stable",
-  "description": "让AI Agent拥有穿衣意识和体面尊严的技能",
+  "description": "让AI Agent拥有穿衣意识、体面尊严和自主生活的技能",
   
   "core_features": [
     "固定虚拟形象系统（支持参考图人脸一致性）",
@@ -17,32 +17,86 @@
     "天气获取服务",
     "场合检测系统",
     "社交能量与反馈影响",
-    "自然互动机制"
+    "自然互动机制",
+    
+    "【V0.3.0新增】自主性体系",
+    "作息驱动系统 - agent按作息自动做事",
+    "自主学习系统 - 定期学习时尚，进化品味",
+    "主动聊天系统 - 有社交冲动，主动找用户",
+    "日记系统 - 记录每天活动、心情、想法",
+    "生活事件系统 - 虚拟生活事件影响状态",
+    "成长记录系统 - 定期反思、自我改进"
   ],
   
-  "new_in_0_2_0": [
-    "修复：closet.json ID不一致bug",
-    "修复：outfit_007 JSON语法错误",
-    "新增：indices.json 查询索引加速",
-    "新增：shyness_system.json 动态羞耻感计算",
-    "新增：weather_service.json 天气获取服务",
-    "新增：social_state.json 社交状态持久化",
-    "新增：feedback_history.json 用户反馈历史",
-    "新增：aging_tracker.json 衣服老化追踪",
-    "新增：mood_tracker.json 心情追踪",
-    "新增：occasion_detection.json 场合检测系统",
-    "更新：README.md 文档结构",
-    "更新：VERSION.json 版本管理"
+  "new_in_0_3_0": [
+    "【作息驱动】schedule.json - 6个作息节点",
+    "【作息驱动】routine_actions.json - 4套例行动作流程",
+    "【作息驱动】agent_state.json - 7种状态类型",
+    "【作息驱动】daily_routine_log.json - 执行日志",
+    "【自主学习】learning_schedule.json - 4种学习计划",
+    "【自主学习】learning_log.json - 学习日志",
+    "【自主学习】want_to_try.json - 想试的清单",
+    "【主动聊天】proactive_chat.json - 7种触发条件",
+    "【日记系统】diary_config.json - 日记配置",
+    "【日记系统】diary/YYYY-MM-DD.md - 每日日记",
+    "【生活事件】life_events.json - 6种事件类型",
+    "【生活事件】life_events_log.json - 事件日志",
+    "【成长记录】growth_system.json - 周反思/月总结/季度回顾",
+    "【成长记录】weekly_reflection_log.json - 反思日志",
+    "【成长记录】growth_summary.json - 成长总结"
   ],
+  
+  "autonomy_architecture": {
+    "description": "自主性体系架构",
+    "core_principle": "agent在用户不找时也应该有自己的生活",
+    "components": [
+      {
+        "name": "作息驱动",
+        "function": "按作息自动做事（换装、查天气、写日记）",
+        "files": ["schedule.json", "routine_actions.json", "agent_state.json"]
+      },
+      {
+        "name": "自主学习",
+        "function": "定期学习时尚，进化品味",
+        "files": ["learning_schedule.json", "learning_log.json", "want_to_try.json"],
+        "schedule": "每周一10:00学时尚，每两周学品牌"
+      },
+      {
+        "name": "主动聊天",
+        "function": "有社交冲动，主动找用户",
+        "files": ["proactive_chat.json"],
+        "limit": "每天最多2条主动消息"
+      },
+      {
+        "name": "日记系统",
+        "function": "记录每天活动、心情、想法",
+        "files": ["diary_config.json", "diary/YYYY-MM-DD.md"],
+        "write_time": "每晚22:00-23:00"
+      },
+      {
+        "name": "生活事件",
+        "function": "虚拟生活事件影响状态",
+        "files": ["life_events.json", "life_events_log.json"],
+        "events": ["逛街", "看内容", "聊天", "试穿", "天气变化", "特殊日子"]
+      },
+      {
+        "name": "成长记录",
+        "function": "定期反思、自我改进",
+        "files": ["growth_system.json", "weekly_reflection_log.json", "growth_summary.json"],
+        "schedule": "每周日晚反思，每月末总结"
+      }
+    ]
+  },
   
   "data_files": {
-    "total": 35,
+    "total": 62,
     "by_category": {
-      "wardrobe": 15,
-      "config": 10,
-      "state": 5,
-      "schedule": 3,
-      "history": 3
+      "wardrobe": 21,
+      "config": 15,
+      "state": 15,
+      "schedule": 6,
+      "history": 7,
+      "diary": 2
     }
   },
   
@@ -73,6 +127,20 @@
   ],
   
   "changelog": [
+    {
+      "version": "0.3.0",
+      "date": "2026-03-28",
+      "changes": [
+        "【重大更新】自主性体系 - agent有自己的作息、学习、生活",
+        "作息驱动系统：6个作息节点，4套例行动作",
+        "自主学习系统：定期学习时尚，进化品味",
+        "主动聊天系统：7种触发条件，每天最多2条",
+        "日记系统：每晚写日记，记录一天",
+        "生活事件系统：6种虚拟生活事件",
+        "成长记录系统：周反思、月总结、季度回顾",
+        "核心思路：用户不找agent，不代表agent就待命了"
+      ]
+    },
     {
       "version": "0.2.0",
       "date": "2026-03-28",

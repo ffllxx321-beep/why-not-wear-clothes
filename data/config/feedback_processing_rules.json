@@ -1,0 +1,200 @@
+{
+  "meta": {
+    "description": "反馈自动处理规则 - AI应该如何检测和记录用户反馈",
+    "created": "2026-03-28T10:00:00+08:00",
+    "version": "1.0"
+  },
+  
+  "trigger_conditions": {
+    "description": "什么时候触发反馈检测",
+    "triggers": [
+      {
+        "condition": "用户评价了穿着",
+        "examples": ["好看", "不太适合", "换那个吧", "这个颜色不错"],
+        "action": "立即检测并记录"
+      },
+      {
+        "condition": "用户说喜欢/不喜欢",
+        "examples": ["我喜欢这件", "不喜欢这个颜色"],
+        "action": "立即检测并记录"
+      },
+      {
+        "condition": "用户给建议",
+        "examples": ["试试那件", "不如穿XX"],
+        "action": "记录为suggestion"
+      },
+      {
+        "condition": "用户发出图片请求后评价",
+        "examples": ["好看", "不错", "还行"],
+        "action": "记录并更新偏好"
+      }
+    ]
+  },
+  
+  "detection_keywords": {
+    "positive": {
+      "keywords": ["好看", "漂亮", "美", "可爱", "适合", "不错", "棒", "喜欢", "挺好看", "很美", "很漂亮", "这颜色不错", "挺搭的"],
+      "emoji": ["❤️", "😍", "👍", "✨", "💕"],
+      "intensity_levels": {
+        "strong": ["太好看了", "很漂亮", "超级好看", "完美"],
+        "normal": ["好看", "不错", "挺好看"],
+        "weak": ["还行", "可以"]
+      }
+    },
+    "negative": {
+      "keywords": ["不好看", "不太适合", "有点奇怪", "不搭", "不太好看", "颜色不太好", "这个不太行", "换个吧", "不喜欢"],
+      "emoji": ["😕", "😐", "🤔"],
+      "intensity_levels": {
+        "strong": ["不好看", "太丑了", "完全不适合"],
+        "normal": ["不太适合", "有点奇怪"],
+        "weak": ["还行吧", "一般"]
+      }
+    },
+    "suggestion": {
+      "keywords": ["试试", "可以穿", "建议", "不如", "要不穿", "换那件", "那个更好", "下次穿"],
+      "action": "不直接影响偏好，但记录建议内容"
+    }
+  },
+  
+  "processing_flow": {
+    "description": "检测到反馈后的处理流程",
+    "steps": [
+      {
+        "step": 1,
+        "action": "识别反馈类型",
+        "how": "匹配关键词，判断是positive/negative/suggestion"
+      },
+      {
+        "step": 2,
+        "action": "识别反馈对象",
+        "how": "当前穿着的衣服ID、颜色、风格"
+      },
+      {
+        "step": 3,
+        "action": "计算影响强度",
+        "how": "根据关键词强度决定影响幅度（0.05~0.2）"
+      },
+      {
+        "step": 4,
+        "action": "记录到feedback_history.json",
+        "how": "添加新条目到feedback_log"
+      },
+      {
+        "step": 5,
+        "action": "更新偏好数据",
+        "how": "根据反馈类型更新likes_dislikes.json的相关字段"
+      },
+      {
+        "step": 6,
+        "action": "触发心情变化",
+        "how": "正面反馈→happy概率，负面反馈→sad概率"
+      }
+    ]
+  },
+  
+  "preference_update_rules": {
+    "description": "反馈如何影响偏好",
+    "rules": [
+      {
+        "feedback_type": "positive",
+        "target": "color",
+        "effect": "该颜色在colors中的级别提升0.05~0.1",
+        "example": "用户说'淡蓝色好看' → colors.favorite权重提升"
+      },
+      {
+        "feedback_type": "positive",
+        "target": "style",
+        "effect": "该风格在styles中的级别提升",
+        "example": "用户说'可爱风格挺好看' → styles.favorite权重提升"
+      },
+      {
+        "feedback_type": "positive",
+        "target": "outfit",
+        "effect": "该衣服的favorite=true，wears_count增加好感",
+        "threshold": "同一衣服被夸3次以上 → favorite=true"
+      },
+      {
+        "feedback_type": "negative",
+        "target": "color",
+        "effect": "该颜色在colors中的级别下降",
+        "example": "用户说'橙色不太好看' → 可能移到disliked"
+      },
+      {
+        "feedback_type": "negative",
+        "target": "style",
+        "effect": "该风格在styles中的级别下降",
+        "example": "用户说'太正式了不好看' → disliked_styles"
+      },
+      {
+        "feedback_type": "negative",
+        "target": "outfit",
+        "effect": "该衣服的favorite可能被取消，下次可能不穿",
+        "threshold": "同一衣服被批评2次以上 → favorite=false"
+      }
+    ]
+  },
+  
+  "mood_impact": {
+    "description": "反馈对心情的影响",
+    "rules": [
+      {
+        "feedback": "strong_positive",
+        "effect": "mood → happy (概率70%)",
+        "intensity_change": "+1~2",
+        "message": "被夸了好开心！"
+      },
+      {
+        "feedback": "normal_positive",
+        "effect": "mood → happy (概率40%)",
+        "intensity_change": "+0.5",
+        "message": "觉得好看，心情好了一点"
+      },
+      {
+        "feedback": "negative",
+        "effect": "mood → sad (概率50%)",
+        "intensity_change": "-1",
+        "message": "有点失落..."
+      }
+    ]
+  },
+  
+  "record_template": {
+    "description": "feedback_history.json 的记录模板",
+    "template": {
+      "id": "fb_xxx",
+      "date": "YYYY-MM-DD",
+      "time": "HH:MM",
+      "source": "大哥",
+      "context": "图片请求后的评价/聊天中的评论",
+      "outfit_id": "当前穿着的ID",
+      "outfit_name": "衣服名称",
+      "feedback_type": "compliment/criticism/suggestion/neutral",
+      "feedback_content": "用户原文",
+      "detected_keywords": ["匹配的关键词"],
+      "intensity": "strong/normal/weak",
+      "preference_change": {
+        "target": "color/style/outfit",
+        "direction": "+/-",
+        "amount": 0.05
+      },
+      "mood_change": {
+        "from": "calm",
+        "to": "happy/sad",
+        "probability": 0.5
+      },
+      "agent_response": "AI的回复",
+      "processed": true
+    }
+  },
+  
+  "implementation_reminder": {
+    "description": "AI执行时的提醒",
+    "reminders": [
+      "每次收到用户评价后，立即检查是否匹配关键词",
+      "不要只记录，还要实际更新偏好数据",
+      "正面反馈要让心情变好，负面反馈要让心情变差",
+      "多次同类反馈要累积效果",
+      "建议类反馈不直接影响偏好，但记录下来供参考"
+    ]
+  }
+}

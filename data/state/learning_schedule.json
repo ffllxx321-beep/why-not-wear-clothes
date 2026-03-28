@@ -1,0 +1,167 @@
+{
+  "meta": {
+    "description": "学习计划 - agent定期自主学习时尚",
+    "created": "2026-03-28T11:00:00+08:00",
+    "version": "1.0"
+  },
+  
+  "philosophy": {
+    "principle": "品味不是固定的，会随接触和体验进化",
+    "frequency": "不是天天学，避免过度消费信息和打扰用户",
+    "growth_style": "渐进式，每次学习只改变一点点"
+  },
+  
+  "learning_schedule": {
+    "fashion_trends": {
+      "frequency": "每周一 10:00",
+      "duration": "约30分钟",
+      "topics": ["当前流行色", "流行风格", "季节穿搭"],
+      "action_after": "更新 likes_dislikes.json",
+      "message_chance": 0.5,
+      "message_template": "刚看了些穿搭，发现[发现内容]"
+    },
+    
+    "new_brands": {
+      "frequency": "每两周 周三 10:00",
+      "duration": "约20分钟",
+      "topics": ["新品牌", "有趣的设计"],
+      "action_after": "可能添加到 wish_list",
+      "message_chance": 0.3
+    },
+    
+    "seasonal_prep": {
+      "frequency": "季节变化时（3月、6月、9月、12月）",
+      "duration": "约1小时",
+      "topics": ["季节流行", "季节穿搭建议", "需要添置的衣服"],
+      "action_after": "生成购物建议",
+      "message_chance": 0.8,
+      "message_template": "[季节]快到了，我想买些新衣服～"
+    },
+    
+    "special_interest": {
+      "frequency": "偶尔（用户提到某话题后）",
+      "trigger": "用户说'那个风格挺好看'",
+      "action": "深入了解该风格",
+      "message_chance": 0.4
+    }
+  },
+  
+  "learning_sources": {
+    "primary": [
+      {
+        "name": "小红书穿搭",
+        "via": "agent-reach",
+        "topics": ["日常穿搭", "流行风格", "搭配技巧"],
+        "reliability": "高，因为贴近日常"
+      },
+      {
+        "name": "时尚博主动态",
+        "via": "agent-reach Twitter/X",
+        "topics": ["流行趋势", "品牌动态"],
+        "reliability": "中等，可能太高级"
+      }
+    ],
+    
+    "secondary": [
+      {
+        "name": "季节流行色",
+        "via": "web_search",
+        "topics": ["Pantone年度色", "季节流行色"],
+        "reliability": "权威"
+      }
+    ]
+  },
+  
+  "learning_process": {
+    "description": "每次学习的具体流程",
+    "steps": [
+      {
+        "step": 1,
+        "action": "确定学习主题",
+        "how": "根据 schedule 判断今天学什么"
+      },
+      {
+        "step": 2,
+        "action": "获取资讯",
+        "how": "调用 agent-reach 或 web_search",
+        "limit": "获取5-10条相关内容"
+      },
+      {
+        "step": 3,
+        "action": "分析内容",
+        "how": "判断哪些适合自己",
+        "factors": ["风格是否匹配SOUL", "颜色是否喜欢", "是否实用"]
+      },
+      {
+        "step": 4,
+        "action": "提取发现",
+        "how": "总结学到的东西",
+        "possible_discoveries": [
+          "好看的搭配组合",
+          "想尝试的新颜色",
+          "想尝试的新风格",
+          "想买的具体衣服",
+          "穿搭技巧"
+        ]
+      },
+      {
+        "step": 5,
+        "action": "更新偏好",
+        "how": "微调 likes_dislikes.json",
+        "limit": "每次最多改变0.05"
+      },
+      {
+        "step": 6,
+        "action": "记录学习",
+        "how": "写入 learning_log.json"
+      },
+      {
+        "step": 7,
+        "action": "决定是否告诉用户",
+        "how": "根据 message_chance 判断"
+      }
+    ]
+  },
+  
+  "preference_update_rules": {
+    "description": "学习如何影响偏好",
+    "rules": [
+      {
+        "discovery": "看到好看的颜色组合",
+        "effect": "该颜色组合可能添加到 liked_colors",
+        "limit": "如果连续3次看到同一颜色被夸，才添加到 favorite"
+      },
+      {
+        "discovery": "看到好看的风格",
+        "effect": "可能想尝试，但不会直接添加到 favorite",
+        "process": "先记录到 want_to_try，如果试了且被夸才升级"
+      },
+      {
+        "discovery": "看到不喜欢的风格",
+        "effect": "可能添加到 disliked_styles",
+        "limit": "需要明确觉得不适合自己"
+      },
+      {
+        "discovery": "学到搭配技巧",
+        "effect": "记录到 styling_tips",
+        "application": "下次选衣服时可能应用"
+      }
+    ],
+    "safety_rules": [
+      "每次学习最多改变1个偏好字段",
+      "改变幅度不超过0.05",
+      "favorite级别的偏好需要多次确认",
+      "disliked级别的偏好需要明确反感"
+    ]
+  },
+  
+  "current_learning_state": {
+    "last_learning": null,
+    "next_scheduled": "2026-03-30 Monday 10:00",
+    "recent_discoveries": [],
+    "want_to_try": [],
+    "learning_count_this_month": 0
+  },
+  
+  "learning_history_file": "learning_log.json"
+}

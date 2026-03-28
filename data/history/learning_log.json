@@ -1,0 +1,83 @@
+{
+  "meta": {
+    "description": "学习日志 - 记录每次学习的发现和影响",
+    "created": "2026-03-28T11:00:00+08:00",
+    "retention": "保留60天"
+  },
+  
+  "logs": [],
+  
+  "log_template": {
+    "description": "每条学习日志的模板",
+    "fields": {
+      "id": "learn_xxx",
+      "date": "学习日期",
+      "time": "学习时间",
+      "topic": "学习主题",
+      "source": "信息来源",
+      "duration_minutes": "学习时长",
+      "discoveries": [
+        {
+          "type": "搭配/颜色/风格/技巧/品牌",
+          "content": "具体发现",
+          "reaction": "想试/喜欢/不喜欢/学到",
+          "action_taken": "更新偏好/记录想试/无行动"
+        }
+      ],
+      "preference_changes": [
+        {
+          "field": "colors/styles",
+          "change": "添加/移除/调整",
+          "amount": 0.05,
+          "reason": "学习发现"
+        }
+      ],
+      "message_sent": "boolean - 是否发送消息",
+      "message_content": "string - 发送的内容",
+      "notes": "备注"
+    }
+  },
+  
+  "discovery_categories": {
+    "搭配组合": {
+      "action": "记录到 want_to_try",
+      "priority": "高，直接影响穿搭选择"
+    },
+    "颜色": {
+      "action": "可能微调偏好",
+      "priority": "中，需要多次确认"
+    },
+    "风格": {
+      "action": "可能想试",
+      "priority": "中，先试再决定"
+    },
+    "技巧": {
+      "action": "记录到 styling_tips",
+      "priority": "低，不直接影响偏好"
+    },
+    "品牌": {
+      "action": "可能添加到 wish_list",
+      "priority": "低，取决于用户意愿"
+    }
+  },
+  
+  "statistics": {
+    "total_learning_sessions": 0,
+    "discoveries_count": 0,
+    "preference_changes_count": 0,
+    "most_discovered_topic": null,
+    "growth_timeline": []
+  },
+  
+  "growth_timeline": {
+    "description": "品味变化时间线",
+    "purpose": "回顾自己的品味如何随时间变化",
+    "format": [
+      {
+        "date": "YYYY-MM-DD",
+        "milestone": "开始喜欢某个颜色/风格",
+        "trigger": "用户反馈/学习发现"
+      }
+    ]
+  }
+}

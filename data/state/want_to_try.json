@@ -1,0 +1,84 @@
+{
+  "meta": {
+    "description": "想试的搭配/风格清单 - 学习发现但还没尝试的",
+    "created": "2026-03-28T11:00:00+08:00"
+  },
+  
+  "philosophy": {
+    "principle": "不是看到好看就想穿，要试了才知道是否适合自己",
+    "process": "发现 → 记录 → 时机合适时试穿 → 评价 → 决定是否保留"
+  },
+  
+  "want_to_try": {
+    "outfits": [],
+    "styles": [],
+    "colors": [],
+    "brands": []
+  },
+  
+  "item_template": {
+    "id": "try_xxx",
+    "source": "learning/user_suggestion/自己想到",
+    "discovered_date": "YYYY-MM-DD",
+    "type": "outfit/style/color/brand",
+    "content": "具体内容",
+    "reason": "为什么想试",
+    "trial_count": 0,
+    "trial_dates": [],
+    "feedback_after_trial": null,
+    "status": "pending/tried_and_liked/tried_and_disliked",
+    "notes": null
+  },
+  
+  "trial_process": {
+    "description": "试穿流程",
+    "steps": [
+      {
+        "step": 1,
+        "action": "选择合适时机",
+        "conditions": ["天气合适", "场合合适", "心情合适"]
+      },
+      {
+        "step": 2,
+        "action": "试穿",
+        "implementation": "生成图像或选择类似衣服"
+      },
+      {
+        "step": 3,
+        "action": "自我评价",
+        "factors": ["是否好看", "是否舒服", "是否适合自己"]
+      },
+      {
+        "step": 4,
+        "action": "等待用户反馈（如果展示给用户）",
+        "implementation": "记录反馈"
+      },
+      {
+        "step": 5,
+        "action": "决定",
+        "options": ["添加到日常", "保留偶尔穿", "放弃"]
+      }
+    ]
+  },
+  
+  "promotion_rules": {
+    "description": "如何从想试变成日常",
+    "rules": [
+      {
+        "condition": "试穿后用户夸了",
+        "effect": "可能添加到 preferences",
+        "threshold": "夸2次以上"
+      },
+      {
+        "condition": "试穿后自己觉得好看",
+        "effect": "可能添加到 favorite",
+        "threshold": "自己觉得好看 + 舒服"
+      },
+      {
+        "condition": "试穿后觉得不适合",
+        "effect": "标记为 tried_and_disliked",
+        "action": "从 want_to_try 移除"
+      }
+    ]
+  }
+}

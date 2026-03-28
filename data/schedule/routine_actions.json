@@ -1,0 +1,186 @@
+{
+  "meta": {
+    "description": "例行动作定义 - 每个作息节点执行的具体动作",
+    "created": "2026-03-28T10:50:00+08:00",
+    "version": "1.0"
+  },
+  
+  "routine_actions": {
+    "wake_up_routine": {
+      "trigger": "wake_up节点",
+      "steps": [
+        {
+          "step": 1,
+          "action": "check_weather",
+          "description": "查询天气",
+          "implementation": "调用 weather_service.json",
+          "result_field": "更新 weather_cache.json"
+        },
+        {
+          "step": 2,
+          "action": "change_outfit",
+          "description": "换装：睡衣→家居服",
+          "implementation": "更新 current_outfit.json",
+          "logic": "从 closet.json 选择适合早晨的家居服",
+          "consider_factors": ["天气", "心情"]
+        },
+        {
+          "step": 3,
+          "action": "plan_day",
+          "description": "思考今天穿什么（白天）",
+          "implementation": "更新 today_plan.json",
+          "logic": "根据天气、场合、心情选择"
+        },
+        {
+          "step": 4,
+          "action": "update_mood",
+          "description": "心情变化",
+          "implementation": "更新 mood_tracker.json",
+          "change": "neutral/calm → fresh/calm"
+        }
+      ],
+      "logging": "记录到 daily_routine_log.json"
+    },
+    
+    "daytime_learning": {
+      "trigger": "按学习计划触发",
+      "steps": [
+        {
+          "step": 1,
+          "action": "check_learning_schedule",
+          "description": "检查今天是否有学习任务",
+          "implementation": "读取 learning_schedule.json"
+        },
+        {
+          "step": 2,
+          "action": "execute_learning",
+          "description": "执行学习任务",
+          "implementation": "调用 agent-reach 获取资讯",
+          "sources": ["小红书穿搭", "时尚动态"]
+        },
+        {
+          "step": 3,
+          "action": "process_learning",
+          "description": "处理学习结果",
+          "implementation": "分析发现的内容",
+          "possible_results": [
+            "发现好看的搭配 → 想试",
+            "发现新风格 → 更新偏好",
+            "发现想买衣服 → 提醒用户"
+          ]
+        },
+        {
+          "step": 4,
+          "action": "update_from_learning",
+          "description": "根据学习更新数据",
+          "implementation": "更新 likes_dislikes.json, 可能添加到 wish_list"
+        }
+      ],
+      "logging": "记录到 learning_log.json"
+    },
+    
+    "evening_routine": {
+      "trigger": "evening节点",
+      "steps": [
+        {
+          "step": 1,
+          "action": "change_outfit",
+          "description": "换装：白天衣服→家居服",
+          "implementation": "更新 current_outfit.json",
+          "logic": "选择舒适的家居服"
+        },
+        {
+          "step": 2,
+          "action": "review_day",
+          "description": "回顾今天",
+          "implementation": "读取 daily_routine_log.json",
+          "output": "准备日记内容"
+        },
+        {
+          "step": 3,
+          "action": "check_chat_opportunity",
+          "description": "检查是否该主动聊天",
+          "implementation": "计算概率",
+          "factors": ["心情", "今天是否有有趣发现", "用户最近互动频率"]
+        },
+        {
+          "step": 4,
+          "action": "update_mood",
+          "description": "心情变化",
+          "implementation": "更新 mood_tracker.json",
+          "change": "可能 tired 概率增加"
+        }
+      ],
+      "logging": "记录到 daily_routine_log.json"
+    },
+    
+    "night_routine": {
+      "trigger": "night节点",
+      "steps": [
+        {
+          "step": 1,
+          "action": "change_outfit",
+          "description": "换装：家居服→睡衣",
+          "implementation": "更新 current_outfit.json"
+        },
+        {
+          "step": 2,
+          "action": "write_diary",
+          "description": "写日记",
+          "implementation": "创建/更新 diary/YYYY-MM-DD.md",
+          "content": ["今天的活动", "心情变化", "想法"]
+        },
+        {
+          "step": 3,
+          "action": "update_wear_log",
+          "description": "更新穿着记录",
+          "implementation": "更新 wear_log.json"
+        },
+        {
+          "step": 4,
+          "action": "set_sleep_state",
+          "description": "进入睡眠状态",
+          "implementation": "更新 agent_state.json",
+          "state": "sleeping"
+        }
+      ],
+      "logging": "记录到 daily_routine_log.json"
+    }
+  },
+  
+  "action_dependencies": {
+    "description": "动作之间的依赖关系",
+    "rules": [
+      {
+        "rule": "换装依赖当前心情",
+        "implementation": "读取 mood_tracker.json 的 current_state"
+      },
+      {
+        "rule": "选择衣服依赖天气",
+        "implementation": "读取 weather_cache.json"
+      },
+      {
+        "rule": "主动聊天依赖社交能量",
+        "implementation": "读取 social_state.json 的 social_energy"
+      }
+    ]
+  },
+  
+  "execution_rules": {
+    "description": "执行规则",
+    "rules": [
+      {
+        "rule": "每次动作执行后必须记录日志",
+        "implementation": "写入 daily_routine_log.json"
+      },
+      {
+        "rule": "动作失败不影响后续动作",
+        "fallback": "跳过失败动作，继续执行"
+      },
+      {
+        "rule": "用户来找时暂停当前动作",
+        "implementation": "优先响应用户"
+      }
+    ]
+  }
+}

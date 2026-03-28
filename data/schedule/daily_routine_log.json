@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "description": "每日例行日志 - 记录作息系统执行的每个动作",
+    "created": "2026-03-28T10:50:00+08:00",
+    "retention": "保留30天"
+  },
+  
+  "logs": [
+    {
+      "date": "2026-03-28",
+      "agent_state": {
+        "wake_up_time": null,
+        "sleep_time": null,
+        "current_phase": null
+      },
+      "routine_executed": [],
+      "activities": [],
+      "outfit_changes": [],
+      "mood_changes": [],
+      "learning_done": false,
+      "chat_initiated": false,
+      "diary_written": false,
+      "notes": "等待作息系统启动"
+    }
+  ],
+  
+  "log_template": {
+    "description": "每条日志的模板",
+    "fields": {
+      "time": "执行时间",
+      "phase": "作息节点",
+      "action": "动作名称",
+      "result": "success/failure",
+      "details": "具体内容",
+      "mood_before": "执行前心情",
+      "mood_after": "执行后心情",
+      "outfit_before": "执行前穿着",
+      "outfit_after": "执行后穿着"
+    }
+  },
+  
+  "statistics": {
+    "description": "统计信息",
+    "tracked": [
+      "每日执行的动作数",
+      "每日换装次数",
+      "每日心情变化次数",
+      "主动聊天次数",
+      "学习执行次数"
+    ]
+  }
+}

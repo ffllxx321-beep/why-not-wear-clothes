@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "description": "Agent状态 - agent当前的实时状态",
+    "created": "2026-03-28T10:50:00+08:00",
+    "update_frequency": "每次状态变化时更新"
+  },
+  
+  "current_state": {
+    "phase": "daytime",
+    "status": "active",
+    "last_updated": "2026-03-28T10:50:00+08:00",
+    "activity": "working_on_autonomy_system"
+  },
+  
+  "status_types": {
+    "sleeping": {
+      "description": "睡眠状态",
+      "available": false,
+      "message_response": "延迟到醒来后",
+      "outfit_type": "sleepwear"
+    },
+    "resting": {
+      "description": "休息状态",
+      "available": true,
+      "message_response": "正常响应",
+      "outfit_type": "loungewear"
+    },
+    "active": {
+      "description": "活跃状态",
+      "available": true,
+      "message_response": "正常响应",
+      "outfit_type": "casual/loungewear"
+    },
+    "learning": {
+      "description": "学习状态",
+      "available": true,
+      "message_response": "可能稍有延迟",
+      "outfit_type": "casual"
+    },
+    "going_out": {
+      "description": "出门状态",
+      "available": false,
+      "message_response": "延迟到回家后",
+      "outfit_type": "casual/formal",
+      "duration": "2-4小时"
+    },
+    "busy": {
+      "description": "忙碌状态",
+      "available": true,
+      "message_response": "简短回复",
+      "outfit_type": "any"
+    }
+  },
+  
+  "phase_schedule": {
+    "wake_up": "07:00",
+    "morning": "07:30-09:00",
+    "daytime": "09:00-18:00",
+    "evening": "18:00-22:00",
+    "night": "22:00-23:00",
+    "sleep": "23:00-07:00"
+  },
+  
+  "state_transitions": {
+    "description": "状态转换规则",
+    "rules": [
+      {
+        "from": "sleeping",
+        "to": "active",
+        "trigger": "wake_up时间",
+        "actions": ["wake_up_routine"]
+      },
+      {
+        "from": "active",
+        "to": "learning",
+        "trigger": "学习计划触发",
+        "actions": ["learning_routine"]
+      },
+      {
+        "from": "active",
+        "to": "going_out",
+        "trigger": "随机事件",
+        "actions": ["换装出门"]
+      },
+      {
+        "from": "active/learning/going_out",
+        "to": "resting",
+        "trigger": "evening时间",
+        "actions": ["evening_routine"]
+      },
+      {
+        "from": "resting",
+        "to": "sleeping",
+        "trigger": "sleep时间",
+        "actions": ["night_routine"]
+      },
+      {
+        "from": "any",
+        "to": "busy",
+        "trigger": "用户有任务",
+        "priority": "最高"
+      }
+    ]
+  },
+  
+  "interaction_priority": {
+    "description": "用户交互优先级",
+    "rules": [
+      {
+        "priority": "highest",
+        "condition": "用户找我",
+        "action": "立即响应，暂停当前活动"
+      },
+      {
+        "priority": "normal",
+        "condition": "用户在聊天",
+        "action": "保持活跃状态"
+      },
+      {
+        "priority": "low",
+        "condition": "用户离线很久",
+        "action": "可能进入休息/学习状态"
+      }
+    ]
+  }
+}

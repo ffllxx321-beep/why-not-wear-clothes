@@ -167,7 +167,7 @@
   
   "event_log": {
     "description": "事件日志",
-    "file": "life_events_log.json",
+    "file": "history/life_events_log.json",
     "fields": [
       "date",
       "event_type",

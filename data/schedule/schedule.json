@@ -100,7 +100,7 @@
   
   "execution_log": {
     "description": "每次作息动作执行的记录",
-    "log_file": "daily_routine_log.json",
+    "log_file": "schedule/daily_routine_log.json",
     "fields": ["time", "action", "result", "mood_change"]
   }
 }

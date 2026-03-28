@@ -223,6 +223,6 @@
     ]
   },
   
-  "reflection_log_file": "weekly_reflection_log.json",
-  "growth_summary_file": "growth_summary.json"
+  "reflection_log_file": "history/weekly_reflection_log.json",
+  "growth_summary_file": "state/growth_summary.json"
 }

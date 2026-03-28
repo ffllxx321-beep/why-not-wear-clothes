@@ -163,5 +163,5 @@
     "learning_count_this_month": 0
   },
   
-  "learning_history_file": "learning_log.json"
+  "learning_history_file": "history/learning_log.json"
 }

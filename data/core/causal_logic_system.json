@@ -373,8 +373,9 @@
           "有发现 → +0.2",
           "ENFP → +0.15"
         ],
-        "final_probability": 0.5 + 0.15 + 0 + 0.2 + 0.15 = 1.0,
-        "clamped": 0.95
+        "final_probability": 1.0,
+        "clamped": 0.95,
+        "note": "计算: 0.5 + 0.15 + 0 + 0.2 + 0.15"
       },
       "possible_outcomes": [
         {"outcome": "发消息分享", "probability": 0.95},

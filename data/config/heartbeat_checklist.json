@@ -85,15 +85,11 @@
         "step": 10,
         "action": "反馈或 HEARTBEAT_OK",
         "how": "如果有执行内容且值得反馈，反馈给用户；否则返回 HEARTBEAT_OK"
-      }
-    ]
-  },
-        "how": "更新 agent_state.json, daily_routine_log.json 等"
       },
       {
         "step": 10,
         "action": "反馈或 HEARTBEAT_OK",
-        "how": "如果有执行内容，反馈给用户；否则返回 HEARTBEAT_OK"
+        "how": "如果有执行内容且值得反馈，反馈给用户；否则返回 HEARTBEAT_OK"
       },
       {
         "step": 11,

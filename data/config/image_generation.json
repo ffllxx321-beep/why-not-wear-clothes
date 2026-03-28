@@ -168,8 +168,7 @@
     ],
     "character_features_note": "人物特征描述：年龄、种族、发型、眼睛颜色、皮肤。注意：不要强调酒窝和痣，AI生成这些细节不够真实",
     "verified": true,
-    "verified_date": "2026-03-29"
-  },
+    "verified_date": "2026-03-29",
     "prompt_optimization_template": {
       "system_prompt": "你是一个专业的AI图像生成提示词优化专家。你精通各种AI图像生成模型的提示词技巧，特别是真人照片生成。",
       "user_prompt_structure": [
@@ -195,9 +194,7 @@
         "【负面约束】- 不要什么风格"
       ]
     },
-    "verified": true,
-    "verified_date": "2026-03-28",
-    "note": "大哥要求的新流程，效果更好！"
+    "workflow_note": "大哥要求的新流程，效果更好！"
   },
   
   "style_templates": {

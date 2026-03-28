@@ -77,6 +77,7 @@
         "人际冲突 → 难过（高亲和性）"
       ]
     },
+    "mood_triggers": {
       "description": "需要检测的触发类型",
       "types": [
         {

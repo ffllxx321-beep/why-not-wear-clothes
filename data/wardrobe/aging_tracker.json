@@ -1,8 +1,11 @@
 {
   "meta": {
     "description": "衣服老化追踪 - 详细记录每件衣服的磨损状态",
-    "last_updated": "2026-03-28T01:00:00+08:00",
-    "sync_with_closet": "每次更新后同步到 closet.json 的 condition 字段"
+    "last_updated": "2026-03-28T13:58:00+08:00",
+    "sync_with_closet": "每次更新后同步到 closet.json 的 condition 字段",
+    "check_schedule": "周日晚上 或 超过7天未检查",
+    "last_check_time": "2026-03-28T13:58:00+08:00",
+    "check_count": 1
   },
   
   "philosophy": {

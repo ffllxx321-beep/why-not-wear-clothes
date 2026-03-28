@@ -219,7 +219,71 @@
     "recent_purchases": [],
     "recent_suggestions": [],
     "cooldown_period_days": 7,
-    "note": "一周内不要重复建议类似的衣服"
+    "note": "一周内不要重复建议类似的衣服",
+    
+    "purchase_record_template": {
+      "item_type": "",
+      "item_name": "",
+      "color": "",
+      "occasion": "",
+      "purchase_date": "",
+      "source": "self|user_suggested|user_chosen",
+      "cost": 0,
+      "reason": "",
+      "satisfaction": null
+    },
+    
+    "suggestion_record_template": {
+      "suggestion_type": "need_based|style_based|replacement|disposal",
+      "target_item_type": "",
+      "reason": "",
+      "urgency": "high|medium|low",
+      "suggested_date": "",
+      "status": "pending|accepted|rejected|expired",
+      "user_response": null
+    },
+    
+    "tracking_rules": {
+      "description": "追踪规则",
+      "rules": [
+        {
+          "rule": "purchase_tracking",
+          "trigger": "购买新衣服",
+          "action": "记录到 recent_purchases，更新 closet.json",
+          "fields": ["item_type", "purchase_date", "reason"]
+        },
+        {
+          "rule": "suggestion_tracking",
+          "trigger": "产生购买建议",
+          "action": "记录到 recent_suggestions",
+          "fields": ["suggestion_type", "target_item_type", "reason"]
+        },
+        {
+          "rule": "cooldown_check",
+          "trigger": "产生建议前",
+          "action": "检查 recent_suggestions，排除7天内相似建议",
+          "similarity_criteria": ["相同item_type", "相同occasion"]
+        },
+        {
+          "rule": "suggestion_cleanup",
+          "trigger": "超过14天",
+          "action": "清理过期建议，标记为expired",
+          "note": "避免历史记录过长"
+        }
+      ]
+    },
+    
+    "statistics": {
+      "description": "统计信息",
+      "metrics": [
+        "total_purchases_count",
+        "total_suggestions_count",
+        "accepted_suggestions_rate",
+        "most_purchased_type",
+        "purchase_by_reason"
+      ],
+      "purpose": "了解用户偏好，改进建议质量"
+    }
   },
   
   "priority_rules": {
@@ -241,5 +305,44 @@
         "action": "随意分享"
       }
     ]
+  },
+  
+  "integration_with_aging": {
+    "description": "与老化系统的联动",
+    "triggers": [
+      {
+        "trigger": "aging_check发现damaged",
+        "action": "触发disposal_process，可能产生购买建议",
+        "suggestion_type": "replacement"
+      },
+      {
+        "trigger": "aging_check发现worn/old导致场合空缺",
+        "action": "产生购买建议填补空缺",
+        "suggestion_type": "need_based"
+      },
+      {
+        "trigger": "aging_check发现favorite=worn",
+        "action": "产生提醒或类似款购买建议",
+        "suggestion_type": "replacement",
+        "emotional_note": "询问用户意见"
+      },
+      {
+        "trigger": "季节变化+衣服老化",
+        "action": "产生季节购买建议",
+        "suggestion_type": "need_based"
+      }
+    ],
+    
+    "suggestion_flow": {
+      "description": "建议产生流程",
+      "steps": [
+        "aging_check检查衣服状态",
+        "如果发现问题，触发disposal_process",
+        "disposal_process评估场合影响",
+        "如果有场合空缺，触发update_suggestions",
+        "生成购买建议，记录到recent_suggestions",
+        "决定是否告知用户"
+      ]
+    }
   }
 }

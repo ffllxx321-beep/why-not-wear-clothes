@@ -64,6 +64,20 @@
         "step": 10,
         "action": "反馈或 HEARTBEAT_OK",
         "how": "如果有执行内容，反馈给用户；否则返回 HEARTBEAT_OK"
+      },
+      {
+        "step": 11,
+        "action": "检查衣服老化状态",
+        "how": "读取 aging_check_routine.json，判断是否该进行老化检查",
+        "condition": "周日 evening/night 或 超过7天未检查",
+        "details": [
+          "遍历 closet.json 和 aging_tracker.json",
+          "计算每件衣服的 condition_score",
+          "检查是否有 condition=damaged 的紧急情况",
+          "检查是否有 favorite=worn/old 的关注情况",
+          "更新 indices.json 的场合覆盖",
+          "如果有问题，触发 disposal_process 或 update_suggestions"
+        ]
       }
     ]
   },
@@ -117,9 +131,17 @@
         "是否已换睡衣",
         "日记是否已写",
         "是否该反思（周日）",
-        "wear_log是否已更新"
+        "wear_log是否已更新",
+        "是否该检查衣服老化（周日 或 超过7天未检查）"
       ],
-      "if_not_done": "执行夜间例行动作"
+      "if_not_done": "执行夜间例行动作",
+      "special_checks": {
+        "sunday_night": [
+          "周反思",
+          "老化检查",
+          "整理衣柜意向"
+        ]
+      }
     },
     
     "sleep": {

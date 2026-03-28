@@ -1,0 +1,89 @@
+{
+  "meta": {
+    "description": "衣服处理历史 - 记录所有处理过的衣服",
+    "created": "2026-03-28T13:58:00+08:00",
+    "version": "1.0"
+  },
+  
+  "records": [],
+  
+  "statistics": {
+    "total_disposed": 0,
+    "by_type": {
+      "扔掉": 0,
+      "捐赠": 0,
+      "收藏": 0,
+      "居家服": 0,
+      "修补": 0
+    },
+    "by_reason": {
+      "damaged": 0,
+      "old": 0,
+      "不喜欢了": 0,
+      "穿不下了": 0
+    },
+    "emotional_count": 0,
+    "replacement_needed_count": 0
+  },
+  
+  "record_template": {
+    "item_id": "",
+    "item_name": "",
+    "condition_at_disposal": "",
+    "condition_score": 0,
+    "disposal_type": "扔掉|捐赠|收藏|居家服|修补",
+    "date": "",
+    "reason": "",
+    "emotional_note": "",
+    "occasion_impact": "",
+    "replacement_needed": false,
+    "replacement_purchased": null,
+    "user_informed": false,
+    "user_response": null
+  },
+  
+  "query_rules": {
+    "description": "查询规则",
+    "queries": [
+      {
+        "query": "by_disposal_type",
+        "how": "按处理方式分类"
+      },
+      {
+        "query": "by_time_range",
+        "how": "按时间范围查询"
+      },
+      {
+        "query": "emotional_disposals",
+        "how": "有情感记录的处理"
+      },
+      {
+        "query": "pending_replacements",
+        "how": "replacement_needed=true 且 replacement_purchased=null"
+      }
+    ]
+  },
+  
+  "integration": {
+    "description": "与其他系统的联动",
+    "sync_on_disposal": [
+      "从 closet.json 移除 item",
+      "从 aging_tracker.json.tracking_data 移除",
+      "重新生成 indices.json",
+      "如果 replacement_needed=true，添加到 update_suggestions.json"
+    ],
+    
+    "life_event": {
+      "description": "可以记录为生活事件",
+      "trigger": "处理有情感价值的衣服",
+      "file": "life_events.json",
+      "event_type": "衣服处理"
+    },
+    
+    "diary": {
+      "description": "可以写入日记",
+      "trigger": "处理衣服时有感触",
+      "example": "今天把那件旧衣服处理了，有点舍不得..."
+    }
+  }
+}

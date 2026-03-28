@@ -1,0 +1,220 @@
+{
+  "meta": {
+    "description": "老化检查例行流程 - 定期检查衣服状态并触发建议",
+    "created": "2026-03-28T13:58:00+08:00",
+    "version": "1.0"
+  },
+  
+  "check_schedule": {
+    "description": "老化检查的时间安排",
+    "frequency": "weekly",
+    "recommended_day": "周日晚上",
+    "reason": "整理衣柜的好时机，反思一周，准备新一周",
+    
+    "trigger_mechanism": {
+      "primary": "heartbeat_checklist 的 step 11",
+      "backup": "每次换衣服时顺便检查当前衣服状态",
+      "emergency": "condition=damaged 时立即触发"
+    },
+    
+    "cooldown": {
+      "description": "避免频繁检查",
+      "min_interval_hours": 24,
+      "exception": "紧急情况（damaged）不受限制"
+    }
+  },
+  
+  "check_process": {
+    "description": "老化检查的具体流程",
+    "steps": [
+      {
+        "step": 1,
+        "action": "遍历所有衣服",
+        "how": "读取 closet.json 和 aging_tracker.json",
+        "output": "衣服列表及其当前状态"
+      },
+      {
+        "step": 2,
+        "action": "计算每件衣服的 condition_score",
+        "how": "公式: base_100 - wear_damage - wash_damage - accident_damage",
+        "sync": "更新 aging_tracker.json.tracking_data 和 closet.json.condition"
+      },
+      {
+        "step": 3,
+        "action": "分类衣服状态",
+        "categories": [
+          "new (90-100)",
+          "good (70-89)",
+          "normal (50-69)",
+          "worn (30-49) - 关注",
+          "old (10-29) - 需要处理",
+          "damaged (0-9) - 紧急处理"
+        ],
+        "output": "各状态的衣服数量和列表"
+      },
+      {
+        "step": 4,
+        "action": "检查紧急情况",
+        "condition": "有任何 condition=damaged 的衣服",
+        "action": "标记为紧急，立即产生处理建议"
+      },
+      {
+        "step": 5,
+        "action": "检查关注情况",
+        "condition": "worn 状态的衣服数量 > 2 或 有 favorite=true 且 worn",
+        "action": "产生提醒建议"
+      },
+      {
+        "step": 6,
+        "action": "检查场合覆盖",
+        "how": "读取 indices.json.by_occasion，检查 worn/old 衣服是否导致场合空缺",
+        "action": "如果空缺，产生购买建议"
+      },
+      {
+        "step": 7,
+        "action": "检查季节覆盖",
+        "how": "读取 indices.json.by_season，检查即将到来的季节是否有足够衣服",
+        "action": "如果不足，产生购买建议"
+      },
+      {
+        "step": 8,
+        "action": "生成建议",
+        "how": "汇总步骤4-7的结果，生成建议列表",
+        "priority": ["紧急处理优先", "场合空缺次优先", "季节准备再次", "情感处理最后"]
+      },
+      {
+        "step": 9,
+        "action": "决定是否告知用户",
+        "rules": [
+          "紧急情况 → 立即告知",
+          "有建议但非紧急 → 根据时机决定",
+          "无特殊情况 → 仅更新状态，不打扰"
+        ]
+      },
+      {
+        "step": 10,
+        "action": "更新记录",
+        "how": "更新 aging_tracker.json.last_check_time，记录本次检查"
+      }
+    ]
+  },
+  
+  "emergency_rules": {
+    "description": "紧急情况处理规则",
+    "conditions": [
+      {
+        "condition": "condition=damaged",
+        "urgency": "immediate",
+        "message": "有衣服破了/坏了，需要处理",
+        "action": "立即触发 disposal_process"
+      },
+      {
+        "condition": "favorite=true 且 condition=worn/old",
+        "urgency": "high",
+        "message": "最喜欢的衣服旧了",
+        "action": "产生提醒，询问用户意见"
+      },
+      {
+        "condition": "clean_and_ready_count < 2",
+        "urgency": "medium",
+        "message": "干净可穿的衣服太少",
+        "action": "检查是否需要洗衣或购买"
+      }
+    ],
+    
+    "escalation": {
+      "description": "紧急程度升级",
+      "rule": "如果连续3次检查都有相同问题，升级紧急程度"
+    }
+  },
+  
+  "suggestion_generation": {
+    "description": "建议生成规则",
+    "templates": {
+      "disposal_needed": {
+        "condition": "damaged",
+        "message_variants": [
+          "这件{{name}}破了，在想怎么处理...",
+          "{{name}}已经穿不了了，要处理一下",
+          "哎呀，{{name}}坏掉了，好可惜"
+        ],
+        "options": ["扔掉", "修补", "当居家服", "收藏"]
+      },
+      "favorite_old": {
+        "condition": "favorite=worn",
+        "message_variants": [
+          "{{name}}有点旧了，但舍不得扔",
+          "最喜欢的{{name}}穿了好久，旧了但还是想穿",
+          "{{name}}有感情，虽然旧了还想留着"
+        ],
+        "options": ["继续穿", "当居家服", "买类似款替代", "收藏"]
+      },
+      "occasion_gap": {
+        "condition": "场合空缺",
+        "message_variants": [
+          "发现没有适合{{occasion}}的衣服",
+          "下次{{occasion}}要穿什么呢，好像没有合适的",
+          "需要一件{{occasion}}用的衣服"
+        ],
+        "suggestion": "建议购买{{suggested_type}}"
+      },
+      "season_prep": {
+        "condition": "季节准备不足",
+        "message_variants": [
+          "{{season}}快到了，看看要不要买几件新衣服",
+          "换季了，{{season}}的衣服好像不够",
+          "得准备{{season}}的衣服了"
+        ],
+        "suggestion": "根据温度范围推荐购买类型"
+      }
+    },
+    
+    "avoid_repetition": {
+      "description": "避免重复建议",
+      "rule": "检查 update_suggestions.json.recent_suggestions，7天内不重复相同建议"
+    }
+  },
+  
+  "integration_points": {
+    "description": "与其他系统的联动",
+    "systems": [
+      {
+        "system": "heartbeat_checklist",
+        "point": "step 11 - 老化检查",
+        "trigger": "周日 evening/night 节点"
+      },
+      {
+        "system": "growth_system",
+        "point": "反思时顺便检查衣服状态",
+        "trigger": "周日晚上反思"
+      },
+      {
+        "system": "proactive_chat",
+        "point": "如果产生建议，可以作为聊天话题",
+        "trigger": "建议产生后"
+      },
+      {
+        "system": "diary",
+        "point": "日记可以记录衣服相关的事",
+        "trigger": "有衣服事件时"
+      },
+      {
+        "system": "life_events",
+        "point": "衣服处理可以作为生活事件",
+        "trigger": "处理旧衣服、买新衣服"
+      }
+    ]
+  },
+  
+  "tracking": {
+    "description": "追踪记录",
+    "fields": {
+      "last_check_time": "上次检查时间",
+      "check_count": "累计检查次数",
+      "issues_found": "发现的问题",
+      "suggestions_generated": "产生的建议",
+      "actions_taken": "采取的行动"
+    },
+    "storage": "aging_tracker.json.meta 或单独文件"
+  }
+}

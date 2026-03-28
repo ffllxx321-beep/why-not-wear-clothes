@@ -1,0 +1,176 @@
+{
+  "meta": {
+    "description": "按需加载指南 - 优化内存占用和加载速度",
+    "created": "2026-03-28T15:00:00+08:00",
+    "version": "1.0"
+  },
+  
+  "principle": {
+    "rule": "永远不要一次性加载所有文件",
+    "reason": "减少内存占用，加快响应速度",
+    "method": "根据场景只加载必需文件"
+  },
+  
+  "scenarios": {
+    "outfit_change": {
+      "description": "换装/穿搭决策",
+      "required": [
+        "wardrobe/closet.json",
+        "wardrobe/indices.json",
+        "wardrobe/preferences.json",
+        "wardrobe/current_outfit.json",
+        "config/shyness_system.json"
+      ],
+      "optional": [
+        "state/weather_cache.json",
+        "state/mood_tracker.json",
+        "schedule/today.json"
+      ],
+      "estimated_size": "~30KB"
+    },
+    
+    "weather_check": {
+      "description": "天气检查和穿衣建议",
+      "required": [
+        "config/weather_service.json",
+        "state/weather_cache.json",
+        "schedule/today.json"
+      ],
+      "optional": [
+        "wardrobe/closet.json",
+        "wardrobe/indices.json"
+      ],
+      "estimated_size": "~10KB"
+    },
+    
+    "laundry_check": {
+      "description": "洗衣检查",
+      "required": [
+        "wardrobe/laundry.json",
+        "wardrobe/closet.json"
+      ],
+      "optional": [
+        "history/laundry_log.json"
+      ],
+      "estimated_size": "~15KB"
+    },
+    
+    "heartbeat": {
+      "description": "Heartbeat 定期检查",
+      "required": [
+        "config/heartbeat_checklist.json",
+        "schedule/today.json",
+        "state/weather_cache.json"
+      ],
+      "optional": [
+        "根据检查项动态加载其他文件"
+      ],
+      "dynamic_loading": {
+        "check_schedule": "加载 schedule/schedule.json",
+        "check_mood": "加载 state/mood_tracker.json",
+        "check_laundry": "加载 wardrobe/laundry.json",
+        "check_aging": "加载 wardrobe/aging_tracker.json",
+        "check_growth": "加载 state/growth_system.json"
+      },
+      "estimated_size": "~20KB（基础）"
+    },
+    
+    "diary_write": {
+      "description": "写日记",
+      "required": [
+        "config/diary_config.json",
+        "state/growth_system.json",
+        "state/life_events.json"
+      ],
+      "optional": [
+        "history/wear_log.json",
+        "history/learning_log.json"
+      ],
+      "estimated_size": "~25KB"
+    },
+    
+    "image_generation": {
+      "description": "生成穿衣图片",
+      "required": [
+        "config/image_generation.json",
+        "wardrobe/current_outfit.json",
+        "appearance/metadata.json"
+      ],
+      "optional": [
+        "history/image_generation_log.json"
+      ],
+      "estimated_size": "~15KB"
+    },
+    
+    "social_interaction": {
+      "description": "社交互动准备",
+      "required": [
+        "config/social_influence.json",
+        "state/social_state.json",
+        "wardrobe/preferences.json"
+      ],
+      "optional": [
+        "history/feedback_history.json"
+      ],
+      "estimated_size": "~20KB"
+    },
+    
+    "self_improvement": {
+      "description": "自我改进检查",
+      "required": [
+        "state/self_improvement.json",
+        "config/performance.json"
+      ],
+      "optional": [
+        "config/performance_optimization_report.json"
+      ],
+      "estimated_size": "~15KB"
+    }
+  },
+  
+  "session_cache": {
+    "description": "会话期间保持缓存的热点文件",
+    "files": [
+      "wardrobe/indices.json",
+      "wardrobe/preferences.json",
+      "wardrobe/current_outfit.json",
+      "state/weather_cache.json"
+    ],
+    "cache_duration": "整个会话期间",
+    "invalidate_on_change": true,
+    "note": "这些文件频繁使用，缓存可避免重复加载"
+  },
+  
+  "never_load_list": {
+    "description": "永远不要主动加载的文件（除非明确需要）",
+    "files": [
+      "appearance/images/primary.jpg（1.3MB图片）",
+      "config/performance_optimization_report.json（只在优化时需要）",
+      "config/integration_test_report.json（只在测试时需要）",
+      "config/test_scenarios.json（只在测试时需要）"
+    ],
+    "reason": "体积大或使用频率低"
+  },
+  
+  "lazy_loading_pattern": {
+    "description": "懒加载实现模式",
+    "pattern": [
+      "1. 确定当前场景",
+      "2. 加载 required 文件列表",
+      "3. 根据需要加载 optional 文件",
+      "4. 使用缓存的热点文件（已加载）",
+      "5. 完成任务后不主动释放缓存"
+    ]
+  },
+  
+  "memory_savings": {
+    "before": {
+      "all_files": "~1.9MB",
+      "json_only": "~600KB"
+    },
+    "after": {
+      "typical_session": "~100-150KB",
+      "savings_percent": "约70-80%"
+    }
+  }
+}

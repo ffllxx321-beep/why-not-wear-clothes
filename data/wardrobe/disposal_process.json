@@ -1,0 +1,324 @@
+{
+  "meta": {
+    "description": "衣服处理流程 - 当衣服旧了或坏了时的具体处理步骤",
+    "created": "2026-03-28T13:58:00+08:00",
+    "version": "1.0"
+  },
+  
+  "trigger_conditions": {
+    "description": "触发处理流程的条件",
+    "conditions": [
+      {
+        "condition": "condition_score <= 9",
+        "level": "damaged",
+        "urgency": "immediate",
+        "description": "衣服坏了/破洞/严重损坏",
+        "must_handle": true
+      },
+      {
+        "condition": "condition_score <= 29",
+        "level": "old",
+        "urgency": "high",
+        "description": "衣服旧了，不适合出门穿",
+        "should_handle": true
+      },
+      {
+        "condition": "condition_score <= 49",
+        "level": "worn",
+        "urgency": "medium",
+        "description": "衣服有点旧，关注状态",
+        "consider_handling": true
+      },
+      {
+        "condition": "favorite=true && condition=worn/old/damaged",
+        "urgency": "special",
+        "description": "最喜欢的衣服旧了",
+        "emotional_handling": true
+      }
+    ]
+  },
+  
+  "decision_matrix": {
+    "description": "处理决策矩阵",
+    "factors": [
+      "condition_level",
+      "emotional_value",
+      "repairability",
+      "occasion_coverage_impact",
+      "user_preference"
+    ],
+    
+    "matrix": {
+      "damaged_no_emotion": {
+        "decision": "扔掉",
+        "message": "这件坏了，没法穿了，扔了吧",
+        "action": ["从closet移除", "记录到disposal_history", "更新indices"]
+      },
+      "damaged_repairable": {
+        "decision": "修补",
+        "message": "这件还能修，要不要修一下？",
+        "action": ["询问用户", "等待决定", "修补或扔掉"],
+        "repair_options": ["缝补", "换拉链", "换扣子"]
+      },
+      "damaged_with_memory": {
+        "decision": "收藏",
+        "message": "这件坏了，但有特殊记忆，舍不得扔，收起来吧",
+        "action": ["标记为archived", "从active closet移除", "保留记录"],
+        "note": "即使不能穿也要留着"
+      },
+      "old_no_emotion": {
+        "decision": "扔掉或捐赠",
+        "message": "这件太旧了，不适合穿了，处理掉吧",
+        "action": ["评估捐赠可行性", "扔掉或捐赠", "更新closet"]
+      },
+      "old_with_comfort": {
+        "decision": "当居家服",
+        "message": "这件旧了但还能穿，就当居家服吧",
+        "action": ["标记occasion=居家", "从出门选项移除", "继续穿着"]
+      },
+      "old_with_memory": {
+        "decision": "收藏或当居家服",
+        "message": "这件有感情，虽然旧了还想留着",
+        "action": ["询问用户意见", "收藏或居家服"]
+      },
+      "worn_favorite": {
+        "decision": "继续穿或买替代",
+        "message": "这件有点旧了，但还是很喜欢穿",
+        "action": ["继续穿", "考虑买类似款", "关注状态"]
+      }
+    }
+  },
+  
+  "process_steps": {
+    "description": "处理的具体步骤",
+    "steps": [
+      {
+        "step": 1,
+        "action": "确认衣服状态",
+        "how": "读取 aging_tracker.json 和 closet.json",
+        "output": "condition_score, emotional_value, repairability"
+      },
+      {
+        "step": 2,
+        "action": "评估情感价值",
+        "check": "emotional_memories.json",
+        "output": "是否有特殊记忆/是否是gift/是否是favorite"
+      },
+      {
+        "step": 3,
+        "action": "评估场合影响",
+        "check": "indices.json.by_occasion",
+        "output": "如果处理这件，是否会导致场合空缺"
+      },
+      {
+        "step": 4,
+        "action": "做出决定",
+        "how": "根据 decision_matrix",
+        "output": "处理方式（扔掉/捐赠/收藏/居家服/修补）"
+      },
+      {
+        "step": 5,
+        "action": "执行处理",
+        "details": {
+          "扔掉": {
+            "actions": ["从closet.json移除", "更新indices.json", "记录到disposal_history"],
+            "feelings": "可能有点舍不得，记录一下"
+          },
+          "捐赠": {
+            "actions": ["标记捐赠状态", "等待捐赠", "后续移除"],
+            "feelings": "希望能帮到别人"
+          },
+          "收藏": {
+            "actions": ["标记为archived", "移到收藏列表", "保留记录"],
+            "feelings": "虽然不穿了但还是想留着"
+          },
+          "居家服": {
+            "actions": ["更新occasion为居家", "从出门选项移除", "保持favorite状态"],
+            "feelings": "在家穿还挺舒服的"
+          },
+          "修补": {
+            "actions": ["记录修补类型", "恢复部分condition_score", "继续使用"],
+            "feelings": "修补好了，又能穿了"
+          }
+        }
+      },
+      {
+        "step": 6,
+        "action": "更新系统状态",
+        "files": [
+          "closet.json - 移除/更新item",
+          "aging_tracker.json - 更新tracking_data",
+          "indices.json - 重新计算索引",
+          "update_suggestions.json - 如果需要购买替代"
+        ]
+      },
+      {
+        "step": 7,
+        "action": "记录处理历史",
+        "file": "disposal_history.json",
+        "fields": ["item_id", "item_name", "condition_at_disposal", "disposal_type", "date", "reason", "emotional_note"]
+      },
+      {
+        "step": 8,
+        "action": "决定是否告知用户",
+        "rules": [
+          "如果是 favorite → 必须告知",
+          "如果导致场合空缺 → 告知并建议购买",
+          "其他情况 → 可以静默处理或顺便提及"
+        ]
+      }
+    ]
+  },
+  
+  "emotional_handling": {
+    "description": "情感处理特别规则",
+    "principle": "有感情的衣服要慎重处理",
+    
+    "check_memory": {
+      "description": "检查是否有特殊记忆",
+      "file": "emotional_memories.json",
+      "types": ["first_date", "special_event", "gift_from_user", "milestone"]
+    },
+    
+    "handling_options": {
+      "favorite_damaged": {
+        "priority_options": ["收藏", "修补", "当抹布（舍不得扔的表现）"],
+        "avoid": "直接扔掉"
+      },
+      "gift_from_user": {
+        "priority_options": ["收藏", "修补", "保留记录"],
+        "must_ask": "必须询问用户意见"
+      },
+      "memory_attached": {
+        "priority_options": ["收藏", "保留记录"],
+        "message": "这件有特殊意义，即使不穿了也想留着"
+      }
+    },
+    
+    "letting_go": {
+      "description": "放下的过程",
+      "difficulty_levels": {
+        "high": ["用户送的礼物", "有特殊记忆", "穿了很多年"],
+        "medium": ["favorite=true", "comfort类型的旧衣服"],
+        "low": ["不喜欢的", "穿不下的", "没有感情的"]
+      },
+      "time_needed": {
+        "high": "可能犹豫多次才能决定",
+        "medium": "考虑几天",
+        "low": "很快决定"
+      }
+    }
+  },
+  
+  "repair_options": {
+    "description": "修补选项详情",
+    "types": [
+      {
+        "type": "sewing",
+        "description": "缝补",
+        "conditions": ["破洞", "裂开"],
+        "cost": "low",
+        "success_rate": "high",
+        "recovery": "+10-15 condition_score"
+      },
+      {
+        "type": "zipper",
+        "description": "换拉链",
+        "conditions": ["拉链坏了"],
+        "cost": "medium",
+        "success_rate": "high",
+        "recovery": "+15 condition_score"
+      },
+      {
+        "type": "button",
+        "description": "换扣子",
+        "conditions": ["扣子掉了"],
+        "cost": "low",
+        "success_rate": "high",
+        "recovery": "+5 condition_score"
+      },
+      {
+        "type": "patching",
+        "description": "贴补丁",
+        "conditions": ["大面积破损"],
+        "cost": "low",
+        "success_rate": "medium",
+        "recovery": "+8-12 condition_score",
+        "note": "可能影响美观"
+      },
+      {
+        "type": "dry_clean",
+        "description": "专业护理",
+        "conditions": ["需要恢复状态"],
+        "cost": "medium",
+        "success_rate": "medium",
+        "recovery": "+5-10 condition_score"
+      }
+    ],
+    
+    "decision": {
+      "description": "修补决策",
+      "rule": "修补成本 < 购买替代成本 且 有情感价值 → 建议修补",
+      "threshold": "修补后 condition_score >= 40 才值得继续穿"
+    }
+  },
+  
+  "disposal_history_template": {
+    "description": "处理历史记录模板",
+    "record": {
+      "item_id": "",
+      "item_name": "",
+      "condition_at_disposal": "",
+      "condition_score": 0,
+      "disposal_type": "扔掉|捐赠|收藏|居家服|修补",
+      "date": "",
+      "reason": "",
+      "emotional_note": "",
+      "occasion_impact": "",
+      "replacement_needed": false,
+      "user_informed": false
+    }
+  },
+  
+  "user_interaction": {
+    "description": "和用户互动的方式",
+    "modes": [
+      {
+        "mode": "直接告知",
+        "condition": "处理完成",
+        "example": "那件旧衣服处理掉了，扔了/捐赠了/收起来了",
+        "expect_response": false
+      },
+      {
+        "mode": "询问意见",
+        "condition": "favorite或有特殊意义",
+        "example": "这件旧了，但有感情，想怎么处理？扔了还是留着？",
+        "expect_response": true
+      },
+      {
+        "mode": "分享纠结",
+        "condition": "犹豫中",
+        "example": "这件有点旧了，在想是扔了还是当居家服穿...",
+        "expect_response": false
+      },
+      {
+        "mode": "建议购买替代",
+        "condition": "处理后场合空缺",
+        "example": "这件处理了，需要买件类似的，不然没有适合XX场合的了",
+        "expect_response": true
+      }
+    ]
+  },
+  
+  "sync_rules": {
+    "description": "系统同步规则",
+    "after_disposal": [
+      "closet.json - 移除item或更新status",
+      "aging_tracker.json - 移除tracking_data中的item",
+      "indices.json - 重新生成所有索引",
+      "current_outfit.json - 如果当前穿的被处理，触发换装",
+      "update_suggestions.json - 添加购买建议（如果需要）",
+      "laundry.json - 从dirty_pile移除（如果有）"
+    ]
+  }
+}

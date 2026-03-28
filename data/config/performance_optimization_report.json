@@ -1,0 +1,184 @@
+{
+  "meta": {
+    "description": "性能优化分析报告 - 轮次10",
+    "created": "2026-03-28T15:00:00+08:00",
+    "round": 10,
+    "direction": "性能优化与内存占用"
+  },
+  
+  "analysis_summary": {
+    "total_data_size": "1.9MB",
+    "total_files": "70+",
+    "json_files_total_lines": 2321,
+    "largest_component": "appearance/images (1.3MB = 68%)"
+  },
+  
+  "issues_found": [
+    {
+      "severity": "high",
+      "category": "storage",
+      "issue": "图片文件过大",
+      "details": "primary.jpg 占用 1.3MB，占总数据68%",
+      "impact": "加载速度慢，内存占用高",
+      "recommendation": "压缩图片到合理大小（建议 < 500KB）"
+    },
+    {
+      "severity": "medium",
+      "category": "data_model",
+      "issue": "双数据模型并存",
+      "details": "closet.json（套装模式）和 clothing_items.json（单品模式）两种哲学",
+      "impact": "indices.json 只索引 closet.json，查询效率不一致",
+      "recommendation": "明确主数据源：建议以 closet.json 为主，clothing_items.json 作为搭配参考库"
+    },
+    {
+      "severity": "medium",
+      "category": "redundancy",
+      "issue": "mood.json 与 mood_tracker.json 功能重叠",
+      "details": "mood_tracker.json 已包含 current_state 和 mood_history",
+      "impact": "重复加载，数据一致性风险",
+      "recommendation": "合并为单一文件 mood_system.json，保留历史追踪功能"
+    },
+    {
+      "severity": "low",
+      "category": "index",
+      "issue": "indices.json 只索引 closet.json",
+      "details": "clothing_items.json 没有对应索引",
+      "impact": "单品查询效率低",
+      "recommendation": "如果单品模式需要使用，创建 clothing_indices.json"
+    }
+  ],
+  
+  "optimization_actions": [
+    {
+      "action": "图片优化",
+      "steps": [
+        "检查 primary.jpg 实际尺寸",
+        "压缩到 < 500KB（保持可见质量）",
+        "可选：转换为 webp 格式（更小体积）",
+        "清理 history/ 目录的空 .gitkeep"
+      ],
+      "estimated_savings": "800KB - 1MB"
+    },
+    {
+      "action": "数据模型统一",
+      "steps": [
+        "明确 closet.json 为主数据源",
+        "clothing_items.json 作为搭配知识库（只读参考）",
+        "indices.json 维护 closet.json 索引",
+        "如果需要单品搭配，创建 pairing_suggestions.json"
+      ],
+      "estimated_savings": "逻辑清晰，避免混淆"
+    },
+    {
+      "action": "mood 系统合并",
+      "steps": [
+        "创建 mood_system.json 整合两者",
+        "包含：mood_types定义 + current_state + mood_history",
+        "删除 mood.json（或标记为deprecated）"
+      ],
+      "estimated_savings": "减少1个文件，避免重复加载"
+    },
+    {
+      "action": "lazy_loading 优化",
+      "steps": [
+        "创建 loading_guide.json 定义按需加载规则",
+        "换装时只加载：closet.json + indices.json + preferences.json",
+        "天气检查时只加载：weather_service.json + weather_cache.json",
+        "心情检查时只加载：mood_tracker.json"
+      ],
+      "estimated_savings": "内存占用降低30-50%"
+    }
+  ],
+  
+  "loading_guide": {
+    "description": "按需加载配置",
+    "scenarios": [
+      {
+        "scenario": "换装/穿搭",
+        "required_files": [
+          "closet.json",
+          "indices.json",
+          "preferences.json",
+          "current_outfit.json",
+          "shyness_system.json"
+        ],
+        "optional_files": [
+          "weather_cache.json（如果有天气信息）",
+          "mood_tracker.json（如果心情影响穿搭）"
+        ]
+      },
+      {
+        "scenario": "天气检查",
+        "required_files": [
+          "weather_service.json",
+          "weather_cache.json",
+          "today.json"
+        ],
+        "optional_files": []
+      },
+      {
+        "scenario": "洗衣检查",
+        "required_files": [
+          "laundry.json",
+          "closet.json"
+        ],
+        "optional_files": [
+          "laundry_log.json"
+        ]
+      },
+      {
+        "scenario": "日记/成长",
+        "required_files": [
+          "diary_config.json",
+          "growth_system.json",
+          "life_events.json"
+        ],
+        "optional_files": []
+      },
+      {
+        "scenario": "heartbeat检查",
+        "required_files": [
+          "heartbeat_checklist.json",
+          "today.json",
+          "weather_cache.json"
+        ],
+        "optional_files": [
+          "根据检查内容动态加载其他文件"
+        ]
+      }
+    ],
+    "never_load_all": true,
+    "session_cache": {
+      "description": "会话期间缓存的文件",
+      "files": ["indices.json", "preferences.json", "current_outfit.json"],
+      "invalidate_on_change": true
+    }
+  },
+  
+  "memory_estimates": {
+    "current": {
+      "all_files": "~1.9MB",
+      "json_files": "~600KB",
+      "images": "1.3MB"
+    },
+    "after_optimization": {
+      "images": "<500KB",
+      "json_files": "~500KB（合并后）",
+      "typical_session": "~150KB（按需加载）"
+    },
+    "savings": "会话内存占用降低约70%"
+  },
+  
+  "recommendations": [
+    "优先压缩图片（最高优先级）",
+    "合并 mood 系统（中优先级）",
+    "明确数据模型分工（中优先级）",
+    "实施 lazy_loading（低优先级，但效果显著）"
+  ],
+  
+  "next_steps": [
+    "创建 loading_guide.json",
+    "更新 performance.json 添加优化记录",
+    "可选：执行图片压缩（需要用户确认）"
+  ]
+}

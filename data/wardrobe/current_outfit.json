@@ -24,18 +24,18 @@
   },
   
   "current_outfit": {
-    "id": "combo_001",
-    "name": "元气学院风",
+    "id": "combo_taikooli",
+    "name": "太古里逛街购物风",
     "type": "casual",
-    "description": "浅蓝色泡泡袖衬衫 + 藏青色高腰百褶短裙 + 极薄黑丝 + 棕色玛丽珍鞋",
-    "top": "浅蓝色泡泡袖衬衫",
-    "skirt": "藏青色高腰百褶短裙",
-    "stockings": "socks_001",
-    "stockings_name": "黑色丝袜(15D透肉)",
-    "shoes": "棕色玛丽珍鞋",
-    "accessories": ["黑色贝雷帽", "小斜挎包"],
-    "wearing_since": "2026-03-29T00:23:00+08:00",
-    "reason": "学习了日系韩系穿搭，选择元气学院风搭配"
+    "description": "奶杏色泡泡袖针织衫 + 牛仔马甲 + 白色百褶短裙 + 白色蕾丝堆堆袜 + 厚底运动鞋",
+    "top": "奶杏色泡泡袖方领短款针织衫 + 浅水洗蓝色牛仔马甲",
+    "skirt": "高腰白色百褶迷你裙",
+    "stockings": "socks_011",
+    "stockings_name": "白色蕾丝花边长筒袜",
+    "shoes": "厚底复古白色运动鞋",
+    "accessories": ["帆布托特包", "金色圆环耳环", "黑色斜挎小腰包"],
+    "wearing_since": "2026-03-29T00:32:00+08:00",
+    "reason": "去太古里逛街买新衣服，甜妹逛街风"
   },
   "status": {
     "clean": true,

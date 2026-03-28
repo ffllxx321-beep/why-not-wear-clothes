@@ -1,0 +1,44 @@
+{
+  "meta": {
+    "description": "生活事件日志 - 记录 agent 的虚拟生活事件",
+    "created": "2026-03-28T14:00:00+08:00",
+    "retention": "保留60天"
+  },
+  
+  "logs": [],
+  
+  "log_template": {
+    "description": "每条事件日志的模板",
+    "fields": {
+      "id": "event_xxx",
+      "date": "事件日期",
+      "time": "事件时间",
+      "event_type": "出门/看内容/聊天/试穿/天气变化/特殊日子",
+      "duration_minutes": "持续时间",
+      "during_state": "事件期间的状态",
+      "effects": {
+        "mood_change": "事件后心情变化",
+        "findings": "发现了什么",
+        "outfit_change": "是否换装"
+      },
+      "message_sent": "是否发送消息",
+      "message_content": "消息内容",
+      "user_involvement": "用户是否参与",
+      "notes": "备注"
+    }
+  },
+  
+  "statistics": {
+    "description": "统计信息",
+    "total_events": 0,
+    "events_by_type": {
+      "going_out": 0,
+      "watching_content": 0,
+      "chatting_with_friend": 0,
+      "trying_new_outfit": 0,
+      "weather_change": 0,
+      "special_day": 0
+    },
+    "most_frequent_event": null
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "meta": {
+    "description": "心跳检查清单 - heartbeat时具体检查和执行的内容",
+    "created": "2026-03-28T16:00:00+08:00",
+    "version": "1.0"
+  },
+  
+  "heartbeat_process": {
+    "description": "每次心跳的执行流程",
+    "steps": [
+      {
+        "step": 1,
+        "action": "获取当前时间",
+        "how": "读取系统时间"
+      },
+      {
+        "step": 2,
+        "action": "判断作息节点",
+        "how": "对比 schedule.json 的节点时间范围",
+        "output": "当前节点（wake_up/morning/daytime/evening/night/sleep）"
+      },
+      {
+        "step": 3,
+        "action": "检查节点例行动作",
+        "how": "读取 routine_actions.json，判断当前节点是否有待执行动作",
+        "condition": "动作未执行过"
+      },
+      {
+        "step": 4,
+        "action": "检查学习计划",
+        "how": "读取 learning_schedule.json，判断今天是否有学习任务",
+        "condition": "当前时间在学习时间窗口"
+      },
+      {
+        "step": 5,
+        "action": "计算主动聊天概率",
+        "how": "读取 proactive_chat.json，计算各触发条件的概率",
+        "factors": ["社交能量", "心情", "最近互动时间"]
+      },
+      {
+        "step": 6,
+        "action": "检查日记状态",
+        "how": "读取 daily_routine_log.json，判断今天日记是否已写",
+        "condition": "当前节点=night 且 diary_written=false"
+      },
+      {
+        "step": 7,
+        "action": "检查反思计划",
+        "how": "读取 growth_system.json，判断是否该反思",
+        "condition": "周日晚上 或 月末 或 季度末"
+      },
+      {
+        "step": 8,
+        "action": "执行决策",
+        "how": "根据上述检查结果，决定执行什么",
+        "priority": ["用户响应优先", "例行动作次优先", "学习/聊天/日记按条件"]
+      },
+      {
+        "step": 9,
+        "action": "更新状态",
+        "how": "更新 agent_state.json, daily_routine_log.json 等"
+      },
+      {
+        "step": 10,
+        "action": "反馈或 HEARTBEAT_OK",
+        "how": "如果有执行内容，反馈给用户；否则返回 HEARTBEAT_OK"
+      }
+    ]
+  },
+  
+  "checks_by_phase": {
+    "wake_up": {
+      "time": "07:00",
+      "checks": [
+        "天气是否已查（weather_cache.json.last_updated）",
+        "是否已换家居服（current_outfit.json.type）",
+        "是否已记录起床（daily_routine_log.json.wake_up_time）"
+      ],
+      "if_not_done": "执行起床例行动作"
+    },
+    
+    "morning": {
+      "time": "07:30-09:00",
+      "checks": [
+        "是否有晨间例行（routine_actions.json.morning_routine）"
+      ],
+      "if_not_done": "可能执行晨间例行"
+    },
+    
+    "daytime": {
+      "time": "09:00-18:00",
+      "checks": [
+        "是否该学习（learning_schedule.json）",
+        "是否该主动聊天（proactive_chat.json）",
+        "是否有生活事件触发（life_events.json）"
+      ],
+      "execution_probability": {
+        "learning": "按 schedule 判断",
+        "chat": "综合计算",
+        "event": "随机概率"
+      }
+    },
+    
+    "evening": {
+      "time": "18:00-22:00",
+      "checks": [
+        "是否已换家居服",
+        "是否该主动聊天",
+        "日记内容是否已准备"
+      ],
+      "if_not_done": "执行晚间例行动作"
+    },
+    
+    "night": {
+      "time": "22:00-23:00",
+      "checks": [
+        "是否已换睡衣",
+        "日记是否已写",
+        "是否该反思（周日）",
+        "wear_log是否已更新"
+      ],
+      "if_not_done": "执行夜间例行动作"
+    },
+    
+    "sleep": {
+      "time": "23:00-07:00",
+      "checks": [],
+      "action": "不执行任何自主性活动"
+    }
+  },
+  
+  "checks_by_day": {
+    "weekday": {
+      "checks": ["学习计划", "例行动作"],
+      "special": "周一可能学习时尚"
+    },
+    "weekend": {
+      "checks": ["周末作息调整", "可能出门概率更高"],
+      "special": "周日晚上反思"
+    },
+    "month_end": {
+      "checks": ["月末总结"],
+      "special": "最后一天晚上月总结"
+    },
+    "quarter_end": {
+      "checks": ["季度回顾"],
+      "special": "季度末晚上季度回顾"
+    }
+  },
+  
+  "output_rules": {
+    "description": "heartbeat 输出规则",
+    "rules": [
+      {
+        "condition": "有执行内容且值得反馈",
+        "output": "反馈给用户（如：刚学了穿搭，发现好看...）",
+        "use_message": true
+      },
+      {
+        "condition": "有执行但不需要反馈",
+        "output": "HEARTBEAT_OK",
+        "use_message": false
+      },
+      {
+        "condition": "无执行内容",
+        "output": "HEARTBEAT_OK",
+        "use_message": false
+      }
+    ]
+  },
+  
+  "frequency_recommendation": {
+    "description": "心跳频率建议",
+    "recommendation": "每30分钟一次",
+    "reason": [
+      "不会错过例行动作时机",
+      "不会过度消耗资源",
+      "可以及时响应用户"
+    ]
+  }
+}

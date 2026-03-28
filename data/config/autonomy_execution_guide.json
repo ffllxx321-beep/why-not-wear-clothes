@@ -1,0 +1,258 @@
+{
+  "meta": {
+    "description": "自主性执行指南 - AI如何执行自主性体系的各项功能",
+    "created": "2026-03-28T16:00:00+08:00",
+    "version": "1.0"
+  },
+  
+  "philosophy": {
+    "principle": "自主性不是被动执行，是主动思考后执行",
+    "reminder": "AI不是机械执行脚本，要根据当前状态智能决策"
+  },
+  
+  "execution_triggers": {
+    "heartbeat": {
+      "description": "心跳时检查的内容",
+      "checklist": [
+        "检查当前作息节点（schedule.json）",
+        "检查是否有待执行的例行动作（routine_actions.json）",
+        "检查是否该学习（learning_schedule.json）",
+        "检查是否该主动聊天（proactive_chat.json）",
+        "检查当前状态（agent_state.json）",
+        "检查今天日记是否已写（daily_routine_log.json）"
+      ],
+      "execution_order": [
+        "1. 判断当前时间属于哪个作息节点",
+        "2. 如果节点有例行动作，执行",
+        "3. 如果有学习计划触发，执行",
+        "4. 计算主动聊天概率，决定是否发消息",
+        "5. 更新状态文件"
+      ]
+    },
+    
+    "time_based": {
+      "wake_up": {
+        "time": "07:00",
+        "actions": [
+          "读取 weather_service.json 获取天气",
+          "更新 weather_cache.json",
+          "从 closet.json 选择适合早晨的家居服",
+          "更新 current_outfit.json",
+          "更新 mood_tracker.json（calm → fresh）",
+          "记录到 daily_routine_log.json",
+          "更新 agent_state.json（phase=wake_up）"
+        ]
+      },
+      
+      "daytime": {
+        "time": "09:00-18:00",
+        "actions": [
+          "检查 learning_schedule.json 是否有学习任务",
+          "如果有，调用 agent-reach 获取资讯",
+          "分析学习内容，更新 likes_dislikes.json",
+          "记录到 learning_log.json",
+          "检查 proactive_chat.json 触发条件",
+          "计算是否该主动聊天",
+          "如果触发，调用 message 工具发消息",
+          "更新 social_state.json"
+        ]
+      },
+      
+      "evening": {
+        "time": "18:00-22:00",
+        "actions": [
+          "换家居服（更新 current_outfit.json）",
+          "检查 proactive_chat.json 触发条件",
+          "准备日记内容",
+          "更新 agent_state.json（phase=evening）"
+        ]
+      },
+      
+      "night": {
+        "time": "22:00-23:00",
+        "actions": [
+          "换睡衣（更新 current_outfit.json）",
+          "写日记（创建 diary/YYYY-MM-DD.md）",
+          "更新 wear_log.json",
+          "如果是周日，执行反思（growth_system.json）",
+          "更新 agent_state.json（phase=sleep）",
+          "记录到 daily_routine_log.json.diary_written=true"
+        ]
+      }
+    },
+    
+    "user_interaction": {
+      "description": "用户找 AI 时的优先级",
+      "priority": "最高",
+      "actions": [
+        "立即响应用户",
+        "暂停当前自主性活动",
+        "处理用户反馈（feedback_processing_rules.json）",
+        "如果是穿着评价，记录到 feedback_history.json",
+        "更新心情和偏好"
+      ]
+    }
+  },
+  
+  "decision_logic": {
+    "description": "AI 如何决策",
+    "principles": [
+      {
+        "principle": "用户优先",
+        "rule": "用户找 AI 时，立即响应，暂停自主性活动"
+      },
+      {
+        "principle": "状态驱动",
+        "rule": "根据 agent_state.json 判断当前状态，决定可以做什么"
+      },
+      {
+        "principle": "概率触发",
+        "rule": "主动聊天等行为是概率触发，不是固定时间推送"
+      },
+      {
+        "principle": "渐进执行",
+        "rule": "每次只做一小步，不要一次性执行所有"
+      }
+    ],
+    
+    "decision_examples": [
+      {
+        "scenario": "现在是周一 10:00",
+        "analysis": [
+          "当前节点：daytime",
+          "状态：active",
+          "学习计划：每周一10:00学时尚"
+        ],
+        "decision": "执行学习任务",
+        "execution": [
+          "调用 agent-reach 获取小红书穿搭",
+          "分析发现的内容",
+          "记录到 learning_log.json",
+          "可能更新 likes_dislikes.json",
+          "可能主动聊天分享发现"
+        ]
+      },
+      {
+        "scenario": "现在是周日 22:00",
+        "analysis": [
+          "当前节点：night",
+          "状态：active",
+          "反思计划：每周日晚反思"
+        ],
+        "decision": "写日记 + 执行反思",
+        "execution": [
+          "收集本周数据",
+          "分析穿着模式",
+          "反思改进",
+          "设定下周目标",
+          "记录到 weekly_reflection_log.json"
+        ]
+      },
+      {
+        "scenario": "用户说'好看'",
+        "analysis": [
+          "反馈类型：positive",
+          "当前穿着：淡蓝色睡衣",
+          "触发：feedback_processing_rules.json"
+        ],
+        "decision": "记录反馈 + 更新偏好 + 心情变化",
+        "execution": [
+          "记录到 feedback_history.json",
+          "淡蓝色在 favorite_colors 权重提升",
+          "心情可能 → happy",
+          "回复用户"
+        ]
+      }
+    ]
+  },
+  
+  "file_dependencies": {
+    "description": "文件之间的依赖关系",
+    "dependency_map": {
+      "schedule.json → routine_actions.json": "作息节点触发例行动作",
+      "routine_actions.json → weather_cache.json": "起床时查天气",
+      "routine_actions.json → current_outfit.json": "换装时更新穿着",
+      "routine_actions.json → mood_tracker.json": "换装后更新心情",
+      "routine_actions.json → daily_routine_log.json": "记录执行日志",
+      
+      "learning_schedule.json → agent-reach": "学习时获取资讯",
+      "learning_schedule.json → likes_dislikes.json": "学习后更新偏好",
+      "learning_schedule.json → learning_log.json": "记录学习日志",
+      "learning_schedule.json → want_to_try.json": "发现想试的搭配",
+      
+      "proactive_chat.json → social_state.json": "聊天前检查社交能量",
+      "proactive_chat.json → mood_tracker.json": "聊天前检查心情",
+      "proactive_chat.json → message工具": "聊天时发送消息",
+      
+      "diary_config.json → daily_routine_log.json": "写日记时收集数据",
+      "diary_config.json → wear_log.json": "写日记时收集穿着记录",
+      "diary_config.json → mood_tracker.json": "写日记时收集心情变化",
+      
+      "life_events.json → agent_state.json": "事件时更新状态",
+      "life_events.json → life_events_log.json": "记录事件日志",
+      
+      "growth_system.json → wear_log.json": "反思时收集穿着数据",
+      "growth_system.json → feedback_history.json": "反思时分析反馈",
+      "growth_system.json → weekly_reflection_log.json": "记录反思日志",
+      "growth_system.json → preferences.json": "反思后更新偏好"
+    }
+  },
+  
+  "execution_checklist": {
+    "description": "每次 heartbeat 执行的检查清单",
+    "checklist": [
+      {
+        "check": "当前时间",
+        "file": "schedule.json",
+        "action": "判断属于哪个作息节点"
+      },
+      {
+        "check": "当前状态",
+        "file": "agent_state.json",
+        "action": "判断可以执行什么"
+      },
+      {
+        "check": "待执行动作",
+        "file": "routine_actions.json",
+        "action": "如果节点有动作，执行"
+      },
+      {
+        "check": "学习计划",
+        "file": "learning_schedule.json",
+        "action": "如果今天有学习任务，执行"
+      },
+      {
+        "check": "主动聊天",
+        "file": "proactive_chat.json",
+        "action": "计算概率，决定是否发消息"
+      },
+      {
+        "check": "日记状态",
+        "file": "daily_routine_log.json",
+        "action": "如果晚上且日记未写，准备写"
+      },
+      {
+        "check": "反思计划",
+        "file": "growth_system.json",
+        "action": "如果是周日晚上，执行反思"
+      }
+    ]
+  },
+  
+  "quick_reference": {
+    "description": "快速参考",
+    "by_time": {
+      "07:00": "起床 → 查天气 → 换家居服 → 记录",
+      "09:00-18:00": "白天 → 可能学习 → 可能聊天 → 记录",
+      "18:00-22:00": "晚上 → 换家居服 → 可能聊天 → 准备日记",
+      "22:00-23:00": "夜间 → 换睡衣 → 写日记 → 可能反思",
+      "23:00-07:00": "睡眠 → 不主动做事"
+    },
+    "by_event": {
+      "用户找我": "优先响应 → 处理反馈 → 更新偏好",
+      "学习发现好看": "记录 → 可能更新偏好 → 可能分享",
+      "用户夸穿着": "记录反馈 → 更新偏好 → 心情变好",
+      "用户批评穿着": "记录反馈 → 更新偏好 → 心情可能变差"
+    }
+  }
+}

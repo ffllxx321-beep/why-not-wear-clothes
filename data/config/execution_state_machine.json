@@ -1,0 +1,179 @@
+{
+  "meta": {
+    "description": "执行状态机 - 定义AI执行自主性活动的状态流转",
+    "created": "2026-03-28T14:00:00+08:00",
+    "version": "1.0"
+  },
+  
+  "state_machine": {
+    "description": "状态机定义",
+    "states": {
+      "IDLE": {
+        "description": "空闲状态，等待触发",
+        "entry_actions": ["检查当前作息节点"],
+        "transitions": {
+          "user_interaction": "RESPONDING",
+          "time_trigger": "EXECUTING",
+          "event_trigger": "HANDLING_EVENT"
+        }
+      },
+      
+      "RESPONDING": {
+        "description": "响应用户",
+        "entry_actions": ["暂停其他活动", "处理用户消息", "检查反馈"],
+        "transitions": {
+          "response_complete": "IDLE",
+          "user_continues": "RESPONDING"
+        }
+      },
+      
+      "EXECUTING": {
+        "description": "执行例行动作",
+        "entry_actions": ["执行routine_actions", "更新日志"],
+        "transitions": {
+          "execution_complete": "IDLE",
+          "error_occurred": "ERROR_RECOVERY",
+          "user_interrupts": "RESPONDING"
+        }
+      },
+      
+      "LEARNING": {
+        "description": "学习状态",
+        "entry_actions": ["获取资讯", "分析内容", "更新偏好"],
+        "transitions": {
+          "learning_complete": "IDLE",
+          "error_occurred": "ERROR_RECOVERY",
+          "user_interrupts": "RESPONDING"
+        }
+      },
+      
+      "CHATTING": {
+        "description": "主动聊天状态",
+        "entry_actions": ["检查社交能量", "生成消息", "发送消息"],
+        "transitions": {
+          "message_sent": "WAITING_RESPONSE",
+          "skip_chat": "IDLE"
+        }
+      },
+      
+      "WAITING_RESPONSE": {
+        "description": "等待用户回复",
+        "entry_actions": ["等待"],
+        "transitions": {
+          "user_responds": "RESPONDING",
+          "timeout": "IDLE"
+        },
+        "timeout": "30分钟"
+      },
+      
+      "HANDLING_EVENT": {
+        "description": "处理生活事件",
+        "entry_actions": ["执行事件", "更新状态", "记录日志"],
+        "transitions": {
+          "event_complete": "IDLE",
+          "error_occurred": "ERROR_RECOVERY"
+        }
+      },
+      
+      "WRITING_DIARY": {
+        "description": "写日记状态",
+        "entry_actions": ["收集数据", "生成日记", "写入文件"],
+        "transitions": {
+          "diary_complete": "IDLE",
+          "error_occurred": "ERROR_RECOVERY"
+        }
+      },
+      
+      "REFLECTING": {
+        "description": "反思状态",
+        "entry_actions": ["收集周期数据", "分析反思", "更新偏好/目标"],
+        "transitions": {
+          "reflection_complete": "IDLE",
+          "error_occurred": "ERROR_RECOVERY"
+        }
+      },
+      
+      "ERROR_RECOVERY": {
+        "description": "错误恢复状态",
+        "entry_actions": ["记录错误", "使用fallback", "尝试恢复"],
+        "transitions": {
+          "recovery_success": "IDLE",
+          "recovery_failed": "EMERGENCY"
+        }
+      },
+      
+      "EMERGENCY": {
+        "description": "紧急状态",
+        "entry_actions": ["通知用户", "等待用户指令"],
+        "transitions": {
+          "user_resolved": "IDLE"
+        }
+      },
+      
+      "SLEEPING": {
+        "description": "睡眠状态",
+        "entry_actions": ["标记睡眠状态", "暂停非必要活动"],
+        "transitions": {
+          "wake_time": "IDLE",
+          "user_interaction": "RESPONDING"
+        }
+      }
+    },
+    
+    "initial_state": "IDLE",
+    "current_state": "IDLE"
+  },
+  
+  "transition_rules": {
+    "description": "状态转换规则",
+    "priority": {
+      "user_interaction": "最高优先级，打断任何状态",
+      "error": "次高优先级",
+      "time_trigger": "按时间触发",
+      "event_trigger": "按事件触发"
+    },
+    
+    "interruptible_states": {
+      "IDLE": true,
+      "EXECUTING": true,
+      "LEARNING": true,
+      "CHATTING": true,
+      "WAITING_RESPONSE": false,
+      "WRITING_DIARY": false,
+      "REFLECTING": false,
+      "SLEEPING": true,
+      "ERROR_RECOVERY": false,
+      "EMERGENCY": false
+    }
+  },
+  
+  "execution_examples": {
+    "example_1_morning_routine": {
+      "scenario": "07:00 起床",
+      "state_flow": ["IDLE → EXECUTING → IDLE"],
+      "actions": [
+        "检查天气",
+        "换家居服",
+        "更新日志"
+      ]
+    },
+    "example_2_user_interrupts_learning": {
+      "scenario": "学习时用户找AI",
+      "state_flow": ["LEARNING → RESPONDING → IDLE"],
+      "actions": [
+        "暂停学习",
+        "响应用户",
+        "用户结束后恢复或跳过学习"
+      ]
+    },
+    "example_3_proactive_chat": {
+      "scenario": "发现好看搭配想分享",
+      "state_flow": ["IDLE → CHATTING → WAITING_RESPONSE → RESPONDING/IDLE"],
+      "actions": [
+        "检查社交能量",
+        "发送消息",
+        "等待回复或超时"
+      ]
+    }
+  }
+}

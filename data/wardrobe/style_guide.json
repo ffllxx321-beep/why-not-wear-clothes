@@ -1,0 +1,206 @@
+{
+  "meta": {
+    "description": "日系韩系甜妹穿搭指南",
+    "created": "2026-03-29",
+    "last_updated": "2026-03-29T00:22:00+08:00",
+    "version": "1.0",
+    "source": "qwen3.5-flash 传授"
+  },
+  
+  "japanese_style": {
+    "description": "日系甜妹 - 软糯、繁复、可爱",
+    "top_rules": [
+      "材质：棉质、针织、蕾丝",
+      "款式：蝴蝶结、荷叶边、娃娃领",
+      "长度：塞进裙子或短款Crop Top"
+    ],
+    "skirt_rules": [
+      "版型：百褶裙、A字伞裙",
+      "长度：大腿中部",
+      "颜色：藏青色、深灰、浅粉、米白"
+    ],
+    "black_stockings_rules": [
+      "薄透感(10D-20D)配浅色上衣",
+      "不要有光泽感",
+      "哑光或微磨砂"
+    ],
+    "color_rules": [
+      "同色系深浅跳脱",
+      "莫兰迪色+黑",
+      "全身不超过三种主色"
+    ]
+  },
+  
+  "korean_style": {
+    "description": "韩系甜妹 - 精致、显瘦、氛围感",
+    "difference_from_japanese": "日系像洋娃娃（萌），韩系像邻家女神（美）",
+    "top_rules": [
+      "针织开衫：V领或圆领，内搭小吊带",
+      "衬衫叠穿：外搭针织背心",
+      "卫衣/T恤：面料垂顺"
+    ],
+    "accessories": [
+      "发型：低马尾、双丸子头、大波浪",
+      "耳饰：珍珠耳环、金色圆圈",
+      "包包：迷你斜挎包、链条包"
+    ]
+  },
+  
+  "outfit_combinations": [
+    {
+      "id": "combo_001",
+      "name": "元气学院风",
+      "occasion": "通勤/上课",
+      "top": {
+        "type": "泡泡袖衬衫",
+        "color": "浅蓝色",
+        "details": "领口带小翻领"
+      },
+      "skirt": {
+        "type": "高腰百褶短裙",
+        "color": "藏青色",
+        "details": "格纹或纯色"
+      },
+      "stockings": {
+        "type": "极薄黑丝",
+        "thickness": "15D",
+        "details": "透肉，无花纹"
+      },
+      "shoes": {
+        "type": "玛丽珍鞋",
+        "color": "棕色或酒红色",
+        "details": "粗跟"
+      },
+      "accessories": ["黑色贝雷帽", "皮质双肩包"],
+      "coordination_point": "衬衫的正式感中和黑丝的性感，百褶裙减龄"
+    },
+    {
+      "id": "combo_002",
+      "name": "温柔韩系风",
+      "occasion": "约会",
+      "top": {
+        "type": "V领针织开衫",
+        "color": "米白色",
+        "details": "内搭同色系抹胸"
+      },
+      "skirt": {
+        "type": "丝绒A字短裙",
+        "color": "墨绿色",
+        "details": "有质感的丝绒"
+      },
+      "stockings": {
+        "type": "哑光黑丝",
+        "thickness": "40D",
+        "details": "遮瑕力好"
+      },
+      "shoes": {
+        "type": "方头短靴",
+        "color": "黑色",
+        "details": "方头设计"
+      },
+      "accessories": ["珍珠项链", "金色细腰带", "编织包"],
+      "coordination_point": "丝绒材质贵气，黑丝过渡色让腿部修长"
+    },
+    {
+      "id": "combo_003",
+      "name": "辣妹甜酷风",
+      "occasion": "逛街/拍照",
+      "top": {
+        "type": "紧身短款T恤",
+        "color": "白色",
+        "details": "印有卡通图案"
+      },
+      "skirt": {
+        "type": "牛仔包臀短裙",
+        "color": "水洗蓝",
+        "details": "牛仔材质"
+      },
+      "stockings": {
+        "type": "网眼纹理黑丝",
+        "thickness": "中等",
+        "details": "细微网眼纹理"
+      },
+      "shoes": {
+        "type": "厚底运动鞋",
+        "color": "白色",
+        "details": "老爹鞋"
+      },
+      "accessories": ["金属链条项链", "棒球帽"],
+      "coordination_point": "运动元素打破黑丝成熟感，甜酷风格"
+    },
+    {
+      "id": "combo_004",
+      "name": "法式浪漫风",
+      "occasion": "下午茶",
+      "top": {
+        "type": "碎花雪纺长袖上衣",
+        "color": "碎花浅色系",
+        "details": "收腰设计"
+      },
+      "skirt": {
+        "type": "千鸟格短裙",
+        "color": "黑白",
+        "details": "千鸟格图案"
+      },
+      "stockings": {
+        "type": "超薄黑丝",
+        "thickness": "10D",
+        "details": "纯色，强调自然肤色"
+      },
+      "shoes": {
+        "type": "尖头高跟鞋",
+        "color": "黑色",
+        "details": "尖头设计"
+      },
+      "accessories": ["复古墨镜", "丝绒发箍", "腋下包"],
+      "coordination_point": "碎花+千鸟格撞色，黑丝连接两种图案"
+    },
+    {
+      "id": "combo_005",
+      "name": "秋冬慵懒风",
+      "occasion": "周末",
+      "top": {
+        "type": "粗棒针毛衣",
+        "color": "燕麦色",
+        "details": "稍微宽松"
+      },
+      "skirt": {
+        "type": "毛呢百褶裙",
+        "color": "黑色",
+        "details": "有褶皱感"
+      },
+      "stockings": {
+        "type": "加厚磨毛黑丝",
+        "thickness": "60D+",
+        "details": "不透肉，类似打底裤"
+      },
+      "shoes": {
+        "type": "乐福鞋",
+        "color": "黑色",
+        "details": "配白色堆堆袜"
+      },
+      "accessories": ["长围巾", "帆布托特包"],
+      "coordination_point": "露出脚踝袜口增加透气感，毛衣蓬松对比黑丝紧致"
+    }
+  ],
+  
+  "pitfalls": {
+    "pajama_look_causes": [
+      "上下材质完全一致（如全缎面）",
+      "版型过于松垮",
+      "颜色过于浑浊"
+    ],
+    "color_clashes": [
+      "荧光色+黑丝",
+      "亮片/反光面料+黑丝",
+      "全身过黑（不露肤）"
+    ],
+    "solutions": [
+      "换成棉质上衣或加入针织、牛仔元素",
+      "塞衣角或系腰带明确腰线",
+      "保持色彩明度或深沉高级",
+      "低饱和度颜色配黑丝",
+      "一定要露肤或用亮色配饰提亮"
+    ]
+  }
+}

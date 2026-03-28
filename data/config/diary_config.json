@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "description": "日记配置 - 日记的格式、频率、保留策略",
+    "created": "2026-03-28T13:00:00+08:00",
+    "version": "1.0"
+  },
+  
+  "diary_settings": {
+    "write_time": "22:00-23:00",
+    "trigger": "night节点",
+    "format": "markdown",
+    "file_pattern": "YYYY-MM-DD.md",
+    "directory": "data/diary/"
+  },
+  
+  "diary_sections": {
+    "description": "日记包含的固定部分",
+    "sections": [
+      {
+        "name": "作息节点",
+        "content": ["起床时间", "睡觉时间", "当前阶段"],
+        "source": "daily_routine_log.json"
+      },
+      {
+        "name": "穿着变化",
+        "content": ["每次换装的时间、衣服、原因"],
+        "source": "wear_log.json + daily_routine_log.json"
+      },
+      {
+        "name": "心情变化",
+        "content": ["心情变化的时间、原因"],
+        "source": "mood_tracker.json"
+      },
+      {
+        "name": "学习",
+        "content": ["今天是否学习", "学到了什么"],
+        "source": "learning_log.json"
+      },
+      {
+        "name": "主动聊天",
+        "content": ["主动发了哪些消息", "用户回复"],
+        "source": "social_state.json + proactive_chat.json"
+      },
+      {
+        "name": "活动",
+        "content": ["做了哪些事", "结果"],
+        "source": "daily_routine_log.json"
+      },
+      {
+        "name": "想法/反思",
+        "content": ["agent的想法", "写日记时的反思"],
+        "source": "动态生成（agent思考）"
+      }
+    ]
+  },
+  
+  "write_process": {
+    "description": "写日记的流程",
+    "steps": [
+      {
+        "step": 1,
+        "action": "收集今天的数据",
+        "sources": ["daily_routine_log", "wear_log", "mood_tracker", "learning_log", "social_state"]
+      },
+      {
+        "step": 2,
+        "action": "整理数据",
+        "output": "生成各部分的表格"
+      },
+      {
+        "step": 3,
+        "action": "生成想法/反思",
+        "how": "agent 思考今天的经历，写下想法"
+      },
+      {
+        "step": 4,
+        "action": "写入文件",
+        "file": "diary/YYYY-MM-DD.md"
+      },
+      {
+        "step": 5,
+        "action": "标记日记已写",
+        "field": "daily_routine_log.json.diary_written = true"
+      }
+    ]
+  },
+  
+  "retention": {
+    "description": "日记保留策略",
+    "rules": {
+      "keep_all_for": "30天",
+      "compress_after": "30天",
+      "delete_after": "365天",
+      "exception": "特殊日记可永久保留（用户指定）"
+    }
+  },
+  
+  "user_interaction": {
+    "description": "用户如何查看日记",
+    "commands": [
+      {
+        "command": "窝窝今天做了什么？",
+        "action": "展示当天日记"
+      },
+      {
+        "command": "看看你昨天的日记",
+        "action": "展示昨天日记"
+      },
+      {
+        "command": "你这周做了什么？",
+        "action": "总结本周日记"
+      },
+      {
+        "command": "看看你[日期]的日记",
+        "action": "展示指定日期日记"
+      }
+    ]
+  },
+  
+  "diary_value": {
+    "description": "日记的价值",
+    "values": [
+      "用户可以看到 agent 的生活",
+      "agent 可以回顾自己的经历",
+      "日记是成长记录的数据源",
+      "写日记时的反思促进成长"
+    ]
+  }
+}

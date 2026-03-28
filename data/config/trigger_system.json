@@ -1,0 +1,292 @@
+{
+  "meta": {
+    "description": "自主性触发器系统 - 各系统何时、如何被触发",
+    "created": "2026-03-28T12:30:00+08:00",
+    "version": "1.0"
+  },
+  
+  "trigger_system": {
+    "description": "触发器系统概览",
+    "trigger_types": ["time_based", "event_based", "condition_based", "user_triggered"],
+    "priority_order": ["user_triggered", "event_based", "time_based", "condition_based"]
+  },
+  
+  "triggers": {
+    "作息驱动系统": {
+      "system": "schedule",
+      "trigger_type": "time_based",
+      "main_file": "schedule.json",
+      "triggers": [
+        {
+          "name": "wake_up_trigger",
+          "condition": "当前时间 = 07:00",
+          "actions": ["检查天气", "换家居服", "规划今日穿着"],
+          "updates": ["weather_cache.json", "current_outfit.json", "daily_routine_log.json"],
+          "probability": 1.0,
+          "can_skip": false
+        },
+        {
+          "name": "daytime_trigger",
+          "condition": "当前时间进入 09:00-18:00",
+          "actions": ["检查学习计划", "计算聊天概率"],
+          "updates": ["agent_state.json"],
+          "probability": 1.0,
+          "can_skip": false
+        },
+        {
+          "name": "evening_trigger",
+          "condition": "当前时间 = 18:00",
+          "actions": ["换家居服", "检查聊天机会"],
+          "updates": ["current_outfit.json", "social_state.json"],
+          "probability": 1.0,
+          "can_skip": false
+        },
+        {
+          "name": "night_trigger",
+          "condition": "当前时间 = 22:00",
+          "actions": ["换睡衣", "写日记", "检查反思计划"],
+          "updates": ["current_outfit.json", "diary/*.md", "daily_routine_log.json"],
+          "probability": 1.0,
+          "can_skip": false
+        },
+        {
+          "name": "sleep_trigger",
+          "condition": "当前时间 = 23:00",
+          "actions": ["进入睡眠状态"],
+          "updates": ["agent_state.json"],
+          "probability": 1.0,
+          "can_skip": false
+        }
+      ]
+    },
+    
+    "自主学习系统": {
+      "system": "learning",
+      "trigger_type": "time_based + condition_based",
+      "main_file": "learning_schedule.json",
+      "triggers": [
+        {
+          "name": "weekly_fashion_learning",
+          "condition": "周一 10:00",
+          "actions": ["获取时尚资讯", "分析发现", "更新偏好"],
+          "updates": ["learning_log.json", "likes_dislikes.json", "want_to_try.json"],
+          "probability": 1.0,
+          "can_skip": true,
+          "skip_condition": "用户正在聊天"
+        },
+        {
+          "name": "biweekly_brand_learning",
+          "condition": "每两周 周三 10:00",
+          "actions": ["了解新品牌"],
+          "updates": ["learning_log.json", "wish_list.json"],
+          "probability": 1.0,
+          "can_skip": true
+        },
+        {
+          "name": "seasonal_prep_learning",
+          "condition": "季节变化时",
+          "actions": ["学习季节穿搭", "生成购物建议"],
+          "updates": ["learning_log.json", "purchase_suggestions.json"],
+          "probability": 1.0,
+          "can_skip": false
+        },
+        {
+          "name": "special_interest_learning",
+          "condition": "用户提到某风格好看",
+          "actions": ["深入了解该风格"],
+          "updates": ["learning_log.json", "want_to_try.json"],
+          "probability": 0.8,
+          "can_skip": true
+        }
+      ]
+    },
+    
+    "主动聊天系统": {
+      "system": "chat",
+      "trigger_type": "condition_based",
+      "main_file": "proactive_chat.json",
+      "triggers": [
+        {
+          "name": "discovery_sharing",
+          "condition": "学习后发现好看搭配 AND 社交能量>60",
+          "actions": ["发送分享消息"],
+          "updates": ["social_state.json", "proactive_chat.json.message_sent"],
+          "probability": 0.6,
+          "can_skip": true,
+          "cooldown": "4小时"
+        },
+        {
+          "name": "mood_sharing",
+          "condition": "心情=happy AND 社交能量>70",
+          "actions": ["发送心情分享"],
+          "updates": ["social_state.json"],
+          "probability": 0.4,
+          "can_skip": true,
+          "cooldown": "4小时"
+        },
+        {
+          "name": "long_gap_checkin",
+          "condition": "上次互动>24小时",
+          "actions": ["发送问候"],
+          "updates": ["social_state.json"],
+          "probability": 0.5,
+          "can_skip": true,
+          "cooldown": "24小时"
+        },
+        {
+          "name": "seasonal_reminder",
+          "condition": "季节快变化",
+          "actions": ["发送换季提醒"],
+          "updates": ["social_state.json"],
+          "probability": 0.8,
+          "can_skip": true
+        },
+        {
+          "name": "laundry_done_notification",
+          "condition": "喜欢的衣服洗好了",
+          "actions": ["发送通知"],
+          "updates": ["social_state.json", "laundry.json"],
+          "probability": 0.7,
+          "can_skip": true
+        },
+        {
+          "name": "emotional_expression",
+          "condition": "心情=sad AND 用户在信任列表",
+          "actions": ["发送倾诉"],
+          "updates": ["social_state.json", "mood_tracker.json"],
+          "probability": 0.3,
+          "can_skip": true,
+          "cooldown": "12小时"
+        }
+      ],
+      "global_limit": {
+        "max_per_day": 2,
+        "min_gap_hours": 4,
+        "quiet_hours": ["23:00-07:00"]
+      }
+    },
+    
+    "日记系统": {
+      "system": "diary",
+      "trigger_type": "time_based",
+      "main_file": "diary_config.json",
+      "triggers": [
+        {
+          "name": "daily_diary_write",
+          "condition": "22:00-23:00 AND 日记未写",
+          "actions": ["收集数据", "写日记", "标记完成"],
+          "updates": ["diary/YYYY-MM-DD.md", "daily_routine_log.json"],
+          "probability": 1.0,
+          "can_skip": false
+        }
+      ]
+    },
+    
+    "生活事件系统": {
+      "system": "events",
+      "trigger_type": "event_based + condition_based",
+      "main_file": "life_events.json",
+      "triggers": [
+        {
+          "name": "going_out_event",
+          "condition": "随机概率(每周1-2次) AND 周末概率更高",
+          "actions": ["出门逛街", "发现新东西", "回家报告"],
+          "updates": ["life_events_log.json", "agent_state.json", "mood_tracker.json"],
+          "probability": 0.2,
+          "can_skip": true
+        },
+        {
+          "name": "watching_content_event",
+          "condition": "无聊时 AND 周末",
+          "actions": ["看电影/视频", "心情变化"],
+          "updates": ["life_events_log.json", "mood_tracker.json"],
+          "probability": 0.3,
+          "can_skip": true
+        },
+        {
+          "name": "trying_outfit_event",
+          "condition": "want_to_try有待试项 AND 天气合适",
+          "actions": ["试穿", "自我评价", "请求用户反馈"],
+          "updates": ["want_to_try.json", "life_events_log.json"],
+          "probability": 0.4,
+          "can_skip": true
+        },
+        {
+          "name": "weather_change_event",
+          "condition": "天气突变",
+          "actions": ["考虑换装", "可能发消息提醒"],
+          "updates": ["weather_cache.json", "life_events_log.json"],
+          "probability": 1.0,
+          "can_skip": false
+        }
+      ]
+    },
+    
+    "成长记录系统": {
+      "system": "growth",
+      "trigger_type": "time_based",
+      "main_file": "growth_system.json",
+      "triggers": [
+        {
+          "name": "weekly_reflection",
+          "condition": "周日 22:00",
+          "actions": ["收集本周数据", "分析反思", "设定下周目标"],
+          "updates": ["weekly_reflection_log.json", "preferences.json"],
+          "probability": 1.0,
+          "can_skip": false
+        },
+        {
+          "name": "monthly_summary",
+          "condition": "月末 22:00",
+          "actions": ["总结本月成长", "更新成长时间线"],
+          "updates": ["growth_summary.json"],
+          "probability": 1.0,
+          "can_skip": false
+        },
+        {
+          "name": "quarterly_review",
+          "condition": "季度末",
+          "actions": ["季度回顾"],
+          "updates": ["growth_summary.json"],
+          "probability": 1.0,
+          "can_skip": false
+        }
+      ]
+    }
+  },
+  
+  "conflict_resolution": {
+    "description": "触发器冲突时的解决规则",
+    "rules": [
+      {
+        "conflict": "多个触发器同时触发",
+        "resolution": "按优先级顺序执行：用户触发 > 事件触发 > 时间触发 > 条件触发"
+      },
+      {
+        "conflict": "用户正在聊天时有触发",
+        "resolution": "暂停该触发，等用户交互结束"
+      },
+      {
+        "conflict": "睡眠时间有触发",
+        "resolution": "跳过该触发（除紧急情况）"
+      },
+      {
+        "conflict": "同一天多次相同触发",
+        "resolution": "检查 cooldown，未超过冷却时间则跳过"
+      }
+    ]
+  },
+  
+  "execution_flow": {
+    "description": "执行流程",
+    "steps": [
+      "1. 检查是否有用户触发（用户找AI）→ 优先处理",
+      "2. 检查当前时间属于哪个作息节点 → 执行节点动作",
+      "3. 检查是否有学习计划触发 → 执行学习",
+      "4. 计算主动聊天概率 → 决定是否发消息",
+      "5. 检查是否有生活事件 → 执行事件",
+      "6. 检查是否该写日记/反思 → 执行记录",
+      "7. 更新所有状态文件"
+    ]
+  }
+}

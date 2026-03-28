@@ -11,16 +11,48 @@
       "agent_state": {
         "wake_up_time": null,
         "sleep_time": null,
-        "current_phase": null
+        "current_phase": "daytime"
       },
-      "routine_executed": [],
-      "activities": [],
+      "routine_executed": [
+        {
+          "time": "12:10",
+          "phase": "daytime",
+          "action": "heartbeat_check",
+          "result": "success",
+          "details": "检查学习计划（今天周六无任务）、计算主动聊天概率（刚聊过，概率低）",
+          "mood_before": "satisfied",
+          "mood_after": "satisfied"
+        }
+      ],
+      "activities": [
+        {
+          "time": "10:45-16:00",
+          "activity": "自主性体系开发",
+          "result": "完成V0.3.0"
+        }
+      ],
       "outfit_changes": [],
-      "mood_changes": [],
+      "mood_changes": [
+        {
+          "time": "10:45",
+          "from": "calm",
+          "to": "excited",
+          "reason": "开始开发自主性体系"
+        },
+        {
+          "time": "16:00",
+          "from": "excited",
+          "to": "satisfied",
+          "reason": "开发完成"
+        }
+      ],
       "learning_done": false,
-      "chat_initiated": false,
+      "learning_note": "周六无学习计划",
+      "chat_initiated": true,
+      "chat_count": 2,
       "diary_written": false,
-      "notes": "等待作息系统启动"
+      "diary_note": "等待晚间写作",
+      "notes": "系统开始运行，已执行12:00检查"
     }
   ],
   

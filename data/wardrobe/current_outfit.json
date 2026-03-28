@@ -1,11 +1,11 @@
 {
   "current_outfit": {
-    "id": "outfit_001",
-    "name": "淡蓝色居家睡衣套装",
-    "type": "sleepwear",
-    "description": "淡蓝色棉质睡衣，上衣是可爱的云朵图案，裤子是舒适的宽松款",
-    "wearing_since": "2026-03-27T07:00:00+08:00",
-    "last_checked": "2026-03-27T15:37:00+08:00"
+    "id": "outfit_003",
+    "name": "雾霾蓝卫衣 + 牛仔裤",
+    "type": "casual",
+    "description": "宽松的雾霾蓝连帽卫衣，配浅蓝色直筒牛仔裤",
+    "wearing_since": "2026-03-28T12:30:00+08:00",
+    "reason": "道歉换装，想穿好看一点哄大哥开心"
   },
   "status": {
     "clean": true,

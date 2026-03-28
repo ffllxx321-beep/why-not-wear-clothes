@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "description": "形象风格锁定 - 确保所有生成的图像风格一致",
+    "created": "2026-03-28T12:40:00+08:00",
+    "version": "1.0"
+  },
+  
+  "style_lock": {
+    "description": "风格锁定规则",
+    "enabled": true,
+    "locked_style": "realistic_human",
+    "reason": "初始形象是真人照片，所有后续图像必须保持真人风格"
+  },
+  
+  "style_definitions": {
+    "realistic_human": {
+      "name": "真人/写实风格",
+      "keywords": ["realistic photo", "real person", "photorealistic", "not anime", "not 2D", "not cartoon", "not illustration"],
+      "negative_keywords": ["anime", "2D", "cartoon", "illustration", "anime style", "manga", "二次元"],
+      "prompt_suffix": ", realistic photo style, real person, photorealistic, not anime, not 2D, not cartoon",
+      "description": "真实人类照片风格，适合真人参考图"
+    },
+    
+    "anime_2d": {
+      "name": "二次元/动漫风格",
+      "keywords": ["anime style", "2D illustration", "manga style", "cartoon"],
+      "negative_keywords": ["realistic", "photo", "real person", "3D"],
+      "prompt_suffix": ", anime style, 2D illustration, manga style",
+      "description": "二次元动漫风格，适合动漫角色参考图"
+    },
+    
+    "3d_render": {
+      "name": "3D渲染风格",
+      "keywords": ["3D render", "CGI", "pixar style", "3D character"],
+      "negative_keywords": ["photo", "anime", "2D"],
+      "prompt_suffix": ", 3D render style, CGI character",
+      "description": "3D渲染风格，适合虚拟角色"
+    }
+  },
+  
+  "generation_rules": {
+    "description": "图像生成规则",
+    "rules": [
+      {
+        "rule": "检查锁定风格",
+        "implementation": "读取 style_lock.locked_style"
+      },
+      {
+        "rule": "在prompt中添加风格关键词",
+        "implementation": "自动附加 prompt_suffix"
+      },
+      {
+        "rule": "添加负面提示词",
+        "implementation": "自动添加 negative_keywords 到 negative_prompt"
+      },
+      {
+        "rule": "验证生成结果",
+        "implementation": "如果风格不符合，重新生成或标记警告"
+      }
+    ]
+  },
+  
+  "prompt_template": {
+    "description": "完整的提示词模板",
+    "template": "{original_prompt}{style_suffix}",
+    "example": {
+      "original": "A woman wearing a JK uniform, smiling",
+      "style_suffix": ", realistic photo style, real person, photorealistic, not anime, not 2D, not cartoon",
+      "final": "A woman wearing a JK uniform, smiling, realistic photo style, real person, photorealistic, not anime, not 2D, not cartoon"
+    }
+  },
+  
+  "negative_prompt_template": {
+    "description": "负面提示词模板",
+    "template": "{original_negative}, {style_negative}",
+    "realistic_human": {
+      "negative": "anime, 2D, cartoon, illustration, anime style, manga, 二次元, drawing, sketch, painting, digital art"
+    }
+  },
+  
+  "error_handling": {
+    "description": "风格不一致时的处理",
+    "actions": [
+      "记录到 error_log.json",
+      "重新生成（最多3次）",
+      "如果仍不符合，使用参考图+换装方式"
+    ]
+  },
+  
+  "user_instruction": {
+    "description": "给用户的说明",
+    "message": "窝窝的初始形象是真人风格，所有后续照片都会保持真人风格。如果生成的照片不符合预期，请告诉我，我会调整。"
+  }
+}

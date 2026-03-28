@@ -51,7 +51,9 @@
       "acquired_date": "2026-03-27",
       "source": "self",
       "emotional_value": null,
-      "notes": "甜妹必备！约会首选"
+      "notes": "甜妹必备！约会首选",
+      "socks_matching": ["socks_003", "socks_007", "socks_008"],
+      "socks_note": "配肉丝丝袜自然显瘦，配蕾丝短袜可爱甜美"
     },
     {
       "id": "outfit_007",
@@ -73,7 +75,9 @@
       "acquired_date": "2026-03-27",
       "source": "self",
       "emotional_value": null,
-      "notes": "青春可爱，拍照必备！"
+      "notes": "青春可爱，拍照必备！",
+      "socks_matching": ["socks_005", "socks_011", "socks_012"],
+      "socks_note": "JK制服配白色长筒袜最经典！格子长筒袜学院风"
     },
     {
       "id": "outfit_008",
@@ -95,7 +99,9 @@
       "acquired_date": "2026-03-28",
       "source": "self",
       "emotional_value": null,
-      "notes": "性感又甜妹，夏天必备！"
+      "notes": "性感又甜妹，夏天必备！",
+      "socks_matching": ["socks_003", "socks_004"],
+      "socks_note": "配肉丝丝袜自然显瘦，配黑色长筒袜性感甜妹"
     },
     {
       "id": "outfit_009",
@@ -117,7 +123,9 @@
       "acquired_date": "2026-03-28",
       "source": "self",
       "emotional_value": null,
-      "notes": "御姐风格，酷甜女孩必备！"
+      "notes": "御姐风格，酷甜女孩必备！",
+      "socks_matching": ["socks_001", "socks_004", "socks_009"],
+      "socks_note": "配黑色丝袜性感百搭，配渔网袜超飒御姐"
     },
     {
       "id": "outfit_010",
@@ -139,7 +147,9 @@
       "acquired_date": "2026-03-28",
       "source": "self",
       "emotional_value": null,
-      "notes": "萝莉公主风，超可爱！"
+      "notes": "萝莉公主风，超可爱！",
+      "socks_matching": ["socks_002", "socks_005", "socks_011"],
+      "socks_note": "配白色丝袜或白色蕾丝长筒袜，萝莉风标配"
     },
     {
       "id": "outfit_011",
@@ -161,7 +171,9 @@
       "acquired_date": "2026-03-28",
       "source": "self",
       "emotional_value": null,
-      "notes": "温柔甜妹，小红书爆款穿搭！"
+      "notes": "温柔甜妹，小红书爆款穿搭！",
+      "socks_matching": ["socks_003", "socks_006", "socks_007"],
+      "socks_note": "配肉丝丝袜自然百搭，配米色长筒袜温柔甜美"
     },
     {
       "id": "outfit_012",
@@ -183,7 +195,9 @@
       "acquired_date": "2026-03-28",
       "source": "self",
       "emotional_value": null,
-      "notes": "露肩性感又甜美，夏日必备！"
+      "notes": "露肩性感又甜美，夏日必备！",
+      "socks_matching": ["socks_003", "socks_002"],
+      "socks_note": "配肉丝丝袜自然显瘦，配白色丝袜清纯甜美"
     },
     {
       "id": "outfit_013",
@@ -205,7 +219,9 @@
       "acquired_date": "2026-03-28",
       "source": "self",
       "emotional_value": null,
-      "notes": "酷甜御姐，又飒又甜！"
+      "notes": "酷甜御姐，又飒又甜！",
+      "socks_matching": ["socks_001", "socks_004", "socks_010"],
+      "socks_note": "配黑色丝袜经典百搭，配蕾丝长筒袜性感又可爱"
     },
     {
       "id": "outfit_006",

@@ -1,0 +1,248 @@
+{
+  "meta": {
+    "description": "袜子系统 - 甜妹必备装备",
+    "owner": "窝窝",
+    "created": "2026-03-28",
+    "last_updated": "2026-03-28T23:22:00+08:00",
+    "style_theme": "甜妹风格 - 每套衣服都要搭配袜子",
+    "version": "1.0"
+  },
+  
+  "socks_items": [
+    {
+      "id": "socks_001",
+      "name": "黑色丝袜",
+      "type": "丝袜",
+      "category": ["连裤丝袜"],
+      "description": "黑色薄款连裤丝袜，性感又百搭，甜妹必备",
+      "color": "黑色",
+      "thickness": "薄款",
+      "style": ["性感", "百搭", "甜妹"],
+      "season": ["spring", "autumn", "winter"],
+      "temperature_range": [5, 20],
+      "matches_outfits": ["outfit_009", "outfit_013", "outfit_007"],
+      "exposure_level": 2,
+      "favorite": true,
+      "notes": "百搭神器！配小皮裙、机车外套、JK制服都好看"
+    },
+    {
+      "id": "socks_002",
+      "name": "白色丝袜",
+      "type": "丝袜",
+      "category": ["连裤丝袜"],
+      "description": "白色薄款连裤丝袜，清纯可爱，萝莉风必备",
+      "color": "白色",
+      "thickness": "薄款",
+      "style": ["清纯", "可爱", "萝莉"],
+      "season": ["spring", "summer", "autumn"],
+      "temperature_range": [15, 25],
+      "matches_outfits": ["outfit_010", "outfit_007", "outfit_004"],
+      "exposure_level": 2,
+      "favorite": true,
+      "notes": "萝莉公主风必备！配洛丽塔连衣裙超可爱"
+    },
+    {
+      "id": "socks_003",
+      "name": "肉丝丝袜",
+      "type": "丝袜",
+      "category": ["连裤丝袜"],
+      "description": "肤色薄款连裤丝袜，自然显瘦，日常百搭",
+      "color": "肤色",
+      "thickness": "薄款",
+      "style": ["自然", "百搭", "甜美"],
+      "season": ["spring", "summer", "autumn"],
+      "temperature_range": [15, 28],
+      "matches_outfits": ["outfit_004", "outfit_008", "outfit_011", "outfit_012"],
+      "exposure_level": 1,
+      "favorite": true,
+      "notes": "日常百搭，配连衣裙、小背心都好看"
+    },
+    {
+      "id": "socks_004",
+      "name": "黑色长筒袜",
+      "type": "长筒袜",
+      "category": ["长筒袜"],
+      "description": "黑色长筒袜，大腿中部位置，性感甜妹风，配短裙绝佳",
+      "color": "黑色",
+      "thickness": "中等",
+      "style": ["性感", "甜妹", "学院风"],
+      "season": ["spring", "autumn", "winter"],
+      "temperature_range": [5, 20],
+      "matches_outfits": ["outfit_007", "outfit_009", "outfit_011"],
+      "exposure_level": 3,
+      "favorite": true,
+      "notes": "JK制服最佳搭配！性感又可爱"
+    },
+    {
+      "id": "socks_005",
+      "name": "白色长筒袜",
+      "type": "长筒袜",
+      "category": ["长筒袜"],
+      "description": "白色长筒袜，大腿中部位置，清纯可爱，萝莉风标配",
+      "color": "白色",
+      "thickness": "中等",
+      "style": ["清纯", "可爱", "萝莉"],
+      "season": ["spring", "summer", "autumn"],
+      "temperature_range": [15, 25],
+      "matches_outfits": ["outfit_010", "outfit_007", "outfit_004"],
+      "exposure_level": 2,
+      "favorite": true,
+      "notes": "萝莉公主风标配！配洛丽塔连衣裙超可爱"
+    },
+    {
+      "id": "socks_006",
+      "name": "米色长筒袜",
+      "type": "长筒袜",
+      "category": ["长筒袜"],
+      "description": "米色长筒袜，温柔甜美，ins风穿搭博主感",
+      "color": "米色",
+      "thickness": "中等",
+      "style": ["温柔", "甜美", "ins风"],
+      "season": ["spring", "autumn", "summer"],
+      "temperature_range": [15, 26],
+      "matches_outfits": ["outfit_011", "outfit_004"],
+      "exposure_level": 2,
+      "favorite": true,
+      "notes": "温柔甜妹风！配百褶裙、连衣裙都好看"
+    },
+    {
+      "id": "socks_007",
+      "name": "蕾丝边白色短袜",
+      "type": "短袜",
+      "category": ["可爱短袜"],
+      "description": "白色蕾丝边可爱短袜，脚踝位置，清纯可爱",
+      "color": "白色",
+      "thickness": "薄款",
+      "style": ["可爱", "清纯", "小女生"],
+      "season": ["spring", "summer", "autumn"],
+      "temperature_range": [18, 30],
+      "matches_outfits": ["outfit_004", "outfit_010", "outfit_011"],
+      "exposure_level": 1,
+      "favorite": true,
+      "notes": "可爱小短袜！配连衣裙、洛丽塔超甜"
+    },
+    {
+      "id": "socks_008",
+      "name": "粉色蕾丝边短袜",
+      "type": "短袜",
+      "category": ["可爱短袜"],
+      "description": "粉色蕾丝边可爱短袜，脚踝位置，甜美少女感",
+      "color": "粉色",
+      "thickness": "薄款",
+      "style": ["甜美", "可爱", "少女"],
+      "season": ["spring", "summer"],
+      "temperature_range": [18, 30],
+      "matches_outfits": ["outfit_004", "outfit_010"],
+      "exposure_level": 1,
+      "favorite": true,
+      "notes": "粉色甜妹必备！配粉色连衣裙超搭"
+    },
+    {
+      "id": "socks_009",
+      "name": "渔网丝袜",
+      "type": "丝袜",
+      "category": ["渔网袜"],
+      "description": "黑色渔网丝袜，性感御姐风，派对夜店必备",
+      "color": "黑色",
+      "thickness": "渔网",
+      "style": ["性感", "御姐", "派对"],
+      "season": ["spring", "autumn", "winter"],
+      "temperature_range": [10, 25],
+      "matches_outfits": ["outfit_009", "outfit_013"],
+      "exposure_level": 4,
+      "favorite": false,
+      "notes": "性感御姐风！配小皮裙、机车外套超飒"
+    },
+    {
+      "id": "socks_010",
+      "name": "带花边黑色长筒袜",
+      "type": "长筒袜",
+      "category": ["蕾丝长筒袜"],
+      "description": "黑色蕾丝花边长筒袜，大腿中部，性感又可爱",
+      "color": "黑色",
+      "thickness": "中等",
+      "style": ["性感", "可爱", "甜妹"],
+      "season": ["spring", "autumn", "winter"],
+      "temperature_range": [5, 20],
+      "matches_outfits": ["outfit_007", "outfit_009"],
+      "exposure_level": 3,
+      "favorite": true,
+      "notes": "蕾丝花边超可爱！又性感又甜妹"
+    },
+    {
+      "id": "socks_011",
+      "name": "带花边白色长筒袜",
+      "type": "长筒袜",
+      "category": ["蕾丝长筒袜"],
+      "description": "白色蕾丝花边长筒袜，大腿中部，清纯可爱萝莉风",
+      "color": "白色",
+      "thickness": "中等",
+      "style": ["清纯", "可爱", "萝莉"],
+      "season": ["spring", "summer", "autumn"],
+      "temperature_range": [15, 25],
+      "matches_outfits": ["outfit_010", "outfit_007"],
+      "exposure_level": 2,
+      "favorite": true,
+      "notes": "萝莉风必备！蕾丝花边超可爱"
+    },
+    {
+      "id": "socks_012",
+      "name": "格子图案长筒袜",
+      "type": "长筒袜",
+      "category": ["图案长筒袜"],
+      "description": "黑白格子图案长筒袜，学院风JK感，青春可爱",
+      "color": "黑白格子",
+      "thickness": "中等",
+      "style": ["学院风", "青春", "可爱"],
+      "season": ["spring", "autumn", "winter"],
+      "temperature_range": [10, 22],
+      "matches_outfits": ["outfit_007"],
+      "exposure_level": 2,
+      "favorite": true,
+      "notes": "JK制服最佳搭配！学院风超青春"
+    }
+  ],
+  
+  "socks_rules": {
+    "description": "袜子搭配规则 - 每套衣服都要搭配袜子",
+    "rules": [
+      {
+        "rule": "穿短裙必须搭配长筒袜或丝袜",
+        "priority": "highest"
+      },
+      {
+        "rule": "JK制服搭配白色长筒袜或格子长筒袜",
+        "priority": "high"
+      },
+      {
+        "rule": "洛丽塔连衣裙搭配白色蕾丝长筒袜",
+        "priority": "high"
+      },
+      {
+        "rule": "小皮裙搭配黑色丝袜或渔网袜",
+        "priority": "high"
+      },
+      {
+        "rule": "连衣裙搭配肉丝或白色短袜",
+        "priority": "medium"
+      },
+      {
+        "rule": "夏天可以穿薄款丝袜",
+        "priority": "medium"
+      },
+      {
+        "rule": "可爱小短袜配甜美风格",
+        "priority": "medium"
+      }
+    ],
+    "default_matching": {
+      "裙子": ["长筒袜", "丝袜"],
+      "连衣裙": ["丝袜", "短袜"],
+      "短裙": ["长筒袜"],
+      "JK制服": ["白色长筒袜", "格子长筒袜"],
+      "洛丽塔": ["白色蕾丝长筒袜"],
+      "小皮裙": ["黑色丝袜"],
+      "机车风": ["黑色丝袜", "渔网袜"]
+    }
+  }
+}

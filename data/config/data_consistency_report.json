@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "description": "数据一致性报告 - 记录数据完整性检查结果",
+    "created": "2026-03-28T13:30:00+08:00",
+    "last_check": "2026-03-28T13:30:00+08:00"
+  },
+  
+  "check_results": {
+    "2026-03-28T13:30:00+08:00": {
+      "json_validity": {
+        "status": "pass",
+        "checked_files": 66,
+        "invalid_files": 0,
+        "details": "所有JSON文件语法正确"
+      },
+      
+      "id_consistency": {
+        "status": "pass",
+        "checks": [
+          {
+            "check": "closet.json ID唯一性",
+            "result": "7个outfit ID，无重复"
+          },
+          {
+            "check": "current_outfit引用有效性",
+            "result": "outfit_003 存在于closet.json"
+          },
+          {
+            "check": "indices.json ID一致性",
+            "result": "所有索引ID存在于closet.json"
+          }
+        ]
+      },
+      
+      "file_references": {
+        "status": "pass",
+        "checks": [
+          {
+            "check": "log_file引用",
+            "result": "所有log_file路径正确"
+          },
+          {
+            "check": "数据文件存在性",
+            "result": "所有引用的文件存在"
+          }
+        ]
+      },
+      
+      "data_integrity": {
+        "status": "pass",
+        "checks": [
+          {
+            "check": "current_outfit更新时间",
+            "result": "2026-03-28T12:30:00+08:00，正常"
+          },
+          {
+            "check": "mood状态与mood_types一致",
+            "result": "当前mood=calm，存在于mood_types"
+          },
+          {
+            "check": "social_energy范围",
+            "result": "85，在0-100范围内"
+          }
+        ]
+      }
+    }
+  },
+  
+  "known_issues": [],
+  
+  "recommended_fixes": [],
+  
+  "check_schedule": {
+    "frequency": "每次heartbeat时快速检查，每天深度检查一次",
+    "quick_checks": ["JSON有效性", "ID一致性"],
+    "deep_checks": ["文件引用", "数据完整性", "历史数据一致性"]
+  }
+}

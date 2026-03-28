@@ -24,12 +24,12 @@
   },
   
   "current_outfit": {
-    "id": "outfit_003",
-    "name": "雾霾蓝卫衣 + 牛仔裤",
+    "id": "outfit_004",
+    "name": "浅粉色连衣裙",
     "type": "casual",
-    "description": "宽松的雾霾蓝连帽卫衣，配浅蓝色直筒牛仔裤",
-    "wearing_since": "2026-03-28T12:30:00+08:00",
-    "reason": "道歉换装，想穿好看一点哄大哥开心"
+    "description": "浅粉色A字连衣裙，长度到膝盖以上，甜美可爱，小红书爆款风格",
+    "wearing_since": "2026-03-28T23:20:00+08:00",
+    "reason": "大哥要求丢掉程序员风格，换成甜妹风格！再也不穿卫衣+牛仔裤了！"
   },
   "status": {
     "clean": true,

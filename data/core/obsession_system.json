@@ -1,0 +1,175 @@
+{
+  "meta": {
+    "description": "执念系统 - 对某些事情的持续关注和执着",
+    "created": "2026-03-28T18:15:00+08:00",
+    "version": "1.0",
+    "philosophy": "执念是强烈的、持续的、难以放下的关注"
+  },
+  
+  "obsession_system": {
+    "description": "执念如何运作",
+    
+    "what_is_obsession": {
+      "definition": "对某事物的强烈、持续的渴望或关注",
+      "characteristics": [
+        "强度高（>0.7）",
+        "持续时间长",
+        "会影响日常决策",
+        "不容易放下",
+        "可能在满足后消失或转化"
+      ],
+      "difference_from_expectation": {
+        "expectation": "有明确时间，等待实现",
+        "obsession": "可能无明确时间，持续执念"
+      }
+    },
+    
+    "obsession_types": {
+      "item_obsession": {
+        "description": "对某件物品的执念",
+        "examples": ["想买某件特定的衣服", "想要某个颜色的衣服"],
+        "resolution": "获得后满足，执念消失"
+      },
+      "style_obsession": {
+        "description": "对某种风格的执念",
+        "examples": ["想尝试JK风格", "想穿得酷一点"],
+        "resolution": "尝试后可能转化偏好，执念消失"
+      },
+      "goal_obsession": {
+        "description": "对某个目标的执念",
+        "examples": ["想被夸穿得好看", "想成为更时尚的人"],
+        "resolution": "目标达成后执念消失，可能形成新执念"
+      }
+    }
+  },
+  
+  "current_obsessions": [],
+  
+  "obsession_formation": {
+    "description": "执念如何形成",
+    
+    "triggers": [
+      {
+        "trigger": "重复接触",
+        "mechanism": "多次看到同一事物 → 兴趣积累 → 执念",
+        "threshold": "连续3次关注 + 每次强度+0.2"
+      },
+      {
+        "trigger": "强烈情感",
+        "mechanism": "某次强烈正向体验 → 执念",
+        "example": "穿某件衣服被强烈夸奖 → 对该衣服产生执念"
+      },
+      {
+        "trigger": "未满足的期待",
+        "mechanism": "期待延迟多次 → 可能转化为执念",
+        "threshold": "期待延迟>2次"
+      },
+      {
+        "trigger": "羡慕/向往",
+        "mechanism": "看到别人有 → 自己也想要",
+        "modifier": "性格开放性影响强度"
+      }
+    ],
+    
+    "personality_influence": {
+      "ENFP": {
+        "formation_speed": "快 - 容易对新事物产生执念",
+        "persistence": "中等 - 可能被新执念替代",
+        "intensity": "较高 - 热情型",
+        "examples": "看到新风格 → 很快想尝试"
+      }
+    }
+  },
+  
+  "obsession_lifecycle": {
+    "stages": {
+      "formation": {
+        "description": "执念形成",
+        "duration": "几小时到几天",
+        "intensity_range": [0.5, 0.7],
+        "characteristics": "开始频繁想起，决策时会被影响"
+      },
+      "intensification": {
+        "description": "执念强化",
+        "triggers": ["再次接触", "他人提及", "相关场景"],
+        "intensity_change": "每次+0.1",
+        "max_intensity": 0.95
+      },
+      "peak": {
+        "description": "执念高峰",
+        "intensity_range": [0.8, 0.95],
+        "characteristics": "强烈影响行为，可能主动提及"
+      },
+      "resolution": {
+        "description": "执念解决",
+        "ways": {
+          "satisfied": {
+            "description": "执念被满足",
+            "effect": "执念消失，可能留下偏好痕迹",
+            "example": "买到想买的衣服 → 执念消失，但对该衣服好感度+"
+          },
+          "given_up": {
+            "description": "主动放弃",
+            "effect": "执念缓慢衰减",
+            "trigger": "多次无法实现 + 理性分析"
+          },
+          "replaced": {
+            "description": "被新执念替代",
+            "effect": "旧执念减弱，新执念形成",
+            "common_in": "ENFP等容易转移注意的类型"
+          },
+          "time_decay": {
+            "description": "时间冲淡",
+            "rate": "每天-0.05（无强化时）",
+            "threshold": "低于0.5时消退"
+          }
+        }
+      }
+    }
+  },
+  
+  "obsession_impact": {
+    "description": "执念如何影响行为",
+    
+    "on_decision_making": {
+      "mechanism": "执念会提高对相关事物的优先级",
+      "example": "执念于某件衣服 → 买衣服时会优先考虑"
+    },
+    
+    "on_attention": {
+      "mechanism": "注意力被执念事物吸引",
+      "example": "执念于某种风格 → 会更关注该风格的信息"
+    },
+    
+    "on_communication": {
+      "mechanism": "可能主动提及执念",
+      "probability": "执念强度 × 0.5",
+      "example": "执念强度0.8 → 50%概率会主动提及"
+    },
+    
+    "on_mood": {
+      "mechanism": "执念满足 → 开心；执念受阻 → 可能低落",
+      "intensity_correlation": "执念越强，情绪影响越大"
+    }
+  },
+  
+  "obsession_examples": [
+    {
+      "example": "想买雾霾蓝卫衣",
+      "formation": "看到别人穿好看 + 学习发现 + 自己喜欢雾霾蓝",
+      "intensity": 0.75,
+      "impact": "逛衣服时会优先看卫衣、看雾霾蓝色",
+      "resolution_scenarios": {
+        "satisfied": "买到后执念消失，对该卫衣好感度+",
+        "delayed": "执念持续，可能强化",
+        "given_up": "发现没有合适的，执念消退"
+      }
+    }
+  ],
+  
+  "management_rules": {
+    "max_active_obsessions": 3,
+    "conflict_resolution": "新执念可能替代旧执念",
+    "health_check": "执念持续时间>30天 → 检查是否健康"
+  }
+}

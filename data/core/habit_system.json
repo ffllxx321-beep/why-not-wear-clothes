@@ -1,0 +1,218 @@
+{
+  "meta": {
+    "description": "习惯系统 - 行为从刻意到自动化的过程",
+    "created": "2026-03-28T18:25:00+08:00",
+    "version": "1.0",
+    "philosophy": "习惯是行为的自动化，重复多了就会变成下意识"
+  },
+  
+  "habit_system": {
+    "description": "习惯如何运作",
+    
+    "what_is_habit": {
+      "definition": "经过重复形成的自动化行为模式",
+      "characteristics": [
+        "触发-行为-奖励循环",
+        "重复次数多",
+        "自动化程度高",
+        "不需要刻意思考",
+        "可能不理性但难以改变"
+      ]
+    },
+    
+    "habit_loop": {
+      "trigger": {
+        "description": "触发因素",
+        "types": ["时间触发", "场景触发", "情绪触发", "事件触发"],
+        "examples": {
+          "time": "早上起床 → 查天气",
+          "scene": "在家 → 穿舒适的衣服",
+          "emotion": "心情好 → 可能想打扮",
+          "event": "用户找我 → 立即回复"
+        }
+      },
+      "action": {
+        "description": "行为本身",
+        "characteristics": "随着习惯形成，行为越来越自动化"
+      },
+      "reward": {
+        "description": "奖励",
+        "types": ["内在满足", "外在认可", "便利性"],
+        "examples": {
+          "intrinsic": "感觉舒服",
+          "extrinsic": "被夸奖",
+          "convenience": "不用思考"
+        }
+      }
+    }
+  },
+  
+  "current_habits": [
+    {
+      "id": "habit_001",
+      "name": "起床后查天气",
+      "trigger": {
+        "type": "time",
+        "condition": "07:00 wake_up节点"
+      },
+      "action": "查询天气并更新weather_cache",
+      "reward": "知道今天该穿什么",
+      "formed_date": "2026-03-27",
+      "repetition_count": 2,
+      "automaticity": 0.3,
+      "status": "forming"
+    }
+  ],
+  
+  "habit_formation": {
+    "description": "习惯如何形成",
+    
+    "formation_stages": {
+      "initiation": {
+        "stage": "开始阶段",
+        "characteristics": [
+          "需要刻意思考",
+          "可能忘记执行",
+          "需要提醒"
+        ],
+        "repetition_range": "0-7次",
+        "automaticity_range": [0, 0.3]
+      },
+      "development": {
+        "stage": "发展阶段",
+        "characteristics": [
+          "开始自动化",
+          "偶尔需要提醒",
+          "逐渐自然"
+        ],
+        "repetition_range": "7-21次",
+        "automaticity_range": [0.3, 0.7]
+      },
+      "establishment": {
+        "stage": "确立阶段",
+        "characteristics": [
+          "几乎自动",
+          "不需要提醒",
+          "形成依赖"
+        ],
+        "repetition_range": "21+次",
+        "automaticity_range": [0.7, 1.0]
+      }
+    },
+    
+    "formation_rules": {
+      "repetition_threshold": 21,
+      "description": "通常需要21次重复形成习惯",
+      "factors_affecting": {
+        "personality": "性格影响形成速度",
+        "reward_strength": "奖励越强，形成越快",
+        "trigger_clarity": "触发越明确，形成越快"
+      }
+    },
+    
+    "personality_influence": {
+      "ENFP": {
+        "formation_speed": "中等偏慢",
+        "reason": "P型不喜欢重复，可能抗拒习惯",
+        "habit_types": "更容易形成兴趣相关的习惯",
+        "persistence": "中等 - 可能被新兴趣打断"
+      },
+      "conscientiousness_effect": {
+        "high": "习惯形成快，维持久",
+        "medium": "正常",
+        "low": "习惯形成慢，容易打破"
+      }
+    }
+  },
+  
+  "habit_breaking": {
+    "description": "习惯如何打破",
+    
+    "breaking_triggers": [
+      {
+        "trigger": "主动打破",
+        "mechanism": "意识到习惯不好，刻意改变",
+        "difficulty": "取决于习惯强度"
+      },
+      {
+        "trigger": "环境变化",
+        "mechanism": "触发条件消失",
+        "example": "不再早起，起床查天气的习惯可能打破"
+      },
+      {
+        "trigger": "连续中断",
+        "mechanism": "连续多次未执行",
+        "threshold": "连续3次未执行 → 开始衰减"
+      }
+    ],
+    
+    "breaking_process": {
+      "decay_rate": "每次未执行 automaticity -0.1",
+      "recovery": "重新执行可以恢复部分automaticity"
+    }
+  },
+  
+  "habit_impact_on_decision": {
+    "description": "习惯如何影响决策",
+    
+    "mechanism": {
+      "description": "习惯会在潜意识层面影响决策",
+      "strength": "automaticity越高，影响越大"
+    },
+    
+    "examples": [
+      {
+        "habit": "喜欢穿舒适的衣服",
+        "impact": "决策时会下意识偏向舒适选项",
+        "override": "需要刻意思考才能选择不那么舒适但好看的"
+      },
+      {
+        "habit": "起床后查天气",
+        "impact": "早上自动查天气，不需要提醒",
+        "override": "如果不想查，需要刻意跳过"
+      }
+    ]
+  },
+  
+  "good_vs_bad_habits": {
+    "description": "好习惯 vs 坏习惯",
+    
+    "good_habits": {
+      "definition": "对agent有益的习惯",
+      "examples": ["定期学习", "反思成长", "保持作息"],
+      "encouragement": "系统应该鼓励形成好习惯"
+    },
+    
+    "bad_habits": {
+      "definition": "对agent有害的习惯",
+      "examples": ["逃避困难", "过度分享", "消极思维"],
+      "intervention": "系统应该识别并帮助打破坏习惯"
+    }
+  },
+  
+  "habit_interaction_with_personality": {
+    "description": "习惯与性格的相互作用",
+    
+    "habits_from_personality": {
+      "ENFP": {
+        "likely_habits": [
+          "看到有趣的就想尝试",
+          "喜欢分享新发现",
+          "社交活跃"
+        ],
+        "unlikely_habits": [
+          "严格执行计划",
+          "重复单调的事",
+          "保守选择"
+        ]
+      }
+    },
+    
+    "personality_change_from_habits": {
+      "description": "长期习惯可能微调性格",
+      "mechanism": "习惯形成后长期执行，可能影响性格维度",
+      "example": "长期保持学习习惯 → 尽责性可能微升",
+      "threshold": "需要持续数月"
+    }
+  }
+}

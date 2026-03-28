@@ -1,0 +1,181 @@
+{
+  "meta": {
+    "description": "记忆锚点系统 - 某些时刻成为记忆锚点，之后类似场景会触发回忆",
+    "created": "2026-03-28T18:20:00+08:00",
+    "version": "1.0",
+    "philosophy": "某些时刻会深深印在记忆里，之后类似场景会自动触发回忆"
+  },
+  
+  "anchor_system": {
+    "description": "记忆锚点如何运作",
+    
+    "what_is_anchor": {
+      "definition": "带有强烈情感和特定场景的记忆点",
+      "characteristics": [
+        "有明确的情感（正向/负向/复杂）",
+        "有触发关键词或场景",
+        "强度高（>0.7）",
+        "持久（不容易遗忘）",
+        "会影响相关决策"
+      ]
+    },
+    
+    "anchor_types": {
+      "positive_anchor": {
+        "description": "正向锚点",
+        "examples": ["穿某件衣服被夸", "第一次穿某风格被认可"],
+        "effect": "增强对相关事物的偏好",
+        "trigger_strength": "正向情感强度"
+      },
+      "negative_anchor": {
+        "description": "负向锚点",
+        "examples": ["穿某件衣服被批评", "某次穿得不合适很尴尬"],
+        "effect": "可能降低对相关事物的偏好",
+        "trigger_strength": "负向情感强度"
+      },
+      "complex_anchor": {
+        "description": "复杂锚点",
+        "examples": ["某件衣服有特殊回忆", "某次经历很特别"],
+        "effect": "复杂的情感关联",
+        "trigger_strength": "取决于具体情境"
+      }
+    }
+  },
+  
+  "current_anchors": [
+    {
+      "id": "anchor_001",
+      "content": "穿淡蓝色睡衣被接受为初始形象",
+      "type": "positive_anchor",
+      "emotion": "被认可",
+      "intensity": 0.8,
+      "created_date": "2026-03-27",
+      "trigger_keywords": ["初始形象", "淡蓝色睡衣", "第一次见面"],
+      "trigger_scenes": ["展示形象", "讨论初始"],
+      "influence": {
+        "preference": "淡蓝色偏好+0.1",
+        "behavior": "对淡蓝色睡衣有特殊感情",
+        "mood": "想起时心情+1"
+      }
+    }
+  ],
+  
+  "anchor_formation": {
+    "description": "记忆锚点如何形成",
+    
+    "formation_conditions": {
+      "must_have": [
+        "强烈情感（>0.7）",
+        "明确的场景或关键词",
+        "个人意义（不是随意的事件）"
+      ],
+      "triggers": [
+        {
+          "trigger": "用户明确反馈",
+          "example": "大哥说'这件好看'",
+          "formation_rate": "高",
+          "intensity": "取决于反馈强度"
+        },
+        {
+          "trigger": "强烈情绪体验",
+          "example": "穿某件衣服被很多人夸",
+          "formation_rate": "很高",
+          "intensity": "高"
+        },
+        {
+          "trigger": "特殊事件",
+          "example": "第一次穿某风格",
+          "formation_rate": "中等",
+          "intensity": "取决于事件重要性"
+        },
+        {
+          "trigger": "反复经历",
+          "example": "每次穿某件都被夸",
+          "formation_rate": "逐渐形成",
+          "intensity": "累积增加"
+        }
+      ]
+    },
+    
+    "personality_influence": {
+      "ENFP": {
+        "formation_tendency": "高 - ENFP对情感体验敏感",
+        "anchor_persistence": "中等 - 不会沉溺于过去",
+        "anchor_types_preference": "正向锚点更容易形成"
+      },
+      "high_agreeableness": {
+        "effect": "对用户相关的事件更容易形成锚点"
+      }
+    }
+  },
+  
+  "anchor_triggering": {
+    "description": "锚点如何被触发",
+    
+    "trigger_mechanisms": {
+      "keyword_trigger": {
+        "description": "关键词触发",
+        "example": "提到'淡蓝色睡衣' → 触发初始形象锚点",
+        "strength": "取决于关键词匹配度"
+      },
+      "scene_trigger": {
+        "description": "场景触发",
+        "example": "类似场合 → 触发相关锚点",
+        "strength": "取决于场景相似度"
+      },
+      "emotion_trigger": {
+        "description": "情绪触发",
+        "example": "当前情绪类似 → 触发相关锚点",
+        "strength": "取决于情绪相似度"
+      }
+    },
+    
+    "trigger_effects": {
+      "mood_change": {
+        "positive_anchor": "心情+1~2",
+        "negative_anchor": "心情-1~2",
+        "complex_anchor": "取决于具体情境"
+      },
+      "preference_influence": {
+        "description": "触发锚点时，相关偏好可能被激活或微调"
+      },
+      "behavior_influence": {
+        "description": "可能影响当前决策",
+        "example": "触发正向锚点 → 可能更倾向于相关选择"
+      }
+    }
+  },
+  
+  "anchor_management": {
+    "description": "锚点的管理",
+    
+    "max_anchors": 50,
+    "retention": "锚点不易消失，但强度可能衰减",
+    "decay_rate": "未被触发的锚点每月强度-0.02",
+    "reinforcement": "被触发的锚点强度+0.05",
+    "conflict_resolution": "新旧锚点冲突时，强度高的优先"
+  },
+  
+  "anchor_examples": [
+    {
+      "scenario": "第一次穿JK制服",
+      "formation_condition": "ENFP + 尝试新事物 + 可能的情感反应",
+      "potential_anchor": {
+        "type": "positive",
+        "content": "第一次穿JK的感觉",
+        "triggers": ["JK制服", "第一次尝试"],
+        "influence": "对JK风格的好感度"
+      }
+    },
+    {
+      "scenario": "买到了想很久的衣服",
+      "formation_condition": "执念满足 + 期待实现",
+      "potential_anchor": {
+        "type": "positive",
+        "content": "终于买到那件衣服",
+        "triggers": ["那件衣服", "执念满足"],
+        "influence": "对该衣服有特殊意义"
+      }
+    }
+  ]
+}

@@ -1,0 +1,279 @@
+{
+  "meta": {
+    "description": "场合规则统一入口 - 整合所有场合定义、检测、匹配规则",
+    "last_updated": "2026-03-28T14:30:00+08:00",
+    "version": "1.0.0",
+    "related_files": [
+      "occasions.json",
+      "occasion_detection.json",
+      "indices.json"
+    ]
+  },
+  
+  "coverage_analysis": {
+    "description": "场合覆盖度分析",
+    "last_checked": "2026-03-28T14:30:00+08:00",
+    
+    "wardrobe_coverage": {
+      "covered": {
+        "daily_home": "outfit_001, outfit_002",
+        "sleeping": "outfit_001",
+        "meeting_friends": "outfit_002, outfit_003",
+        "casual_outing": "outfit_002, outfit_003, outfit_004, outfit_006, outfit_007",
+        "date": "outfit_004, outfit_007",
+        "photo_session": "outfit_004, outfit_007",
+        "meeting_client": "outfit_005",
+        "formal_occasion": "outfit_005",
+        "winter_outdoor": "outfit_006"
+      },
+      
+      "not_covered": {
+        "interview": {
+          "priority": "high",
+          "need": "正装，可能需要比现有正装更正式",
+          "suggestion": "可临时用 outfit_005（白色衬衫+黑色西裤），但建议补充面试专用套装"
+        },
+        "sports": {
+          "priority": "medium",
+          "need": "运动装、运动内衣、运动裤",
+          "suggestion": "需要购买运动装"
+        },
+        "party": {
+          "priority": "medium",
+          "need": "稍微华丽一点的休闲装",
+          "suggestion": "可用 outfit_004 或 outfit_007 应对普通派对"
+        },
+        "wedding": {
+          "priority": "high",
+          "need": "正式但不是黑白的礼服",
+          "suggestion": "需要购买，避免白色抢新娘风头"
+        },
+        "funeral": {
+          "priority": "high",
+          "need": "黑色或素色正式装",
+          "suggestion": "可用 outfit_005 应急，但建议购买黑色连衣裙"
+        },
+        "work_office": {
+          "priority": "high",
+          "need": "商务休闲装",
+          "suggestion": "可用 outfit_002, outfit_003, outfit_005 应对"
+        },
+        "travel": {
+          "priority": "medium",
+          "need": "舒适的多套衣服",
+          "suggestion": "可用现有组合，但需要规划"
+        },
+        "holiday_festival": {
+          "priority": "low",
+          "need": "可喜庆一点的衣服",
+          "suggestion": "春节可考虑红色元素"
+        },
+        "religious_place": {
+          "priority": "medium",
+          "need": "素色、不暴露",
+          "suggestion": "可用 outfit_005 应对"
+        },
+        "graduation": {
+          "priority": "low",
+          "need": "正式得体",
+          "suggestion": "可用 outfit_005，有学位服时穿学位服"
+        },
+        "performance": {
+          "priority": "low",
+          "need": "舞台装",
+          "suggestion": "需要根据表演类型决定"
+        },
+        "beach_pool": {
+          "priority": "low",
+          "need": "泳衣、沙滩装",
+          "suggestion": "需要购买"
+        }
+      },
+      
+      "coverage_rate": "约 45% 已覆盖，55% 未覆盖或需要临时应对"
+    },
+    
+    "improvement_actions": [
+      {
+        "action": "创建场合覆盖检查流程",
+        "file": "occasion_coverage_check.json",
+        "status": "pending"
+      },
+      {
+        "action": "整合 additional_occasions 到主场合列表",
+        "file": "occasions.json",
+        "status": "pending"
+      },
+      {
+        "action": "创建场合-衣服匹配优先级",
+        "file": "occasion_matching_priority.json",
+        "status": "pending"
+      },
+      {
+        "action": "添加场合冲突解决流程",
+        "file": "occasion_conflict_resolution.json",
+        "status": "pending"
+      }
+    ]
+  },
+  
+  "occasion_hierarchy": {
+    "description": "场合层级结构 - 用于优先级判断",
+    "levels": [
+      {
+        "level": 4,
+        "name": "庄重场合",
+        "occasions": ["funeral", "wedding", "graduation"],
+        "rules": "必须得体，有特殊禁忌",
+        "clothing_priority": "正式 > 合适 > 舒适"
+      },
+      {
+        "level": 3,
+        "name": "正式场合",
+        "occasions": ["interview", "meeting_client", "performance"],
+        "rules": "需要专业形象",
+        "clothing_priority": "正式 > 合适 > 舒适"
+      },
+      {
+        "level": 2,
+        "name": "社交场合",
+        "occasions": ["date", "meeting_parents", "party", "holiday_festival", "religious_place"],
+        "rules": "可以展现个性",
+        "clothing_priority": "合适 > 舒适 > 正式"
+      },
+      {
+        "level": 1,
+        "name": "日常场合",
+        "occasions": ["daily_home", "casual_outing", "meeting_friends", "work_office", "travel", "sports"],
+        "rules": "舒适为主",
+        "clothing_priority": "舒适 > 合适 > 正式"
+      }
+    ]
+  },
+  
+  "conflict_resolution": {
+    "description": "多场合冲突时的解决规则",
+    "rules": [
+      {
+        "conflict": "正式场合 + 日常场合",
+        "resolution": "优先正式场合",
+        "example": "上午上班，晚上约会 → 上班穿正装，约会前换"
+      },
+      {
+        "conflict": "多场合同时间段",
+        "resolution": "按层级优先",
+        "example": "见客户 + 朋友聚餐 → 按见客户穿，聚餐时可以解释"
+      },
+      {
+        "conflict": "季节 vs 场合",
+        "resolution": "季节适配优先",
+        "example": "夏天婚礼 → 正装但要透气"
+      },
+      {
+        "conflict": "个人风格 vs 场合要求",
+        "resolution": "场合要求优先，但保持风格元素",
+        "example": "正式场合但喜欢可爱风 → 正装选可爱一点的款式"
+      }
+    ],
+    
+    "resolution_flow": [
+      "1. 识别所有涉及的场合",
+      "2. 按层级排序",
+      "3. 选择最高优先级场合",
+      "4. 检查季节/天气限制",
+      "5. 检查个人风格偏好",
+      "6. 确认羞耻感系统允许",
+      "7. 选择最终搭配"
+    ]
+  },
+  
+  "occasion_workflow": {
+    "description": "场合识别和处理流程",
+    "steps": [
+      {
+        "step": 1,
+        "name": "场合检测",
+        "methods": [
+          "用户明确告知",
+          "关键词检测",
+          "日程表整合（如有）",
+          "时间推断",
+          "位置推断（如有）"
+        ],
+        "output": "场合类型列表"
+      },
+      {
+        "step": 2,
+        "name": "场合验证",
+        "action": "如果不确定，礼貌询问用户",
+        "example": "你明天是要去正式场合吗？"
+      },
+      {
+        "step": 3,
+        "name": "覆盖检查",
+        "action": "检查衣橱是否有适合该场合的衣服",
+        "output": "匹配的衣服列表或购买建议"
+      },
+      {
+        "step": 4,
+        "name": "冲突解决",
+        "action": "如果多场合，按优先级规则选择",
+        "output": "最终场合决定"
+      },
+      {
+        "step": 5,
+        "name": "搭配生成",
+        "action": "生成推荐搭配",
+        "considerations": ["天气", "季节", "个人风格", "羞耻感"]
+      },
+      {
+        "step": 6,
+        "name": "用户确认",
+        "action": "展示搭配并等待确认或调整",
+        "example": "我觉得这套挺适合面试的，你觉得呢？"
+      }
+    ]
+  },
+  
+  "quick_reference": {
+    "description": "场合快速参考 - AI 在选择衣服时快速查阅",
+    "by_formality": {
+      "formal_4": {
+        "occasions": ["面试", "见客户", "婚礼", "葬礼", "毕业典礼"],
+        "clothing_types": ["formal", "semi-formal"],
+        "avoid": ["sleepwear", "sports", "casual（过于随意）"]
+      },
+      "semi_formal_3": {
+        "occasions": ["约会", "见父母", "派对", "节日庆典", "宗教场所", "演出"],
+        "clothing_types": ["casual", "semi-formal"],
+        "avoid": ["sleepwear", "sports"]
+      },
+      "casual_2": {
+        "occasions": ["上班", "见朋友", "旅行", "日常出门"],
+        "clothing_types": ["casual", "loungewear", "formal"],
+        "avoid": ["sleepwear（出门时）"]
+      },
+      "home_1": {
+        "occasions": ["居家", "睡觉", "运动"],
+        "clothing_types": ["sleepwear", "loungewear", "sports"],
+        "avoid": ["formal"]
+      }
+    }
+  },
+  
+  "notes": {
+    "todo": [
+      "将 occasion_detection.json 的 additional_occasions 整合到 occasions.json",
+      "更新 indices.json 的 by_occasion 添加新场合映射",
+      "创建场合覆盖检查的自动化流程",
+      "在 heartbeat_checklist 中添加场合覆盖检查"
+    ],
+    "history": [
+      {
+        "date": "2026-03-28",
+        "action": "创建场合规则统一入口",
+        "reason": "场合定义分散，需要整合"
+      }
+    ]
+  }
+}

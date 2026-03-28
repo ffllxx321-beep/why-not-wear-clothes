@@ -4,8 +4,8 @@
   "start_time": "2026-03-27T21:48:00+08:00",
   "end_time": "2026-03-28T08:00:00+08:00",
   
-  "current_round": 7,
-  "last_check_time": "2026-03-28T00:25:00+08:00",
+  "current_round": 9,
+  "last_check_time": "2026-03-28T14:30:00+08:00",
   
   "directions": [
     "图像生成API稳定性与错误处理",
@@ -70,6 +70,61 @@
       "findings": ["current_state没有实际追踪", "缺少脏污增量计算", "没有洗衣检查机制", "没有历史记录"],
       "improvements": ["添加脏污追踪算法", "添加洗衣检查规则", "创建laundry_log.json"],
       "feedback_sent": false
+    },
+    {
+      "round": 7,
+      "time": "2026-03-28T13:00:00+08:00",
+      "direction": "心情系统与穿着的关系",
+      "findings": ["心情影响穿着的逻辑不完整"],
+      "improvements": ["完善心情与穿搭的联动"],
+      "feedback_sent": true
+    },
+    {
+      "round": 8,
+      "time": "2026-03-28T13:58:00+08:00",
+      "direction": "衣服老化与更新建议",
+      "findings": [
+        "缺少老化自动触发机制",
+        "heartbeat_checklist缺少老化检查步骤",
+        "购买历史追踪不完整",
+        "缺少处理旧衣服的具体流程",
+        "缺少处理历史记录"
+      ],
+      "improvements": [
+        "创建aging_check_routine.json - 老化检查例行流程",
+        "创建disposal_process.json - 处理旧衣服的具体流程",
+        "创建disposal_history.json - 处理历史记录",
+        "更新heartbeat_checklist.json - 添加step 11老化检查",
+        "完善update_suggestions.json - 添加购买历史追踪模板和联动规则",
+        "更新aging_tracker.json - 添加检查记录字段"
+      ],
+      "feedback_sent": true
+    },
+    {
+      "round": 9,
+      "time": "2026-03-28T14:30:00+08:00",
+      "direction": "场合规则的覆盖度",
+      "findings": [
+        "场合定义分散在occasions.json和occasion_detection.json两处",
+        "衣橱场合覆盖仅45%，55%场合无直接适合的衣服",
+        "缺少场合规则统一入口文件",
+        "缺少场合覆盖检查流程",
+        "场合冲突解决规则分散",
+        "indices.json的by_occasion未覆盖所有场合"
+      ],
+      "improvements": [
+        "创建occasion_rules.json - 场合规则统一入口，整合场合层级、冲突解决、覆盖分析",
+        "创建occasion_coverage_check.json - 场合覆盖检查流程，包含检查矩阵和补充优先级",
+        "定义场合层级结构（4级庄重→正式→社交→日常）",
+        "建立场合-衣服覆盖矩阵（full/partial/none分级）",
+        "创建场合冲突解决流程（多场合时的优先级规则）"
+      ],
+      "coverage_analysis": {
+        "full_coverage": ["居家", "睡觉", "见朋友", "日常出门", "约会", "见客户"],
+        "partial_coverage": ["面试", "派对", "葬礼", "上班", "旅行", "宗教场所", "毕业典礼"],
+        "no_coverage": ["运动", "婚礼", "海滩/泳池"]
+      },
+      "feedback_sent": true
     }
   ],
   
@@ -87,7 +142,18 @@
     "feedback_history.json: 创建反馈历史",
     "laundry.json: 添加脏污追踪算法",
     "laundry.json: 添加洗衣检查规则",
-    "laundry_log.json: 创建洗衣历史记录"
+    "laundry_log.json: 创建洗衣历史记录",
+    "aging_check_routine.json: 创建老化检查例行流程",
+    "disposal_process.json: 创建处理旧衣服流程",
+    "disposal_history.json: 创建处理历史记录",
+    "heartbeat_checklist.json: 添加step 11老化检查",
+    "update_suggestions.json: 完善购买历史追踪",
+    "aging_tracker.json: 添加检查记录字段",
+    "occasion_rules.json: 创建场合规则统一入口",
+    "occasion_rules.json: 整合场合层级和冲突解决规则",
+    "occasion_rules.json: 定义覆盖分析和场合工作流程",
+    "occasion_coverage_check.json: 创建场合覆盖检查流程",
+    "occasion_coverage_check.json: 定义覆盖矩阵和补充优先级"
   ],
   
   "cron_job_id": "project-self-improvement",

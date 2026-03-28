@@ -1,0 +1,250 @@
+{
+  "meta": {
+    "description": "场合覆盖检查流程 - 定期检查衣橱场合覆盖度",
+    "last_updated": "2026-03-28T14:30:00+08:00",
+    "version": "1.0.0"
+  },
+  
+  "check_schedule": {
+    "description": "检查频率",
+    "regular_check": {
+      "frequency": "weekly",
+      "time": "每周日 10:00",
+      "trigger": "heartbeat"
+    },
+    "event_triggered": {
+      "description": "用户提及新场合时触发",
+      "trigger_keywords": [
+        "要去", "参加", "面试", "婚礼", "派对", "运动",
+        "旅行", "上班", "约会", "见", "去"
+      ]
+    }
+  },
+  
+  "check_process": {
+    "description": "场合覆盖检查流程",
+    "steps": [
+      {
+        "step": 1,
+        "name": "场合识别",
+        "action": "提取场合关键词",
+        "input": "用户消息或检查列表"
+      },
+      {
+        "step": 2,
+        "name": "匹配查询",
+        "action": "查询 indices.json 的 by_occasion",
+        "output": "匹配的 outfit_id 列表"
+      },
+      {
+        "step": 3,
+        "name": "覆盖判断",
+        "conditions": {
+          "covered": "匹配列表非空且至少有一件干净可穿",
+          "partial": "有匹配但所有衣服都在洗/脏",
+          "not_covered": "无匹配或无适合类型"
+        }
+      },
+      {
+        "step": 4,
+        "name": "建议生成",
+        "conditions": {
+          "covered": "可选推荐或静默",
+          "partial": "建议等衣服洗好或临时用其他",
+          "not_covered": "触发购买建议流程"
+        }
+      },
+      {
+        "step": 5,
+        "name": "记录更新",
+        "action": "更新场合覆盖状态到 occasion_rules.json"
+      }
+    ]
+  },
+  
+  "coverage_matrix": {
+    "description": "场合-衣服覆盖矩阵",
+    "matrix": {
+      "daily_home": {
+        "outfit_001": "✅ 直接适合",
+        "outfit_002": "✅ 可用",
+        "coverage": "full"
+      },
+      "sleeping": {
+        "outfit_001": "✅ 直接适合",
+        "coverage": "full"
+      },
+      "meeting_friends": {
+        "outfit_002": "✅ 直接适合",
+        "outfit_003": "✅ 直接适合",
+        "coverage": "full"
+      },
+      "casual_outing": {
+        "outfit_002": "✅ 直接适合",
+        "outfit_003": "✅ 直接适合",
+        "outfit_004": "✅ 可用",
+        "outfit_006": "✅ 冬天适合",
+        "outfit_007": "✅ 可用",
+        "coverage": "full"
+      },
+      "date": {
+        "outfit_004": "✅ 直接适合",
+        "outfit_007": "✅ 直接适合",
+        "coverage": "full"
+      },
+      "meeting_client": {
+        "outfit_005": "✅ 直接适合",
+        "coverage": "full"
+      },
+      "interview": {
+        "outfit_005": "⚠️ 临时可用",
+        "coverage": "partial",
+        "note": "建议购买专门的面试套装"
+      },
+      "sports": {
+        "coverage": "none",
+        "note": "需要购买运动装"
+      },
+      "party": {
+        "outfit_004": "⚠️ 可用但不够派对",
+        "outfit_007": "⚠️ 可用但可能不够派对",
+        "coverage": "partial",
+        "note": "建议购买派对装"
+      },
+      "wedding": {
+        "coverage": "none",
+        "note": "需要购买，避免白色"
+      },
+      "funeral": {
+        "outfit_005": "⚠️ 可用（白色衬衫不太合适）",
+        "coverage": "partial",
+        "note": "建议购买黑色连衣裙"
+      },
+      "work_office": {
+        "outfit_002": "✅ 商务休闲可用",
+        "outfit_003": "✅ 商务休闲可用",
+        "outfit_005": "✅ 正式可用",
+        "coverage": "full"
+      },
+      "travel": {
+        "outfit_002": "✅ 舒适可用",
+        "outfit_003": "✅ 舒适可用",
+        "outfit_004": "✅ 可用",
+        "coverage": "partial",
+        "note": "需要根据旅行时长准备多套"
+      },
+      "holiday_festival": {
+        "coverage": "partial",
+        "note": "春节可以考虑红色元素"
+      },
+      "religious_place": {
+        "outfit_005": "✅ 素色可用",
+        "coverage": "partial"
+      },
+      "graduation": {
+        "outfit_005": "✅ 可用",
+        "coverage": "partial",
+        "note": "有学位服时穿学位服"
+      },
+      "performance": {
+        "coverage": "context_dependent",
+        "note": "需要根据表演类型决定"
+      },
+      "beach_pool": {
+        "coverage": "none",
+        "note": "需要购买泳衣"
+      }
+    }
+  },
+  
+  "priority_补充": {
+    "description": "场合补充优先级",
+    "high_priority": [
+      {
+        "occasion": "面试",
+        "reason": "重要人生事件",
+        "suggestion": "深色正装套装",
+        "budget_estimate": "中等"
+      },
+      {
+        "occasion": "婚礼",
+        "reason": "重要社交场合",
+        "suggestion": "非白色礼服/连衣裙",
+        "budget_estimate": "中等"
+      },
+      {
+        "occasion": "葬礼",
+        "reason": "庄重场合",
+        "suggestion": "黑色连衣裙",
+        "budget_estimate": "低"
+      }
+    ],
+    "medium_priority": [
+      {
+        "occasion": "运动",
+        "reason": "健康生活方式",
+        "suggestion": "运动装套装",
+        "budget_estimate": "低"
+      },
+      {
+        "occasion": "派对",
+        "reason": "社交需求",
+        "suggestion": "稍微华丽的休闲装",
+        "budget_estimate": "低"
+      },
+      {
+        "occasion": "海滩",
+        "reason": "度假可能需要",
+        "suggestion": "泳衣+沙滩装",
+        "budget_estimate": "低"
+      }
+    ],
+    "low_priority": [
+      {
+        "occasion": "节日庆典",
+        "reason": "可临时搭配",
+        "suggestion": "红色元素配件",
+        "budget_estimate": "低"
+      },
+      {
+        "occasion": "演出",
+        "reason": "根据需要",
+        "suggestion": "根据表演类型决定",
+        "budget_estimate": "不定"
+      }
+    ]
+  },
+  
+  "check_response_template": {
+    "description": "场合覆盖不足时的响应模板",
+    "templates": {
+      "full_coverage": "我有适合的衣服哦！",
+      "partial_coverage": "有差不多的，不过如果想更合适的话可以考虑...",
+      "no_coverage": "哎呀，我现在没有适合那个场合的衣服...要不要一起去买？",
+      "dirty_only": "有适合的，但是正在洗呢...要等一下或者穿其他的？"
+    }
+  },
+  
+  "auto_suggestion_trigger": {
+    "description": "自动触发购买建议",
+    "trigger_conditions": [
+      "场合优先级为 high 或 medium",
+      "完全无覆盖（coverage=none）",
+      "用户明确要去该场合"
+    ],
+    "suggestion_flow": [
+      "1. 告知当前无适合衣服",
+      "2. 给出购买建议",
+      "3. 询问是否需要帮助挑选",
+      "4. 记录到 update_suggestions.json"
+    ]
+  },
+  
+  "notes": {
+    "integration": [
+      "在 heartbeat_checklist.json 添加场合覆盖检查步骤",
+      "与 update_suggestions.json 联动",
+      "与 autonomy_execution_guide.json 联动"
+    ]
+  }
+}

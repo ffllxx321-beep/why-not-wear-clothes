@@ -1,0 +1,158 @@
+{
+  "meta": {
+    "description": "调试工具 - 快速诊断系统问题",
+    "created": "2026-03-28T20:40:00+08:00",
+    "version": "1.0"
+  },
+  
+  "quick_diagnostics": {
+    "description": "快速诊断命令",
+    
+    "check_all": {
+      "command": "检查所有系统状态",
+      "checks": [
+        "JSON完整性",
+        "文件引用",
+        "数据一致性",
+        "变量范围",
+        "因果链完整性"
+      ],
+      "output": "健康报告"
+    },
+    
+    "check_system": {
+      "command": "检查指定系统",
+      "usage": "check_system [system_name]",
+      "examples": [
+        "check_system personality → 检查性格系统",
+        "check_system mood → 检查心情系统",
+        "check_system causal_logic → 检查因果逻辑"
+      ]
+    },
+    
+    "show_variables": {
+      "command": "显示所有变量当前值",
+      "output": {
+        "mood": "当前心情",
+        "social_energy": "社交能量",
+        "expectations": "期待列表",
+        "obsessions": "执念列表",
+        "habits": "习惯列表"
+      }
+    },
+    
+    "trace_decision": {
+      "command": "追溯最近的决策",
+      "usage": "trace_decision [decision_id]",
+      "output": "显示完整因果链"
+    },
+    
+    "simulate_time": {
+      "command": "模拟时间流逝",
+      "usage": "simulate_time [hours]",
+      "effect": "模拟变量随时间的变化"
+    }
+  },
+  
+  "common_issues": {
+    "description": "常见问题及解决方案",
+    
+    "issue_001": {
+      "symptom": "心情一直是calm不变",
+      "possible_causes": [
+        "没有触发心情变化的事件",
+        "心情变化概率太低",
+        "性格影响导致稳定"
+      ],
+      "check": "查看causal_trace_log中的心情变化记录",
+      "solution": "增加触发事件或调整性格参数"
+    },
+    
+    "issue_002": {
+      "symptom": "从不主动聊天",
+      "possible_causes": [
+        "社交能量太低",
+        "已经发了2条消息",
+        "在安静时间",
+        "没有触发条件"
+      ],
+      "check": [
+        "查看social_energy值",
+        "查看proactive_chat.messages_sent_today",
+        "查看当前时间"
+      ],
+      "solution": "等待社交能量恢复或新的一天"
+    },
+    
+    "issue_003": {
+      "symptom": "变量值异常（如>100或<0）",
+      "possible_causes": [
+        "更新规则没有限制范围",
+        "多次叠加导致越界"
+      ],
+      "check": "查看variable_updater.json的update_rules",
+      "solution": "添加范围限制"
+    },
+    
+    "issue_004": {
+      "symptom": "因果链引用的变量不存在",
+      "possible_causes": [
+        "变量名拼写错误",
+        "变量定义在错误的位置"
+      ],
+      "check": "对比causal_logic_system.json和variables.json",
+      "solution": "修正引用或添加变量定义"
+    }
+  },
+  
+  "debug_workflow": {
+    "description": "调试工作流",
+    
+    "step_1": {
+      "action": "确认问题",
+      "how": "复现问题，记录现象"
+    },
+    "step_2": {
+      "action": "检查相关日志",
+      "logs": [
+        "causal_trace_log.json - 决策历史",
+        "daily_routine_log.json - 作息执行",
+        "error_log.json - 错误记录"
+      ]
+    },
+    "step_3": {
+      "action": "定位原因",
+      "using": "因果追溯或变量检查"
+    },
+    "step_4": {
+      "action": "验证修复",
+      "how": "修复后重新检查"
+    }
+  },
+  
+  "reset_options": {
+    "description": "重置选项（谨慎使用）",
+    
+    "reset_mood": {
+      "effect": "重置心情到baseline",
+      "command": "reset mood"
+    },
+    "reset_social_energy": {
+      "effect": "重置社交能量到80",
+      "command": "reset social_energy"
+    },
+    "reset_expectations": {
+      "effect": "清空所有期待",
+      "command": "reset expectations"
+    },
+    "reset_obsessions": {
+      "effect": "清空所有执念",
+      "command": "reset obsessions"
+    },
+    "reset_all": {
+      "effect": "完全重置到初始状态",
+      "command": "reset all",
+      "warning": "会丢失所有积累的数据"
+    }
+  }
+}

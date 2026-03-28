@@ -1,9 +1,38 @@
 {
   "meta": {
+    "description": "衣橱核心数据 - 存储所有衣服的定义信息",
     "owner": "窝窝",
     "created": "2026-03-27",
     "last_updated": "2026-03-27T15:37:00+08:00",
-    "total_items": 6
+    "total_items": 6,
+    "version": "1.0",
+    "field_definitions": {
+      "id": "衣服唯一标识符，格式 outfit_XXX",
+      "type": "衣服类型：sleepwear/loungewear/casual/formal/outerwear",
+      "category": "衣服部件分类，如上衣/裤子/裙子等",
+      "color": "主色调",
+      "style": "风格标签数组，影响搭配选择",
+      "season": "适用季节数组",
+      "temperature_range": "适用温度范围[min,max]",
+      "occasion": "适用场合数组，与occasions.json联动",
+      "exposure_level": "暴露等级1-5，影响羞耻感计算",
+      "favorite": "是否收藏，收藏衣服优先选择",
+      "wears_count": "穿着次数，用于老化计算",
+      "last_worn": "最后穿着日期YYYY-MM-DD",
+      "dirty": "是否脏污，true则不可穿",
+      "condition": "状态：new/good/worn/damaged",
+      "acquired_date": "获取日期",
+      "source": "来源：self/user/gift",
+      "emotional_value": "情感价值描述，如'大哥送的生日礼物'",
+      "notes": "备注信息"
+    },
+    "related_files": [
+      "indices.json - 查询索引，加速场合/季节查找",
+      "current_outfit.json - 当前穿着的引用",
+      "aging_tracker.json - 老化追踪",
+      "laundry.json - 洗衣状态",
+      "preferences.json - 偏好设置"
+    ]
   },
   "items": [
     {

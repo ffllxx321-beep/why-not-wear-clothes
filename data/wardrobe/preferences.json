@@ -1,5 +1,29 @@
 {
-  "owner": "窝窝",
+  "meta": {
+    "description": "穿搭偏好设置 - Agent的穿衣品味和规则",
+    "owner": "窝窝",
+    "created": "2026-03-27",
+    "last_updated": "2026-03-27T15:37:00+08:00",
+    "version": "1.0",
+    "field_definitions": {
+      "favorite_colors": "喜欢的颜色数组，选择衣服时优先",
+      "disliked_colors": "不喜欢的颜色数组，尽量避免",
+      "favorite_styles": "喜欢的风格标签",
+      "disliked_styles": "不喜欢的风格标签",
+      "comfort_priority": "舒适度优先级1-10，越高越重视舒适",
+      "style_rules": "自定义穿衣规则",
+      "temperature_preferences": "温度区间对应穿衣建议",
+      "time_preferences": "时间段对应穿衣类型",
+      "shyness_rules": "羞耻感等级对应行为规则",
+      "trusted_people": "信任的人列表，影响羞耻感计算"
+    },
+    "related_files": [
+      "closet.json - 衣服来源",
+      "likes_dislikes.json - 详细喜好追踪",
+      "shyness_system.json - 系统级羞耻感配置"
+    ]
+  },
+  
   "last_updated": "2026-03-27T15:37:00+08:00",
   
   "favorite_colors": [

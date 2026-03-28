@@ -1,4 +1,28 @@
 {
+  "meta": {
+    "description": "当前穿着状态 - 记录Agent此刻穿的衣服",
+    "created": "2026-03-27",
+    "version": "1.0",
+    "usage": "每次图像生成、场合变化、作息切换时读取此文件",
+    "update_triggers": [
+      "heartbeat检测作息节点变化",
+      "用户请求换装",
+      "场合检测发现不合适",
+      "温度变化超过范围"
+    ],
+    "field_definitions": {
+      "id": "closet.json中的outfit_id引用",
+      "name": "衣服名称，用于显示",
+      "type": "衣服类型",
+      "description": "详细描述，用于图像生成prompt",
+      "wearing_since": "开始穿着时间ISO格式",
+      "reason": "换装原因记录",
+      "status.clean": "是否干净",
+      "status.comfortable": "是否舒适",
+      "status.appropriate_for_context": "是否适合当前场合"
+    }
+  },
+  
   "current_outfit": {
     "id": "outfit_003",
     "name": "雾霾蓝卫衣 + 牛仔裤",

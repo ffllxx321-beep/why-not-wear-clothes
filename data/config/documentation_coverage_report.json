@@ -1,0 +1,183 @@
+{
+  "meta": {
+    "description": "文档与注释覆盖度报告 - 轮次11",
+    "created": "2026-03-28T15:30:00+08:00",
+    "version": "1.0",
+    "round": 11
+  },
+  
+  "analysis": {
+    "total_json_files": 70,
+    "total_json_lines": 12801,
+    "files_with_meta_description": 30,
+    "files_without_description": 40,
+    
+    "coverage_by_directory": {
+      "config": {
+        "files": 30,
+        "with_description": 30,
+        "coverage_rate": "100%",
+        "status": "优秀"
+      },
+      "wardrobe": {
+        "files": 25,
+        "with_description": 0,
+        "coverage_rate": "0%",
+        "status": "需改进"
+      },
+      "schedule": {
+        "files": 6,
+        "with_description": 0,
+        "coverage_rate": "0%",
+        "status": "需改进"
+      },
+      "state": {
+        "files": 15,
+        "with_description": 1,
+        "coverage_rate": "6%",
+        "status": "需改进"
+      },
+      "history": {
+        "files": 8,
+        "with_description": 0,
+        "coverage_rate": "0%",
+        "status": "需改进"
+      },
+      "appearance": {
+        "files": 2,
+        "with_description": 0,
+        "coverage_rate": "0%",
+        "status": "需改进"
+      }
+    }
+  },
+  
+  "findings": [
+    {
+      "id": 1,
+      "category": "文件注释",
+      "issue": "config/ 目录注释覆盖100%，但其他目录几乎为0%",
+      "severity": "中",
+      "impact": "新开发者难以理解数据结构"
+    },
+    {
+      "id": 2,
+      "category": "目录索引",
+      "issue": "各目录缺少 _index.json 或 README 说明文件用途",
+      "severity": "低",
+      "impact": "需要逐个文件查看才能理解目录作用"
+    },
+    {
+      "id": 3,
+      "category": "字段注释",
+      "issue": "JSON 文件内的字段缺少注释说明",
+      "severity": "中",
+      "impact": "字段含义不明确，可能导致错误使用"
+    },
+    {
+      "id": 4,
+      "category": "开发者文档",
+      "issue": "缺少 DEVELOPER_GUIDE.md 开发者指南",
+      "severity": "中",
+      "impact": "第三方开发者难以贡献代码"
+    },
+    {
+      "id": 5,
+      "category": "示例文档",
+      "issue": "examples/ 目录只有一个文件，缺少更多使用示例",
+      "severity": "低",
+      "impact": "新手学习曲线陡峭"
+    },
+    {
+      "id": 6,
+      "category": "API文档",
+      "issue": "缺少对外接口的详细说明（如 agent-reach 调用参数）",
+      "severity": "低",
+      "impact": "集成到其他项目时可能困惑"
+    }
+  ],
+  
+  "improvements_plan": {
+    "phase_1": {
+      "priority": "高",
+      "actions": [
+        "为 wardrobe/ 关键文件添加 meta.description",
+        "为 schedule/ 文件添加 meta.description",
+        "为 state/ 文件添加 meta.description"
+      ],
+      "files_to_update": [
+        "closet.json",
+        "current_outfit.json",
+        "indices.json",
+        "preferences.json",
+        "laundry.json",
+        "aging_tracker.json",
+        "schedule.json",
+        "daily_rhythm.json",
+        "routine_actions.json",
+        "mood.json",
+        "mood_tracker.json",
+        "social_state.json",
+        "agent_state.json"
+      ]
+    },
+    "phase_2": {
+      "priority": "中",
+      "actions": [
+        "创建各目录的 README.md 或 _index.json",
+        "为 history/ 文件添加 meta.description"
+      ],
+      "new_files": [
+        "data/wardrobe/README.md",
+        "data/config/README.md",
+        "data/schedule/README.md",
+        "data/state/README.md",
+        "data/history/README.md"
+      ]
+    },
+    "phase_3": {
+      "priority": "低",
+      "actions": [
+        "创建 DEVELOPER_GUIDE.md",
+        "扩展 examples/ 目录",
+        "添加字段级注释到核心文件"
+      ],
+      "new_files": [
+        "DEVELOPER_GUIDE.md",
+        "examples/api_usage.json",
+        "examples/custom_wardrobe.json"
+      ]
+    }
+  },
+  
+  "priority_files": [
+    {
+      "file": "data/wardrobe/closet.json",
+      "reason": "核心数据文件，定义所有衣服",
+      "fields_need_comment": ["id", "type", "exposure_level", "wears_count", "dirty"]
+    },
+    {
+      "file": "data/wardrobe/current_outfit.json",
+      "reason": "高频访问，AI每次生成图像都要读",
+      "fields_need_comment": ["outfit_id", "changed_at", "change_reason"]
+    },
+    {
+      "file": "data/state/mood_tracker.json",
+      "reason": "心情追踪核心文件",
+      "fields_need_comment": ["current_mood", "intensity", "reason", "affects_outfit"]
+    },
+    {
+      "file": "data/schedule/schedule.json",
+      "reason": "作息节点定义，heartbeat核心",
+      "fields_need_comment": ["phases", "time_ranges", "allowed_actions"]
+    }
+  ],
+  
+  "recommendations": [
+    "建立注释规范：每个 JSON 文件必须有 meta.description",
+    "目录级文档：每个子目录有 README.md 或 _index.json",
+    "字段注释：核心文件的关键字段添加 _comment 后缀字段",
+    "开发文档：创建 DEVELOPER_GUIDE.md 说明如何扩展系统",
+    "示例丰富：增加更多使用场景示例"
+  ]
+}

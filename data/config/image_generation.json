@@ -1,12 +1,26 @@
 {
   "meta": {
     "description": "图像生成模型配置",
-    "last_updated": "2026-03-27T16:45:00+08:00"
+    "last_updated": "2026-03-28T21:45:00+08:00"
   },
   
-  "default_provider": "playground",
+  "default_provider": "bailian",
   
   "providers": {
+    "bailian": {
+      "name": "阿里百炼",
+      "type": "api",
+      "endpoint": "https://dashscope.aliyuncs.com/api/v1/services/aigc/text2image/image-synthesis",
+      "cost": "paid",
+      "speed": "快",
+      "quality": "⭐⭐⭐⭐",
+      "api_key_env": "BAILIAN_API_KEY",
+      "recommended": true,
+      "models": ["wanx2.1-t2i-turbo", "wanx2.1-t2i-plus"],
+      "note": "阿里百炼图像生成，速度快，效果好",
+      "configured": true,
+      "configured_date": "2026-03-28"
+    },
     "wanx": {
       "name": "通义万相 (阿里云)",
       "type": "api",

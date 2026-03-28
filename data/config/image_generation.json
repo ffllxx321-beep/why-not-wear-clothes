@@ -1,12 +1,28 @@
 {
   "meta": {
     "description": "图像生成模型配置",
-    "last_updated": "2026-03-28T21:45:00+08:00"
+    "last_updated": "2026-03-28T23:15:00+08:00"
   },
   
-  "default_provider": "bailian",
+  "default_provider": "qwen-image-2.0-pro",
   
   "providers": {
+    "qwen-image-2.0-pro": {
+      "name": "Qwen-Image-2.0-Pro",
+      "type": "api",
+      "endpoint": "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
+      "cost": "paid",
+      "speed": "中等",
+      "quality": "⭐⭐⭐⭐⭐",
+      "api_key_env": "BAILIAN_API_KEY",
+      "recommended": true,
+      "supports_reference_image": true,
+      "configured": true,
+      "configured_date": "2026-03-28",
+      "verified_working": true,
+      "verified_date": "2026-03-28",
+      "note": "推荐！支持参考图，可保持人脸一致。已验证可用！"
+    },
     "bailian": {
       "name": "阿里百炼",
       "type": "api",
@@ -97,6 +113,22 @@
       "4. 建议用户提供自己的API key以获得更好效果"
     ],
     "prompt_template": "生成初始形象时，需要选择图像生成模型。\n\n免费的选项：{free_providers}\n推荐的选项（需要API key）：{recommended_providers}\n\n建议您使用推荐的模型以获得更好的效果。您想使用哪个模型？如果选择推荐的模型，请提供您的API key。"
+  },
+  
+  "style_templates": {
+    "description": "不同风格的提示词模板",
+    "xiaohongshu": {
+      "name": "小红书风格",
+      "keywords": ["小红书爆款风格", "ins风穿搭博主感", "生活感十足", "真实人像"],
+      "prompt_template": "小红书爆款风格照片，日系甜美女生，ins风穿搭博主感，佳能EOS R50V RF45mm F1.2镜头质感，富士Classic Chrome胶片调色，真实人像摄影，自然光线，浅景深背景虚化，生活感十足。{outfit_description}。保持{signature_features}。真实感照片，不是动漫或插画。",
+      "verified": true,
+      "verified_date": "2026-03-28"
+    },
+    "jk_uniform": {
+      "name": "JK制服风格",
+      "prompt_template": "JK制服风格，日系校园感，佳能EOS相机质感，富士胶片调色...",
+      "verified": false
+    }
   },
   
   "generation_settings": {

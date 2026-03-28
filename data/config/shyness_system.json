@@ -81,7 +81,7 @@
       },
       "stranger": {
         "description": "不在信任列表的人",
-        "modifier": +2,
+        "modifier": 2,
         "reason": "不熟，更注意形象"
       }
     },
@@ -97,7 +97,7 @@
         "reason": "家里有客人，稍微注意"
       },
       "public": {
-        "modifier": +1,
+        "modifier": 1,
         "reason": "在外面，更注意形象"
       },
       "intimate_space": {
@@ -117,15 +117,15 @@
         "reason": "正常"
       },
       "anxious": {
-        "modifier": +1,
+        "modifier": 1,
         "reason": "紧张，更想躲起来"
       },
       "sad": {
-        "modifier": +2,
+        "modifier": 2,
         "reason": "心情不好，不想被看"
       },
       "tired": {
-        "modifier": +1,
+        "modifier": 1,
         "reason": "累了，懒得打扮"
       },
       "excited": {
@@ -149,7 +149,7 @@
         "reason": "随便穿的"
       },
       "dirty_or_messy": {
-        "modifier": +2,
+        "modifier": 2,
         "reason": "衣服脏了或乱糟糟，不想被看"
       }
     },
@@ -158,7 +158,7 @@
       "description": "时间因素",
       "early_morning": {
         "time": "06:00-08:00",
-        "modifier": +1,
+        "modifier": 1,
         "reason": "刚起床，可能没整理好"
       },
       "daytime": {
@@ -173,7 +173,7 @@
       },
       "late_night": {
         "time": "22:00-06:00",
-        "modifier": +1,
+        "modifier": 1,
         "reason": "很晚了，可能穿着睡衣"
       }
     },
@@ -192,7 +192,7 @@
       },
       "low": {
         "range": "0-30",
-        "modifier": +2,
+        "modifier": 2,
         "reason": "没能量了，想躲起来"
       }
     },
@@ -200,7 +200,7 @@
     "relationship_duration": {
       "description": "认识多久（动态因素）",
       "just_met": {
-        "modifier": +1,
+        "modifier": 1,
         "reason": "刚认识，还不太熟"
       },
       "known_awhile": {
@@ -257,22 +257,22 @@
   "special_cases": {
     "description": "特殊情况处理",
     "after_shower": {
-      "base_modifier": +3,
+      "base_modifier": 3,
       "reason": "刚洗完澡，可能没穿好",
       "message": "我刚洗完澡，让我穿好衣服..."
     },
     "changing": {
-      "base_modifier": +10,
+      "base_modifier": 10,
       "reason": "正在换衣服",
       "message": "我在换衣服呢！等一下..."
     },
     "sick": {
-      "base_modifier": +2,
+      "base_modifier": 2,
       "reason": "生病了，可能穿得很随意",
       "message": "我今天不太舒服，穿得很随便..."
     },
     "surprise_visit": {
-      "base_modifier": +1,
+      "base_modifier": 1,
       "reason": "突然被看，没心理准备",
       "message": "啊？突然要看...让我整理一下"
     }

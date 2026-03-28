@@ -115,6 +115,60 @@
     "prompt_template": "生成初始形象时，需要选择图像生成模型。\n\n免费的选项：{free_providers}\n推荐的选项（需要API key）：{recommended_providers}\n\n建议您使用推荐的模型以获得更好的效果。您想使用哪个模型？如果选择推荐的模型，请提供您的API key。"
   },
   
+  "generation_workflow": {
+    "description": "两步图像生成流程：先用语言模型优化提示词，再用图像模型生成",
+    "version": "2.0",
+    "last_updated": "2026-03-28T23:45:00+08:00",
+    "steps": [
+      {
+        "step": 1,
+        "name": "提示词优化",
+        "model": "qwen3.5-flash",
+        "endpoint": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+        "purpose": "根据关键词生成专业的真人照片提示词",
+        "input": "关键词 + 人物特征 + 场景描述",
+        "output": "优化后的专业提示词（包含摄影参数、光线、构图等）"
+      },
+      {
+        "step": 2,
+        "name": "图像生成",
+        "model": "qwen-image-2.0-pro",
+        "endpoint": "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
+        "purpose": "用优化后的提示词生成高质量真人照片",
+        "input": "参考图 + 优化后的提示词",
+        "output": "保持脸一致的真人照片"
+      }
+    ],
+    "prompt_optimization_template": {
+      "system_prompt": "你是一个专业的AI图像生成提示词优化专家。你精通各种AI图像生成模型的提示词技巧，特别是真人照片生成。",
+      "user_prompt_structure": [
+        "1. 先思考真人照片生成的最佳技巧（相机、光线、风格等）",
+        "2. 整合所有关键词和人物特征",
+        "3. 生成一个完整、专业的提示词",
+        "4. 提示词要适合 qwen-image-2.0-pro 模型"
+      ],
+      "output_format": [
+        "## 最佳真人照片生成技巧",
+        "[列出技巧]",
+        "## 生成的提示词",
+        "[完整提示词]"
+      ]
+    },
+    "optimized_prompt_structure": {
+      "sections": [
+        "【核心主体】- 人物年龄、种族、特征",
+        "【服装造型】- 衣服、袜子、配饰",
+        "【动作与场景】- 姿势、环境",
+        "【摄影参数】- 相机、镜头、光线、画质",
+        "【风格标签】- 小红书、ins风等",
+        "【负面约束】- 不要什么风格"
+      ]
+    },
+    "verified": true,
+    "verified_date": "2026-03-28",
+    "note": "大哥要求的新流程，效果更好！"
+  },
+  
   "style_templates": {
     "description": "不同风格的提示词模板",
     "xiaohongshu": {

@@ -1,0 +1,230 @@
+{
+  "meta": {
+    "description": "时间边界处理器 - 处理跨天/跨周/跨月的逻辑",
+    "created": "2026-03-28T19:45:00+08:00",
+    "version": "1.0"
+  },
+  
+  "philosophy": {
+    "principle": "时间边界是变量重置/延续的关键节点",
+    "implementation": "每个时间边界都有明确的处理动作"
+  },
+  
+  "time_boundaries": {
+    "hourly": {
+      "description": "每小时边界",
+      "actions": [
+        {
+          "action": "社交能量恢复",
+          "condition": "独处状态",
+          "amount": "+5",
+          "max": 100
+        },
+        {
+          "action": "心情向baseline衰减",
+          "condition": "心情≠baseline",
+          "amount": "向calm靠近0.5",
+          "source": "mood_tracker.json"
+        },
+        {
+          "action": "检查habit形成进度",
+          "condition": "今日重复动作",
+          "update": "automaticity +0.05"
+        }
+      ]
+    },
+    
+    "daily": {
+      "description": "每日边界（00:00）",
+      "actions": [
+        {
+          "action": "创建新一天的daily_routine_log",
+          "implementation": "添加新的log条目",
+          "resets": ["routine_executed", "activities", "outfit_changes"]
+        },
+        {
+          "action": "检查期待到期",
+          "implementation": "遍历expectations，检查target_date",
+          "if_expired": "标记为待处理（实现/落空）"
+        },
+        {
+          "action": "执念衰减",
+          "condition": "无强化",
+          "amount": "-0.05",
+          "threshold": "<0.5移除"
+        },
+        {
+          "action": "重置今日计数器",
+          "resets": [
+            "proactive_chat.messages_sent_today",
+            "daily_routine_log.routine_executed"
+          ]
+        },
+        {
+          "action": "统计昨日数据",
+          "updates": [
+            "wear_log统计",
+            "mood变化统计",
+            "learning统计"
+          ]
+        }
+      ]
+    },
+    
+    "weekly": {
+      "description": "每周边界（周日 00:00）",
+      "actions": [
+        {
+          "action": "标记需要反思",
+          "flag": "weekly_reflection_needed = true",
+          "execute_at": "周日 22:00"
+        },
+        {
+          "action": "习惯形成检查",
+          "condition": "本周重复>21次",
+          "result": "习惯可能形成"
+        },
+        {
+          "action": "周统计",
+          "updates": [
+            "weekly_reflection_log准备数据",
+            "穿着频率统计",
+            "反馈统计"
+          ]
+        }
+      ]
+    },
+    
+    "monthly": {
+      "description": "每月边界（月末 00:00）",
+      "actions": [
+        {
+          "action": "标记需要月总结",
+          "flag": "monthly_summary_needed = true",
+          "execute_at": "月末当晚"
+        },
+        {
+          "action": "成长里程碑检查",
+          "condition": "偏好变化>0.3",
+          "result": "记录为成长里程碑"
+        },
+        {
+          "action": "数据归档",
+          "archives": [
+            "日志数据归档",
+            "清理过期数据"
+          ]
+        }
+      ]
+    },
+    
+    "seasonal": {
+      "description": "季节边界",
+      "triggers": ["3月1日", "6月1日", "9月1日", "12月1日"],
+      "actions": [
+        {
+          "action": "季节变化学习",
+          "implementation": "触发seasonal_prep学习计划"
+        },
+        {
+          "action": "衣橱检查",
+          "check": "是否有适合新季节的衣服",
+          "if_insufficient": "提醒用户"
+        },
+        {
+          "action": "偏好微调",
+          "reason": "季节影响穿着偏好"
+        }
+      ]
+    }
+  },
+  
+  "boundary_execution": {
+    "description": "边界处理的执行流程",
+    
+    "when_to_check": {
+      "on_heartbeat": "每次heartbeat检查是否跨边界",
+      "on_startup": "启动时检查距离上次运行是否跨边界"
+    },
+    
+    "execution_steps": [
+      {
+        "step": 1,
+        "action": "获取当前时间和上次运行时间",
+        "source": "agent_state.json"
+      },
+      {
+        "step": 2,
+        "action": "判断是否跨越边界",
+        "checks": ["跨小时？", "跨天？", "跨周？", "跨月？", "跨季节？"]
+      },
+      {
+        "step": 3,
+        "action": "执行对应的边界处理",
+        "how": "按优先级执行：月>周>天>小时"
+      },
+      {
+        "step": 4,
+        "action": "更新时间戳",
+        "where": "agent_state.json.last_boundary_check"
+      },
+      {
+        "step": 5,
+        "action": "记录边界处理日志",
+        "where": "daily_routine_log或专门日志"
+      }
+    ]
+  },
+  
+  "startup_recovery": {
+    "description": "启动时的恢复逻辑",
+    "scenarios": [
+      {
+        "scenario": "距离上次运行<1小时",
+        "action": "正常继续，无特殊处理"
+      },
+      {
+        "scenario": "距离上次运行1-24小时",
+        "action": "执行错过的每日边界处理",
+        "priority": "高优先级任务（如期待检查）"
+      },
+      {
+        "scenario": "距离上次运行>24小时",
+        "action": "执行所有错过的边界处理",
+        "special": "可能标记为'长时间离线'状态"
+      },
+      {
+        "scenario": "距离上次运行>7天",
+        "action": "执行完整恢复流程",
+        "special": [
+          "执行所有错过的边界处理",
+          "可能重置某些状态",
+          "欢迎回来消息"
+        ]
+      }
+    ]
+  },
+  
+  "special_boundaries": {
+    "description": "特殊时间边界",
+    
+    "birthday": {
+      "description": "agent生日",
+      "date": "需要配置",
+      "actions": [
+        "心情自动变好",
+        "想打扮好看",
+        "可能主动提及"
+      ]
+    },
+    
+    "holidays": {
+      "description": "节假日",
+      "list": ["春节", "情人节", "圣诞节等"],
+      "actions": [
+        "特殊心情",
+        "可能想穿特别的衣服"
+      ]
+    }
+  }
+}

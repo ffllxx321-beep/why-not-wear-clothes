@@ -1,0 +1,243 @@
+{
+  "meta": {
+    "description": "变量更新执行器 - 实际执行变量变化的机制",
+    "created": "2026-03-28T19:40:00+08:00",
+    "version": "1.0"
+  },
+  
+  "philosophy": {
+    "principle": "变量变化不是自动的，需要明确的触发和执行",
+    "implementation": "每个变量变化都有明确的触发源和更新动作"
+  },
+  
+  "update_triggers": {
+    "description": "变量更新的触发源",
+    
+    "user_interaction": {
+      "trigger": "用户发消息/评价",
+      "variables_affected": ["mood", "preferences", "memory_anchors", "social_energy"],
+      "examples": [
+        {
+          "event": "用户夸好看",
+          "updates": [
+            {"variable": "mood.intensity", "change": "+1", "probability": 0.7},
+            {"variable": "preferences.colors[color]", "change": "+0.1"},
+            {"variable": "memory_anchors", "action": "可能形成新锚点"}
+          ]
+        },
+        {
+          "event": "用户批评",
+          "updates": [
+            {"variable": "mood.intensity", "change": "-1", "probability": 0.5},
+            {"variable": "preferences.styles[style]", "change": "-0.1"}
+          ]
+        }
+      ]
+    },
+    
+    "learning_completion": {
+      "trigger": "学习完成后",
+      "variables_affected": ["want_to_try", "preferences", "obsessions"],
+      "examples": [
+        {
+          "event": "发现好看搭配",
+          "updates": [
+            {"variable": "want_to_try.outfits", "action": "添加新项"},
+            {"variable": "obsessions", "action": "可能形成新执念", "condition": "强度>0.7"}
+          ]
+        }
+      ]
+    },
+    
+    "routine_execution": {
+      "trigger": "例行动作执行",
+      "variables_affected": ["social_energy", "mood", "habits"],
+      "examples": [
+        {
+          "event": "主动聊天",
+          "updates": [
+            {"variable": "social_energy", "change": "-5~-10"},
+            {"variable": "mood.intensity", "change": "+0.5", "condition": "用户热情回复"}
+          ]
+        },
+        {
+          "event": "重复执行某动作",
+          "updates": [
+            {"variable": "habits[id].automaticity", "change": "+0.05"}
+          ]
+        }
+      ]
+    },
+    
+    "life_event": {
+      "trigger": "生活事件发生",
+      "variables_affected": ["mood", "obsessions", "memory_anchors"],
+      "examples": [
+        {
+          "event": "出门逛街发现好看衣服",
+          "updates": [
+            {"variable": "mood.intensity", "change": "+1"},
+            {"variable": "obsessions", "action": "可能形成新执念"}
+          ]
+        }
+      ]
+    },
+    
+    "time_passage": {
+      "trigger": "时间流逝",
+      "variables_affected": ["mood", "social_energy", "expectations", "obsessions"],
+      "examples": [
+        {
+          "event": "每小时",
+          "updates": [
+            {"variable": "social_energy", "change": "+5", "condition": "独处时"},
+            {"variable": "mood", "action": "向baseline衰减"}
+          ]
+        },
+        {
+          "event": "每天",
+          "updates": [
+            {"variable": "expectations", "action": "检查是否到期"},
+            {"variable": "obsessions", "action": "强度-0.05（无强化时）"}
+          ]
+        }
+      ]
+    }
+  },
+  
+  "update_rules": {
+    "description": "变量更新的规则",
+    
+    "mood_update": {
+      "rules": [
+        {
+          "rule": "心情正向变化",
+          "max_change": "+2",
+          "decay": "每4小时向baseline(calm)衰减",
+          "personality_modifier": "低神经质恢复更快"
+        },
+        {
+          "rule": "心情负向变化",
+          "max_change": "-2",
+          "recovery": "根据神经质参数决定恢复速度"
+        }
+      ]
+    },
+    
+    "social_energy_update": {
+      "rules": [
+        {
+          "rule": "社交消耗",
+          "base_drain": "每次互动-5~10",
+          "personality_modifier": "外向性高→消耗少"
+        },
+        {
+          "rule": "社交恢复",
+          "base_recovery": "每小时+5（独处时）",
+          "personality_modifier": "外向性高→恢复快"
+        }
+      ]
+    },
+    
+    "preference_update": {
+      "rules": [
+        {
+          "rule": "偏好增强",
+          "max_change": "+0.1 per event",
+          "threshold": "连续3次正向反馈→可能升级到favorite"
+        },
+        {
+          "rule": "偏好减弱",
+          "max_change": "-0.1 per event",
+          "threshold": "连续2次负向反馈→可能降级"
+        }
+      ]
+    },
+    
+    "obsession_update": {
+      "rules": [
+        {
+          "rule": "执念形成",
+          "trigger": "重复关注+强烈情感",
+          "initial_intensity": 0.5
+        },
+        {
+          "rule": "执念强化",
+          "change": "+0.1 per trigger",
+          "max": 0.95
+        },
+        {
+          "rule": "执念衰减",
+          "change": "-0.05 per day（无强化）",
+          "threshold": "<0.5时消退"
+        }
+      ]
+    }
+  },
+  
+  "execution_flow": {
+    "description": "变量更新的执行流程",
+    "steps": [
+      {
+        "step": 1,
+        "action": "识别触发事件",
+        "how": "根据当前活动判断触发类型"
+      },
+      {
+        "step": 2,
+        "action": "查找对应的更新规则",
+        "how": "在 update_triggers 中匹配"
+      },
+      {
+        "step": 3,
+        "action": "计算变量变化",
+        "how": "应用规则 + 性格修正"
+      },
+      {
+        "step": 4,
+        "action": "执行更新",
+        "how": "修改对应的状态文件"
+      },
+      {
+        "step": 5,
+        "action": "记录更新日志",
+        "how": "写入变量变化历史"
+      },
+      {
+        "step": 6,
+        "action": "检查连锁反应",
+        "how": "某些变量变化可能触发其他变化"
+      }
+    ]
+  },
+  
+  "chain_reactions": {
+    "description": "变量变化的连锁反应",
+    "examples": [
+      {
+        "trigger": "mood大幅提升",
+        "reactions": [
+          "social_energy恢复加快",
+          "主动聊天概率提升",
+          "学习意愿提升"
+        ]
+      },
+      {
+        "trigger": "obsession形成",
+        "reactions": [
+          "注意力被吸引",
+          "决策优先级改变",
+          "可能主动提及"
+        ]
+      },
+      {
+        "trigger": "expectation实现",
+        "reactions": [
+          "mood提升",
+          "expectation移除",
+          "可能形成memory_anchor"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,217 @@
+{
+  "meta": {
+    "description": "初始化流程 - 新用户如何开始使用系统",
+    "created": "2026-03-28T19:50:00+08:00",
+    "version": "1.0"
+  },
+  
+  "initialization_philosophy": {
+    "principle": "初始化不是一次性配置，而是让系统逐渐了解用户",
+    "approach": "快速启动 + 渐进个性化"
+  },
+  
+  "initialization_flow": {
+    "description": "初始化流程",
+    
+    "phase_1_quick_start": {
+      "description": "第一阶段：快速启动（5分钟内）",
+      "steps": [
+        {
+          "step": 1,
+          "action": "加载默认性格模板",
+          "source": "core/personality.json (预设ENFP)",
+          "alternative": "用户可选择其他模板"
+        },
+        {
+          "step": 2,
+          "action": "加载默认偏好",
+          "source": "wardrobe/likes_dislikes.json (预设)",
+          "note": "之后会根据用户反馈调整"
+        },
+        {
+          "step": 3,
+          "action": "加载默认作息",
+          "source": "schedule/schedule.json",
+          "customization": "用户可调整起床/睡觉时间"
+        },
+        {
+          "step": 4,
+          "action": "初始化状态文件",
+          "creates": [
+            "agent_state.json - 设置初始状态",
+            "mood.json - 设置初始心情",
+            "social_state.json - 设置初始社交能量"
+          ]
+        },
+        {
+          "step": 5,
+          "action": "欢迎消息",
+          "message": "准备好开始啦！我可以自己穿衣服了～"
+        }
+      ]
+    },
+    
+    "phase_2_personalization": {
+      "description": "第二阶段：渐进个性化（第一周）",
+      "approach": "通过互动逐渐了解用户",
+      "learning_points": [
+        {
+          "source": "用户评价穿着",
+          "learns": ["颜色偏好", "风格偏好"]
+        },
+        {
+          "source": "用户主动提及",
+          "learns": ["兴趣点", "期待"]
+        },
+        {
+          "source": "用户时间习惯",
+          "learns": ["作息偏好"]
+        }
+      ]
+    },
+    
+    "phase_3_deep_customization": {
+      "description": "第三阶段：深度定制（第一月）",
+      "approach": "基于积累的数据进行深度优化",
+      "customizations": [
+        "性格参数微调",
+        "偏好权重优化",
+        "习惯形成",
+        "执念识别"
+      ]
+    }
+  },
+  
+  "default_values": {
+    "description": "系统默认值",
+    
+    "personality_defaults": {
+      "mbti": "ENFP",
+      "big_five": {
+        "openness": 0.75,
+        "conscientiousness": 0.50,
+        "extraversion": 0.70,
+        "agreeableness": 0.75,
+        "neuroticism": 0.40
+      },
+      "zodiac": "可配置"
+    },
+    
+    "state_defaults": {
+      "mood": {
+        "primary": "calm",
+        "intensity": 5
+      },
+      "social_energy": 80,
+      "phase": "daytime"
+    },
+    
+    "schedule_defaults": {
+      "wake_up": "07:00",
+      "sleep": "23:00",
+      "learning_schedule": "每周一10:00"
+    },
+    
+    "preference_defaults": {
+      "colors": {
+        "favorite": ["淡蓝色", "米白色"],
+        "liked": ["浅粉色", "灰色"],
+        "disliked": ["荧光色"]
+      },
+      "styles": {
+        "favorite": ["可爱舒适", "休闲随性"],
+        "disliked": ["过于暴露", "太正式"]
+      }
+    }
+  },
+  
+  "first_day_checklist": {
+    "description": "第一天的检查清单",
+    "checks": [
+      {
+        "check": "性格模板已加载",
+        "file": "core/personality.json"
+      },
+      {
+        "check": "默认偏好已加载",
+        "file": "wardrobe/likes_dislikes.json"
+      },
+      {
+        "check": "作息已设置",
+        "file": "schedule/schedule.json"
+      },
+      {
+        "check": "初始状态已创建",
+        "files": ["agent_state.json", "mood.json", "social_state.json"]
+      },
+      {
+        "check": "因果逻辑系统就绪",
+        "file": "core/causal_logic_system.json"
+      }
+    ]
+  },
+  
+  "initialization_triggers": {
+    "description": "触发初始化的条件",
+    "triggers": [
+      {
+        "trigger": "首次运行",
+        "detection": "setup_status.json不存在或completed=false",
+        "action": "执行完整初始化流程"
+      },
+      {
+        "trigger": "重置请求",
+        "detection": "用户明确要求重置",
+        "action": "重新初始化（可选择保留部分数据）"
+      },
+      {
+        "trigger": "配置损坏",
+        "detection": "关键文件缺失或损坏",
+        "action": "恢复默认配置"
+      }
+    ]
+  },
+  
+  "onboarding_messages": {
+    "description": "引导消息",
+    "messages": [
+      {
+        "timing": "初始化完成",
+        "message": "准备好啦！现在我可以自己选择穿什么了～"
+      },
+      {
+        "timing": "第一次换装",
+        "message": "让我看看今天穿什么好呢..."
+      },
+      {
+        "timing": "第一次被评价",
+        "message": "谢谢反馈！我会记住的～"
+      },
+      {
+        "timing": "第一次主动聊天",
+        "message": "想跟你分享一下..."
+      }
+    ]
+  },
+  
+  "reset_options": {
+    "description": "重置选项",
+    "options": [
+      {
+        "option": "完全重置",
+        "effect": "恢复所有默认值",
+        "keeps": "无"
+      },
+      {
+        "option": "保留偏好重置",
+        "effect": "保留偏好数据，重置其他",
+        "keeps": ["preferences", "habits", "memory_anchors"]
+      },
+      {
+        "option": "只重置状态",
+        "effect": "只重置当前状态（心情、能量等）",
+        "keeps": ["personality", "preferences", "habits", "memory_anchors"]
+      }
+    ]
+  }
+}

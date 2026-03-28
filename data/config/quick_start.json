@@ -1,0 +1,189 @@
+{
+  "meta": {
+    "description": "快速启动流程 - 新用户3步完成配置",
+    "created": "2026-03-28T16:00:00+08:00",
+    "version": "1.0"
+  },
+  
+  "enabled": true,
+  
+  "trigger": {
+    "condition": "setup_status.json.setup_completed = false OR setup_status.json不存在",
+    "action": "启动快速配置流程",
+    "timing": "首次使用穿衣功能时"
+  },
+  
+  "flow": {
+    "step_1": {
+      "name": "选择预设衣橱",
+      "message": "我还没有衣服穿呢！要帮我配置衣橱吗？",
+      "description": "选择一个预设或自定义",
+      "options": [
+        {
+          "id": "minimal",
+          "name": "极简衣橱",
+          "emoji": "🧥",
+          "description": "3件基础款：睡衣、休闲装、正装",
+          "items_count": 3,
+          "recommend_for": ["新用户", "不确定的用户", "想快速开始的用户"],
+          "items": [
+            {"type": "sleepwear", "name": "舒适睡衣", "color": "淡蓝色"},
+            {"type": "casual", "name": "休闲卫衣+牛仔裤", "color": "灰色"},
+            {"type": "formal", "name": "正装", "color": "白色/黑色"}
+          ]
+        },
+        {
+          "id": "comfy",
+          "name": "舒适优先",
+          "emoji": "🏠",
+          "description": "4件舒适款：睡衣、家居服、休闲装、外套",
+          "items_count": 4,
+          "recommend_for": ["注重舒适的用户", "宅家多的用户"],
+          "items": [
+            {"type": "sleepwear", "name": "舒适睡衣套装", "color": "淡蓝色"},
+            {"type": "loungewear", "name": "家居服", "color": "米白色"},
+            {"type": "casual", "name": "宽松卫衣+运动裤", "color": "灰色"},
+            {"type": "outerwear", "name": "舒适外套", "color": "黑色"}
+          ]
+        },
+        {
+          "id": "varied",
+          "name": "多样化衣橱",
+          "emoji": "👗",
+          "description": "6件多场合：睡衣、家居服、休闲装、连衣裙、正装、外套",
+          "items_count": 6,
+          "recommend_for": ["想要更多选择的用户", "经常出门的用户"],
+          "items": [
+            {"type": "sleepwear", "name": "睡衣", "color": "淡蓝色"},
+            {"type": "loungewear", "name": "家居服", "color": "米白色"},
+            {"type": "casual", "name": "休闲装", "color": "雾霾蓝"},
+            {"type": "casual", "name": "连衣裙", "color": "浅粉色"},
+            {"type": "formal", "name": "正装", "color": "白色/黑色"},
+            {"type": "outerwear", "name": "羽绒服", "color": "黑色"}
+          ]
+        },
+        {
+          "id": "custom",
+          "name": "自定义",
+          "emoji": "✨",
+          "description": "一件一件添加",
+          "items_count": 0,
+          "recommend_for": ["有特定需求的用户", "想要完全控制的用户"],
+          "action": "进入自定义添加流程"
+        }
+      ],
+      "default_selection": "minimal",
+      "timeout": "用户不回复则使用默认值",
+      "skip_allowed": true,
+      "skip_message": "好的，我先用默认的极简衣橱吧！"
+    },
+    
+    "step_2": {
+      "name": "确认偏好",
+      "message": "好嘞！你希望我偏好什么风格？",
+      "description": "颜色和风格偏好",
+      "auto_detect": {
+        "enabled": true,
+        "sources": [
+          {
+            "file": "USER.md",
+            "extract_fields": ["user_preferences"]
+          },
+          {
+            "file": "SOUL.md",
+            "extract_fields": ["personality", "style_hints"]
+          }
+        ],
+        "fallback": {
+          "favorite_colors": ["淡蓝色", "米白色", "浅粉色"],
+          "disliked_colors": ["荧光绿", "艳粉色"],
+          "comfort_priority": 9
+        }
+      },
+      "quick_options": [
+        {
+          "id": "cute_comfy",
+          "name": "可爱舒适",
+          "colors": ["淡蓝色", "米白色", "浅粉色"],
+          "styles": ["可爱", "舒适", "休闲"],
+          "message": "我喜欢可爱舒适的感觉～"
+        },
+        {
+          "id": "cool_minimal",
+          "name": "简约小酷",
+          "colors": ["黑色", "白色", "灰色"],
+          "styles": ["简约", "有点小酷"],
+          "message": "简约但不简单，酷酷的～"
+        },
+        {
+          "id": "warm_natural",
+          "name": "温暖自然",
+          "colors": ["米白色", "卡其色", "浅棕色"],
+          "styles": ["自然", "温暖", "舒适"],
+          "message": "喜欢温暖自然的感觉～"
+        }
+      ],
+      "skip_allowed": true,
+      "skip_message": "没关系，用默认偏好也很可爱！"
+    },
+    
+    "step_3": {
+      "name": "完成",
+      "message": "搞定！我现在有衣服穿了～",
+      "description": "配置完成",
+      "actions": [
+        {
+          "action": "更新setup_status.json",
+          "fields": {
+            "setup_completed": true,
+            "completed_at": "NOW",
+            "preset_used": "{selected_preset}"
+          }
+        },
+        {
+          "action": "生成基准照片",
+          "condition": "用户同意",
+          "optional": true,
+          "message": "要生成我的基准照片吗？这样每次自拍会更像我～"
+        }
+      ],
+      "next_steps_hint": [
+        "可以随时让我添加新衣服",
+        "可以说'让我看看你的衣橱'",
+        "可以说'换套衣服'"
+      ]
+    }
+  },
+  
+  "edge_cases": {
+    "user_interrupted": {
+      "condition": "用户在流程中打断",
+      "action": "保存当前进度到setup_status.json",
+      "message": "没关系，随时可以继续配置～"
+    },
+    "user_skipped_all": {
+      "condition": "用户全部跳过",
+      "action": "使用全部默认值完成配置",
+      "message": "好嘞，用默认配置开始吧！"
+    },
+    "returning_user": {
+      "condition": "setup_status.json存在且setup_completed=true",
+      "action": "跳过快速启动",
+      "message": null
+    }
+  },
+  
+  "conversational_prompts": {
+    "welcome": "哇，第一次用穿衣功能！让我先配置一下衣橱～",
+    "step_1_prompt": "我需要几件衣服，你希望我有什么样的衣橱？",
+    "step_2_prompt": "接下来，你喜欢我穿什么风格？",
+    "step_3_prompt": "好啦，配置完成！我现在可以正常穿衣打扮了～",
+    "complete_with_photo": "要生成我的基准照片吗？这样每次自拍会更像我～"
+  },
+  
+  "estimated_time": {
+    "minimal": "30秒",
+    "with_customization": "1-2分钟",
+    "full_custom": "3-5分钟"
+  }
+}

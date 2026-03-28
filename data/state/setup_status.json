@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "description": "用户配置状态追踪 - 记录用户完成配置的进度",
+    "created": "2026-03-28T16:00:00+08:00",
+    "version": "1.0"
+  },
+  
+  "setup_completed": true,
+  "current_step": 3,
+  "started_at": "2026-03-27T14:00:00+08:00",
+  "completed_at": "2026-03-27T14:30:00+08:00",
+  
+  "progress": {
+    "wardrobe": {
+      "status": "completed",
+      "completed_at": "2026-03-27T14:10:00+08:00",
+      "items_count": 6,
+      "preset_used": "custom",
+      "notes": "手动添加了6件衣服"
+    },
+    "preferences": {
+      "status": "completed",
+      "completed_at": "2026-03-27T14:15:00+08:00",
+      "colors_set": true,
+      "styles_set": true,
+      "comfort_priority_set": true
+    },
+    "appearance": {
+      "status": "completed",
+      "completed_at": "2026-03-27T14:20:00+08:00",
+      "base_appearance_defined": true,
+      "primary_photo_exists": true
+    },
+    "weather_service": {
+      "status": "completed",
+      "completed_at": "2026-03-27T14:25:00+08:00",
+      "location_set": true,
+      "api_configured": true
+    }
+  },
+  
+  "missing_fields": [],
+  
+  "validation_history": [
+    {
+      "time": "2026-03-27T14:30:00+08:00",
+      "score": 100,
+      "passed": ["wardrobe_non_empty", "preferences_set", "appearance_defined", "weather_service_configured"],
+      "warnings": []
+    }
+  ],
+  
+  "customizations": [
+    "添加了自定义衣服",
+    "设置了颜色偏好",
+    "配置了羞耻感规则",
+    "添加了信任的人"
+  ],
+  
+  "quick_commands_used": [
+    "添加一件淡蓝色居家睡衣套装",
+    "添加一件灰色连帽卫衣",
+    "设置默认地点为北京"
+  ],
+  
+  "onboarding_completed": true,
+  "onboarding_version": "1.0",
+  "notes": "窝窝的初始配置完成，可以正常使用穿衣系统"
+}

@@ -1,0 +1,261 @@
+{
+  "meta": {
+    "description": "配置校验器 - 检查用户配置完整性",
+    "created": "2026-03-28T16:00:00+08:00",
+    "version": "1.0"
+  },
+  
+  "validators": {
+    "wardrobe_non_empty": {
+      "id": "V001",
+      "name": "衣橱非空",
+      "description": "检查用户是否有至少一件衣服",
+      "check": {
+        "file": "data/wardrobe/closet.json",
+        "condition": "items.length > 0",
+        "minimum": 1,
+        "recommended": 3
+      },
+      "severity": "error",
+      "message": {
+        "error": "衣橱为空！需要添加至少一件衣服才能使用穿衣功能。",
+        "fix_hint": "说'帮我添加一件衣服'或选择预设衣橱"
+      },
+      "auto_fix": {
+        "available": true,
+        "action": "启动快速配置流程"
+      }
+    },
+    
+    "preferences_set": {
+      "id": "V002",
+      "name": "偏好已设置",
+      "description": "检查用户偏好是否配置",
+      "check": {
+        "file": "data/wardrobe/preferences.json",
+        "conditions": [
+          {
+            "field": "favorite_colors",
+            "condition": "length > 0",
+            "severity": "warning"
+          },
+          {
+            "field": "comfort_priority",
+            "condition": "exists",
+            "severity": "info"
+          }
+        ]
+      },
+      "severity": "warning",
+      "message": {
+        "warning": "偏好未完全设置，将使用默认值。",
+        "info": "设置偏好可以获得更个性化的穿搭建议～"
+      },
+      "default_values": {
+        "favorite_colors": ["淡蓝色", "米白色"],
+        "comfort_priority": 8
+      }
+    },
+    
+    "appearance_defined": {
+      "id": "V003",
+      "name": "外貌已定义",
+      "description": "检查Agent外貌是否定义",
+      "check": {
+        "file": "data/base_appearance.yaml",
+        "condition": "file_exists",
+        "alternative_files": ["data/appearance/base_appearance.yaml"]
+      },
+      "severity": "warning",
+      "message": {
+        "warning": "外貌未定义，图像生成可能不一致。",
+        "fix_hint": "创建base_appearance.yaml定义固定外貌"
+      },
+      "auto_detect": {
+        "sources": ["SOUL.md", "IDENTITY.md"],
+        "fallback": "使用默认外貌模板"
+      }
+    },
+    
+    "current_outfit_valid": {
+      "id": "V004",
+      "name": "当前穿着有效",
+      "description": "检查current_outfit.json是否有效",
+      "check": {
+        "file": "data/wardrobe/current_outfit.json",
+        "conditions": [
+          {
+            "field": "outfit_id",
+            "condition": "exists in closet.json"
+          },
+          {
+            "field": "type",
+            "condition": "valid_type",
+            "valid_types": ["sleepwear", "loungewear", "casual", "formal", "sportswear", "outerwear", "underwear"]
+          }
+        ]
+      },
+      "severity": "warning",
+      "message": {
+        "warning": "当前穿着无效或未设置。",
+        "fix_hint": "说'换件衣服'来选择穿着"
+      }
+    },
+    
+    "weather_service_configured": {
+      "id": "V005",
+      "name": "天气服务已配置",
+      "description": "检查天气服务是否启用",
+      "check": {
+        "file": "data/config/weather_service.json",
+        "conditions": [
+          {
+            "field": "enabled",
+            "condition": "true"
+          },
+          {
+            "field": "default_location",
+            "condition": "not_empty"
+          }
+        ]
+      },
+      "severity": "info",
+      "message": {
+        "info": "天气服务未配置，将使用默认温度选择穿着。",
+        "fix_hint": "说'设置默认地点为[城市]'来配置天气服务"
+      }
+    },
+    
+    "shyness_system_configured": {
+      "id": "V006",
+      "name": "羞耻感系统已配置",
+      "description": "检查羞耻感阈值是否合理",
+      "check": {
+        "file": "data/config/shyness_system.json",
+        "conditions": [
+          {
+            "field": "base_shyness",
+            "condition": "between 1 and 10"
+          },
+          {
+            "field": "trusted_people",
+            "condition": "array"
+          }
+        ]
+      },
+      "severity": "info",
+      "message": {
+        "info": "羞耻感系统使用默认配置。"
+      }
+    },
+    
+    "image_generation_configured": {
+      "id": "V007",
+      "name": "图像生成已配置",
+      "description": "检查图像生成API是否可用",
+      "check": {
+        "file": "data/config/image_generation.json",
+        "conditions": [
+          {
+            "field": "api_key_env",
+            "condition": "env_exists"
+          },
+          {
+            "field": "default_provider",
+            "condition": "not_empty"
+          }
+        ]
+      },
+      "severity": "warning",
+      "message": {
+        "warning": "图像生成API未配置，无法生成自拍。",
+        "fix_hint": "设置API Key环境变量或配置图像生成服务"
+      }
+    },
+    
+    "indices_built": {
+      "id": "V008",
+      "name": "索引已构建",
+      "description": "检查衣橱索引是否建立",
+      "check": {
+        "file": "data/wardrobe/indices.json",
+        "condition": "file_exists"
+      },
+      "severity": "info",
+      "message": {
+        "info": "索引未建立，穿搭选择会稍慢。",
+        "auto_fix": "下次使用时自动建立索引"
+      },
+      "auto_rebuild": true
+    }
+  },
+  
+  "validation_levels": {
+    "full": {
+      "description": "完整校验，检查所有validators",
+      "validators": ["V001", "V002", "V003", "V004", "V005", "V006", "V007", "V008"],
+      "trigger": "用户主动请求 或 首次使用"
+    },
+    "quick": {
+      "description": "快速校验，只检查核心validators",
+      "validators": ["V001", "V004"],
+      "trigger": "每次穿衣操作前"
+    },
+    "startup": {
+      "description": "启动校验，检查必要validators",
+      "validators": ["V001", "V002", "V003"],
+      "trigger": "技能加载时"
+    }
+  },
+  
+  "scoring": {
+    "description": "配置完成度评分",
+    "formula": "(passed_validators / total_validators) * 100",
+    "levels": {
+      "100": {
+        "status": "完美",
+        "emoji": "✨",
+        "message": "配置完美！可以愉快使用了～"
+      },
+      "80-99": {
+        "status": "良好",
+        "emoji": "👍",
+        "message": "配置良好，大部分功能可用。"
+      },
+      "60-79": {
+        "status": "基本",
+        "emoji": "👌",
+        "message": "基本配置完成，建议完善。"
+      },
+      "40-59": {
+        "status": "不完整",
+        "emoji": "⚠️",
+        "message": "配置不完整，部分功能受限。"
+      },
+      "0-39": {
+        "status": "需配置",
+        "emoji": "❗",
+        "message": "需要先完成初始配置。"
+      }
+    },
+    "pass_threshold": 60
+  },
+  
+  "auto_fix_behavior": {
+    "enabled": true,
+    "strategy": "提示用户并引导修复",
+    "fixable_validators": ["V001", "V002", "V003"],
+    "fix_flow": "启动quick_start.json流程"
+  },
+  
+  "report_template": {
+    "description": "校验报告模板",
+    "format": {
+      "summary": "{score}分 ({status})",
+      "passed": "✅ {validator_name}",
+      "failed": "❌ {validator_name}: {message}",
+      "warning": "⚠️ {validator_name}: {message}",
+      "info": "ℹ️ {validator_name}: {message}"
+    }
+  }
+}

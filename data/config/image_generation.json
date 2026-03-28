@@ -116,18 +116,30 @@
   },
   
   "generation_workflow": {
-    "description": "两步图像生成流程：先用语言模型优化提示词，再用图像模型生成",
-    "version": "2.0",
-    "last_updated": "2026-03-28T23:45:00+08:00",
+    "description": "两步图像生成流程：先用语言模型优化提示词（含pose设计），再用图像模型生成",
+    "version": "2.1",
+    "last_updated": "2026-03-29T00:28:00+08:00",
+    "lessons_learned": [
+      "不要在提示词中强调酒窝和痣，AI生成不够真实",
+      "让qwen设计符合情景的pose动作（手、腿、身子）",
+      "pose要自然协调，符合穿搭风格"
+    ],
     "steps": [
       {
         "step": 1,
-        "name": "提示词优化",
+        "name": "提示词优化 + Pose设计",
         "model": "qwen3.5-flash",
         "endpoint": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
-        "purpose": "根据关键词生成专业的真人照片提示词",
-        "input": "关键词 + 人物特征 + 场景描述",
-        "output": "优化后的专业提示词（包含摄影参数、光线、构图等）"
+        "purpose": "根据关键词生成专业的真人照片提示词，并设计符合情景的pose动作",
+        "input": "关键词 + 人物特征 + 场景描述 + 穿搭风格",
+        "output": "优化后的专业提示词（包含pose动作指导、摄影参数、光线、构图等）",
+        "pose_design_requirements": [
+          "手部动作：怎么比、放哪里、是否拿道具",
+          "腿部动作：是否翘腿、脚尖方向、站姿还是坐姿",
+          "身体姿态：侧身还是正面、腰部角度",
+          "表情：微笑、大笑、高冷等",
+          "pose要符合穿搭风格和场景氛围"
+        ]
       },
       {
         "step": 2,
@@ -139,6 +151,10 @@
         "output": "保持脸一致的真人照片"
       }
     ],
+    "character_features_note": "人物特征描述：年龄、种族、发型、眼睛颜色、皮肤。注意：不要强调酒窝和痣，AI生成这些细节不够真实",
+    "verified": true,
+    "verified_date": "2026-03-29"
+  },
     "prompt_optimization_template": {
       "system_prompt": "你是一个专业的AI图像生成提示词优化专家。你精通各种AI图像生成模型的提示词技巧，特别是真人照片生成。",
       "user_prompt_structure": [

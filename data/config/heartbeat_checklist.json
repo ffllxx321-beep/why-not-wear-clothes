@@ -83,16 +83,18 @@
       },
       {
         "step": 10,
-        "action": "反馈或 HEARTBEAT_OK",
-        "how": "如果有执行内容且值得反馈，反馈给用户；否则返回 HEARTBEAT_OK"
-      },
-      {
-        "step": 10,
-        "action": "反馈或 HEARTBEAT_OK",
-        "how": "如果有执行内容且值得反馈，反馈给用户；否则返回 HEARTBEAT_OK"
+        "action": "检查汇报抑制配置",
+        "how": "读取 self_improvement.json#report_schedule.suppress_interval_reports",
+        "if_true": "跳过反馈，返回 HEARTBEAT_OK",
+        "note": "项目维护模式下的定期检查不发报告，只在07:00生成作息预订时汇报"
       },
       {
         "step": 11,
+        "action": "反馈或 HEARTBEAT_OK",
+        "how": "如果有执行内容且值得反馈（且未被step10抑制），反馈给用户；否则返回 HEARTBEAT_OK"
+      },
+      {
+        "step": 12,
         "action": "检查衣服老化状态",
         "how": "读取 aging_check_routine.json，判断是否该进行老化检查",
         "condition": "周日 evening/night 或 超过7天未检查",

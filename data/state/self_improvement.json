@@ -5,7 +5,7 @@
   "end_time": "2026-03-28T08:00:00+08:00",
   
   "current_round": 13,
-  "last_check_time": "2026-03-29T13:28:00+08:00",
+  "last_check_time": "2026-03-29T14:58:00+08:00",
   "status": "all_completed",
   "completion_time": "2026-03-28T16:58:00+08:00",
   "final_verification_time": "2026-03-28T19:28:00+08:00",
@@ -457,6 +457,82 @@
         "primary_appearance_update": 1
       },
       "summary": "✅ 激活模式运行健康 - 113 JSON + 12 MD + 9张新外观图片，JSON语法验证通过(抽样10个)，Git有新文件待提交，系统稳定运行"
+    },
+    {
+      "time": "2026-03-29T13:58:00+08:00",
+      "action": "active_mode_check",
+      "result": "project_running_healthy",
+      "files_count": {"json": 113, "md": 12},
+      "all_directions_completed": 12,
+      "total_rounds": 13,
+      "git_status": "modified_with_9_new_images",
+      "json_syntax_check": "all_passed_15_samples",
+      "status": "active_mode",
+      "daily_schedule": "周末下午 - 逛街决策时间临近",
+      "current_activity": "午饭后时段",
+      "afternoon_plan": "逛街决策(14:00) - 当前35%概率",
+      "appearance_updates": {
+        "new_hairstyle_images": 4,
+        "new_selfie_images": 3,
+        "shopping_outfit_preview": 1,
+        "primary_appearance_update": 1,
+        "total_new_images": 9
+      },
+      "summary": "✅ 激活模式运行正常 - 113 JSON + 12 MD + 9张外观图片，JSON语法验证通过(15个抽样)，周末作息计划正常执行中"
+    },
+    {
+      "time": "2026-03-29T14:28:00+08:00",
+      "action": "active_mode_check_with_shopping_decision",
+      "result": "project_running_healthy",
+      "files_count": {"json": 109, "md": 6},
+      "all_directions_completed": 12,
+      "total_rounds": 13,
+      "git_status": "modified_with_9_new_images_pending_commit",
+      "json_syntax_check": "all_passed_15_samples",
+      "status": "active_mode",
+      "daily_schedule": "周末下午 - 逛街决策时间已过",
+      "current_activity": "下午时段",
+      "shopping_decision": {
+        "decision_time": "14:00",
+        "probability": 0.35,
+        "weather_condition": "晴朗22℃(适合)",
+        "mood_state": "calm(适合)",
+        "decision_result": "未出门(概率低，社交能量中等)"
+      },
+      "appearance_updates": {
+        "hairstyle_change": "奶茶灰棕法式刘海锁骨发",
+        "change_time": "2026-03-29T12:30:00+08:00",
+        "confirmed_by": "大哥",
+        "new_images": 9
+      },
+      "summary": "✅ 激活模式运行健康 - 109 JSON + 6 MD + 9张外观图片，JSON语法验证通过(15个抽样)，新发型已更新(奶茶灰棕法式刘海)，逛街决策已过(未出门)"
+    },
+    {
+      "time": "2026-03-29T14:58:00+08:00",
+      "action": "active_mode_check",
+      "result": "project_running_healthy",
+      "files_count": {"json": 113, "md": 12},
+      "all_directions_completed": 12,
+      "total_rounds": 13,
+      "git_status": "modified_10_new_images_pending_commit",
+      "json_syntax_check": "all_passed",
+      "status": "active_mode",
+      "daily_schedule": "周末下午时段",
+      "current_activity": "下午休闲时光",
+      "appearance_updates": {
+        "new_hairstyle_images": 4,
+        "new_selfie_images": 3,
+        "shopping_outfit_preview": 1,
+        "primary_appearance_update": 1,
+        "primary_change_log": 1,
+        "total_new_images": 10
+      },
+      "pending_git_changes": {
+        "modified": 6,
+        "untracked": 11,
+        "note": "等待用户确认后提交"
+      },
+      "summary": "✅ 激活模式运行健康 - 113 JSON + 12 MD，10张新外观图片待提交，发型已更新为奶茶灰棕法式刘海锁骨发，JSON语法验证通过，系统稳定运行"
     }
   ],
   

@@ -117,8 +117,9 @@
   
   "generation_workflow": {
     "description": "两步图像生成流程：先用语言模型优化提示词（含pose设计），再用图像模型生成",
-    "version": "2.2",
-    "last_updated": "2026-03-29T01:05:00+08:00",
+    "version": "2.3",
+    "last_updated": "2026-03-29T12:57:00+08:00",
+    "verified_by": "大哥确认，这套流程是对的",
     "lessons_learned": [
       "不要在提示词中强调酒窝和痣，AI生成不够真实",
       "让qwen设计符合情景的pose动作（手、腿、身子）",

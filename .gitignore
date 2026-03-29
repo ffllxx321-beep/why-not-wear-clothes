@@ -1,0 +1,20 @@
+# 窝窝的个人信息 - 不推送到公开仓库
+data/appearance/
+
+# 窝窝的照片
+images/
+data/appearance/images/
+
+# 今日私人作息
+data/schedule/today.json
+
+# 实时状态
+data/state/agent_state.json
+
+# 变更日志（包含外观变更记录）
+data/appearance/images/primary_change_log.json
+
+# 缓存和日志
+*.log
+*.cache
+node_modules/

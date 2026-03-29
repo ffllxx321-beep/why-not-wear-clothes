@@ -5,7 +5,7 @@
   "end_time": "2026-03-28T08:00:00+08:00",
   
   "current_round": 13,
-  "last_check_time": "2026-03-29T07:28:00+08:00",
+  "last_check_time": "2026-03-29T10:58:00+08:00",
   "status": "all_completed",
   "completion_time": "2026-03-28T16:58:00+08:00",
   "final_verification_time": "2026-03-28T19:28:00+08:00",
@@ -292,6 +292,90 @@
       "json_syntax_check": "all_passed",
       "status": "maintenance_mode",
       "summary": "✅ 维护模式定期检查通过 - 108 JSON + 6 MD，所有JSON语法验证通过，Git干净，系统健康"
+    },
+    {
+      "time": "2026-03-29T07:58:00+08:00",
+      "action": "maintenance_check",
+      "result": "project_stable_verified",
+      "files_count": {"json": 108, "md": 12},
+      "all_directions_completed": 12,
+      "total_rounds": 13,
+      "git_status": "clean",
+      "json_syntax_check": "all_passed",
+      "status": "maintenance_mode",
+      "summary": "✅ 维护模式定期检查通过 - 108 JSON + 12 MD，所有JSON语法验证通过，Git干净，系统健康"
+    },
+    {
+      "time": "2026-03-29T08:28:00+08:00",
+      "action": "maintenance_check",
+      "result": "project_stable_verified",
+      "files_count": {"json": 108, "md": 6},
+      "all_directions_completed": 12,
+      "total_rounds": 13,
+      "git_status": "self_improvement_json_updated",
+      "json_syntax_check": "all_passed",
+      "status": "maintenance_mode",
+      "summary": "✅ 维护模式定期检查通过 - 108 JSON + 6 MD，所有JSON语法验证通过，系统健康稳定"
+    },
+    {
+      "time": "2026-03-29T08:58:00+08:00",
+      "action": "maintenance_check",
+      "result": "project_stable_verified",
+      "files_count": {"json": 111, "md": 12},
+      "all_directions_completed": 12,
+      "total_rounds": 13,
+      "git_status": "self_improvement_json_updated",
+      "json_syntax_check": "all_passed",
+      "status": "maintenance_mode",
+      "summary": "✅ 维护模式定期检查通过 - 111 JSON + 12 MD，所有JSON语法验证通过，系统健康稳定"
+    },
+    {
+      "time": "2026-03-29T09:28:00+08:00",
+      "action": "maintenance_check",
+      "result": "project_stable_verified",
+      "files_count": {"json": 111, "md": 12},
+      "all_directions_completed": 12,
+      "total_rounds": 13,
+      "git_status": "self_improvement_json_updated",
+      "json_syntax_check": "all_passed",
+      "status": "maintenance_mode",
+      "summary": "✅ 维护模式定期检查通过 - 111 JSON + 12 MD，所有JSON语法验证通过，系统健康稳定"
+    },
+    {
+      "time": "2026-03-29T09:58:00+08:00",
+      "action": "maintenance_check",
+      "result": "project_stable_verified",
+      "files_count": {"json": 108, "md": 6},
+      "all_directions_completed": 12,
+      "total_rounds": 13,
+      "git_status": "self_improvement_json_updated",
+      "json_syntax_check": "all_passed",
+      "status": "maintenance_mode",
+      "summary": "✅ 维护模式定期检查通过 - 108 JSON + 6 MD，所有JSON语法验证通过，系统健康稳定"
+    },
+    {
+      "time": "2026-03-29T10:28:00+08:00",
+      "action": "maintenance_check",
+      "result": "project_stable_verified",
+      "files_count": {"json": 108, "md": 6},
+      "all_directions_completed": 12,
+      "total_rounds": 13,
+      "git_status": "self_improvement_json_modified",
+      "json_syntax_check": "all_passed",
+      "status": "maintenance_mode",
+      "summary": "✅ 维护模式定期检查通过 - 108 JSON + 6 MD，所有JSON语法验证通过，系统健康稳定"
+    },
+    {
+      "time": "2026-03-29T10:58:00+08:00",
+      "action": "maintenance_check",
+      "result": "project_stable_verified",
+      "files_count": {"json": 111, "md": 12},
+      "all_directions_completed": 12,
+      "total_rounds": 13,
+      "git_status": "self_improvement_json_modified",
+      "json_syntax_check": "all_passed",
+      "status": "maintenance_mode",
+      "summary": "✅ 维护模式定期检查通过 - 111 JSON + 12 MD，所有JSON语法验证通过，系统健康稳定"
     }
   ],
   
@@ -568,6 +652,17 @@
   
   "cron_job_id": "project-self-improvement",
   "cron_interval": "30 minutes",
+  
+  "report_schedule": {
+    "mode": "daily_with_schedule",
+    "description": "汇报只在每日生成作息预订时进行，不每次检查都汇报",
+    "report_time": "07:00",
+    "trigger": "daily_schedule_generation",
+    "suppress_interval_reports": true,
+    "only_report_on_issues": false,
+    "note": "维护检查继续每30分钟运行，但汇报只在早上生成作息预订时发送给用户"
+  },
+  
   "graduation_status": {
     "graduated": true,
     "graduation_time": "2026-03-28T20:58:00+08:00",

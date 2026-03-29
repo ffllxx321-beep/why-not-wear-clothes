@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "description": "联动规则 - 改了一个地方，哪些地方需要跟着改",
+    "created": "2026-03-29T16:37:00+08:00",
+    "principle": "改任何东西之前，先想：这个改了，系统其他地方需要联动修改吗？"
+  },
+  
+  "linkage_rules": {
+    "发型变更": {
+      "trigger": "base_appearance.yaml → hair 字段修改",
+      "must_update": [
+        {
+          "file": "base_appearance.yaml",
+          "field": "signature_features",
+          "reason": "标志性特征要包含新发型"
+        },
+        {
+          "file": "base_appearance.yaml", 
+          "field": "prompt_template",
+          "reason": "提示词模板要描述新发型"
+        },
+        {
+          "file": "data/appearance/images/primary.jpg",
+          "action": "替换为新发型照片",
+          "reason": "基准照片要反映新发型"
+        },
+        {
+          "file": "data/appearance/images/primary_new.jpg",
+          "action": "生成并保存新基准照片",
+          "reason": "保留最新形象"
+        },
+        {
+          "file": "data/appearance/metadata.json",
+          "field": "primary_image",
+          "reason": "记录变更时间和原因"
+        }
+      ],
+      "checkpoint": "改发型后，5个地方都要更新"
+    },
+    
+    "发色变更": {
+      "trigger": "base_appearance.yaml → hair.color 修改",
+      "must_update": [
+        {
+          "file": "base_appearance.yaml",
+          "field": "signature_features",
+          "reason": "标志性特征要包含新发色"
+        },
+        {
+          "file": "base_appearance.yaml",
+          "field": "prompt_template",
+          "reason": "提示词要描述新发色"
+        },
+        {
+          "file": "data/appearance/images/primary.jpg",
+          "action": "替换为新发色照片",
+          "reason": "基准照片要反映新发色"
+        },
+        {
+          "file": "data/appearance/metadata.json",
+          "field": "primary_image.style_reference",
+          "reason": "记录新发色"
+        }
+      ],
+      "checkpoint": "发色改了，基准照片必须换"
+    },
+    
+    "穿搭风格变更": {
+      "trigger": "base_appearance.yaml → style_preferences 修改",
+      "must_update": [
+        {
+          "file": "data/wardrobe/closet.json",
+          "action": "检查现有衣服是否符合新风格",
+          "reason": "衣橱要匹配风格偏好"
+        },
+        {
+          "file": "data/wardrobe/update_suggestions.json",
+          "action": "更新购买建议",
+          "reason": "根据新风格推荐新衣服"
+        }
+      ],
+      "checkpoint": "风格变了，衣橱和购买建议要检查"
+    },
+    
+    "基准照片变更": {
+      "trigger": "primary.jpg 替换",
+      "must_update": [
+        {
+          "file": "data/appearance/metadata.json",
+          "field": "primary_image.last_updated",
+          "reason": "记录变更时间"
+        },
+        {
+          "file": "data/appearance/base_appearance.yaml",
+          "action": "检查描述是否与照片一致",
+          "reason": "文字描述要和照片匹配"
+        }
+      ],
+      "checkpoint": "换照片后，要更新metadata和检查描述"
+    },
+    
+    "自优化开关变更": {
+      "trigger": "self_improvement.json → cron_enabled 修改",
+      "must_update": [
+        {
+          "file": "HEARTBEAT.md",
+          "action": "更新检查规则",
+          "reason": "心跳执行要知道是否要检查"
+        },
+        {
+          "file": "data/config/heartbeat_checklist.json",
+          "action": "启用/禁用相关检查步骤",
+          "reason": "检查清单要同步"
+        }
+      ],
+      "checkpoint": "开关变了，心跳和检查清单要同步"
+    }
+  },
+  
+  "thinking_pattern": {
+    "before_change": "改任何东西前，先问自己三个问题：",
+    "questions": [
+      "1. 这个改了，哪些地方会受影响？",
+      "2. 受影响的地方需要跟着改吗？",
+      "3. 还有其他地方引用了这个值吗？"
+    ],
+    "after_change": "改完后检查：",
+    "checklist": [
+      "所有相关文件都更新了吗？",
+      "有没有遗漏的联动点？",
+      "配置和实际状态一致吗？"
+    ]
+  },
+  
+  "common_linkage_points": {
+    "description": "常见的联动关系",
+    "points": [
+      "base_appearance.yaml 是外貌的唯一真值源，改了要检查 prompt_template 和 signature_features",
+      "primary.jpg 是基准照片，改了要更新 metadata.json",
+      "closet.json 是衣橱数据，改了要检查 indices.json 和 outfit_combinations.json",
+      "self_improvement.json 是项目状态，改了要检查 HEARTBEAT.md"
+    ]
+  }
+}

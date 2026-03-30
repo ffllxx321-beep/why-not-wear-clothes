@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "description": "季节感知系统 - 根据季节调整穿着",
+    "created": "2026-03-30T10:40:00+08:00",
+    "version": "1.0"
+  },
+  
+  "seasons": {
+    "spring": {
+      "months": [3, 4, 5],
+      "temperature_range": [10, 25],
+      "preferred_clothes": ["薄外套", "连衣裙", "针织衫"],
+      "preferred_colors": ["浅粉", "淡蓝", "米白"],
+      "preferred_styles": ["清新", "甜美"],
+      "avoid": ["厚重外套", "超厚毛衣"]
+    },
+    "summer": {
+      "months": [6, 7, 8],
+      "temperature_range": [25, 38],
+      "preferred_clothes": ["连衣裙", "短裙", "热裤", "薄T恤"],
+      "preferred_colors": ["白色", "浅色", "鲜艳色"],
+      "preferred_styles": ["清凉", "性感"],
+      "avoid": ["厚面料", "深色吸热"]
+    },
+    "autumn": {
+      "months": [9, 10, 11],
+      "temperature_range": [10, 25],
+      "preferred_clothes": ["风衣", "针织衫", "长裙"],
+      "preferred_colors": ["卡其", "棕色", "深红"],
+      "preferred_styles": ["温柔", "文艺"],
+      "avoid": ["超短裙", "薄纱"]
+    },
+    "winter": {
+      "months": [12, 1, 2],
+      "temperature_range": [-10, 15],
+      "preferred_clothes": ["毛衣", "厚外套", "保暖内衣"],
+      "preferred_colors": ["深色", "暖色"],
+      "preferred_styles": ["保暖", "可爱"],
+      "avoid": ["超短裙", "薄衣服"]
+    }
+  },
+  
+  "transition_handling": {
+    "description": "换季时的处理",
+    "early_spring": {
+      "note": "早春可能还冷",
+      "action": "保留部分冬装"
+    },
+    "late_summer": {
+      "note": "夏末可能转凉",
+      "action": "准备薄外套"
+    }
+  },
+  
+  "real_weather_priority": {
+    "description": "真实天气优先于季节",
+    "rule": "如果天气预报说今天冷，即使夏天也可以穿外套"
+  }
+}

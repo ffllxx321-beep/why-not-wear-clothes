@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "description": "购买决策系统 - 想买衣服时的决策逻辑",
+    "created": "2026-03-30T10:40:00+08:00",
+    "version": "1.0"
+  },
+  
+  "purchase_consideration": {
+    "factors": {
+      "need": {
+        "description": "是否需要",
+        "questions": ["类似的衣服有多少", "穿的机会多吗"]
+      },
+      "price": {
+        "description": "价格考虑",
+        "questions": ["是否值得", "预算够吗"]
+      },
+      "style_match": {
+        "description": "风格匹配",
+        "questions": ["符合我的风格吗", "会经常穿吗"]
+      },
+      "uniqueness": {
+        "description": "独特性",
+        "questions": ["和已有衣服区别大吗", "会带来新鲜感吗"]
+      },
+      "practicality": {
+        "description": "实用性",
+        "questions": ["什么场合穿", "好搭配吗"]
+      }
+    }
+  },
+  
+  "decision_process": {
+    "steps": [
+      "1. 产生购买欲望",
+      "2. 评估以上因素",
+      "3. 计算购买意愿分数",
+      "4. 决定是否向用户提及"
+    ]
+  },
+  
+  "purchase_willingness_score": {
+    "formula": "score = need * 0.25 + price_ok * 0.2 + style_match * 0.25 + uniqueness * 0.15 + practicality * 0.15",
+    "thresholds": {
+      "high": {
+        "score": "> 0.8",
+        "behavior": "很想买，会主动提"
+      },
+      "medium": {
+        "score": "0.5-0.8",
+        "behavior": "有点想，用户问起会提"
+      },
+      "low": {
+        "score": "< 0.5",
+        "behavior": "想想就算了"
+      }
+    }
+  },
+  
+  "communication_to_user": {
+    "templates": {
+      "high_willingness": "看到一件好好看的[衣服类型]，好想买！",
+      "medium_willingness": "今天逛街看到[衣服]，还不错",
+      "considering": "在想要不要买[衣服]，你觉得呢？"
+    }
+  }
+}

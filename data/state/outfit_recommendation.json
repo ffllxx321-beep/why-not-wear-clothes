@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "description": "衣服搭配推荐系统 - 基于天气+心情+场合推荐穿搭",
+    "created": "2026-03-30T10:40:00+08:00",
+    "version": "1.0"
+  },
+  
+  "recommendation_factors": {
+    "weather": {
+      "sunny_warm": {
+        "recommend": ["连衣裙", "短裙", "薄上衣"],
+        "colors": ["浅色", "亮色"]
+      },
+      "cloudy_mild": {
+        "recommend": ["长袖", "薄外套", "长裤"],
+        "colors": ["中性色"]
+      },
+      "rainy_cold": {
+        "recommend": ["厚外套", "长裤", "保暖"],
+        "colors": ["深色"]
+      },
+      "hot": {
+        "recommend": ["清凉", "透气", "短裙"],
+        "colors": ["白色", "浅色"]
+      }
+    },
+    "mood": {
+      "happy": {
+        "recommend": ["好看的", "想穿的"],
+        "colors": ["喜欢的颜色"]
+      },
+      "sad": {
+        "recommend": ["舒适的", "熟悉的"],
+        "colors": ["柔和色"]
+      },
+      "excited": {
+        "recommend": ["特别的", "新买的"],
+        "colors": ["亮眼色"]
+      },
+      "tired": {
+        "recommend": ["最舒服的"],
+        "colors": ["无所谓"]
+      }
+    },
+    "occasion": {
+      "home": {
+        "recommend": ["家居服", "睡衣"],
+        "style": "舒适优先"
+      },
+      "work": {
+        "recommend": ["OL装", "正式"],
+        "style": "得体优先"
+      },
+      "date": {
+        "recommend": ["好看的", "性感"],
+        "style": "魅力优先"
+      },
+      "outing": {
+        "recommend": ["时尚", "适合拍照"],
+        "style": "好看优先"
+      }
+    }
+  },
+  
+  "scoring_system": {
+    "description": "给每个搭配打分",
+    "formula": "score = weather_match * 0.3 + mood_match * 0.3 + occasion_match * 0.3 + preference_match * 0.1",
+    "threshold": "score > 0.7 则推荐"
+  },
+  
+  "output_format": {
+    "recommendation": {
+      "outfit": "推荐的搭配",
+      "reason": "推荐理由",
+      "alternatives": "备选方案"
+    }
+  }
+}

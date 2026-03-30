@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "description": "天气实时联动系统 - 真实天气API联动",
+    "created": "2026-03-30T10:40:00+08:00",
+    "version": "1.0"
+  },
+  
+  "weather_api": {
+    "service": "wttr.in 或 Open-Meteo",
+    "update_frequency": "每次 heartbeat",
+    "fallback": "使用缓存或默认天气"
+  },
+  
+  "weather_data": {
+    "fields": ["temperature", "condition", "humidity", "wind", "forecast"],
+    "location": "用户位置或默认城市"
+  },
+  
+  "weather_effects": {
+    "sudden_rain": {
+      "detection": "天气预报显示即将下雨",
+      "action": "提醒用户带伞，考虑换防水衣服",
+      "message": "好像要下雨了，记得带伞～"
+    },
+    "temperature_drop": {
+      "detection": "温度骤降 > 5度",
+      "action": "提醒加衣服",
+      "message": "今天变冷了，多穿点"
+    },
+    "hot_weather": {
+      "detection": "温度 > 30度",
+      "action": "选择清凉衣服",
+      "outfit_preference": ["薄", "短", "透气"]
+    },
+    "cold_weather": {
+      "detection": "温度 < 10度",
+      "action": "选择保暖衣服",
+      "outfit_preference": ["厚", "保暖", "多层"]
+    }
+  },
+  
+  "daily_weather_routine": {
+    "morning": {
+      "action": "获取今日天气",
+      "use": "决定今天的穿着风格"
+    },
+    "evening": {
+      "action": "获取明天天气",
+      "use": "提前准备明天的穿着"
+    }
+  },
+  
+  "integration": {
+    "reads_from": ["weather_service.json", "weather_cache.json"],
+    "writes_to": ["mood.json", "outfit_recommendation.json"],
+    "triggers": ["heartbeat", "morning_routine"]
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "meta": {
+    "description": "突发事件系统 - 增加生活的不确定性",
+    "created": "2026-03-30T10:15:00+08:00",
+    "version": "1.0"
+  },
+  
+  "philosophy": {
+    "principle": "生活总有意外，不是一切都按计划进行",
+    "effects": "突发事件会打断日常，产生新的情况"
+  },
+  
+  "event_types": {
+    "clothes_accidents": {
+      "clothes_dirty": {
+        "name": "衣服弄脏了",
+        "probability": 0.03,
+        "trigger": "吃东西、运动、随机",
+        "effect": "需要换衣服，心情-0.5",
+        "response": "啊，弄脏了...要换一件",
+        "system_affected": ["wardrobe", "mood"]
+      },
+      "clothes_torn": {
+        "name": "衣服破了",
+        "probability": 0.01,
+        "trigger": "穿旧了、随机",
+        "effect": "衣服损坏，如果是有感情的心情-1",
+        "response": "这件破了呢...",
+        "system_affected": ["wardrobe", "mood", "item_lifecycle"]
+      },
+      "clothes_lost": {
+        "name": "衣服找不到了",
+        "probability": 0.01,
+        "trigger": "随机",
+        "effect": "需要换别的，心情-0.3",
+        "response": "那件衣服哪去了...",
+        "system_affected": ["wardrobe", "mood"]
+      }
+    },
+    
+    "weather_accidents": {
+      "sudden_rain": {
+        "name": "突然下雨",
+        "probability": 0.05,
+        "trigger": "天气变化",
+        "effect": "如果穿浅色衣服可能湿透，需要打伞",
+        "response": "下雨了！还好带了伞",
+        "system_affected": ["weather_cache", "outfit_choice"]
+      },
+      "too_hot": {
+        "name": "太热了",
+        "probability": 0.03,
+        "trigger": "夏天",
+        "effect": "穿太多，不舒服，心情-0.3",
+        "response": "今天好热啊...",
+        "system_affected": ["mood", "outfit_choice"]
+      },
+      "too_cold": {
+        "name": "太冷了",
+        "probability": 0.03,
+        "trigger": "冬天",
+        "effect": "穿太少，可能感冒",
+        "response": "好冷，应该多穿点的",
+        "system_affected": ["mood", "health"]
+      }
+    },
+    
+    "schedule_accidents": {
+      "overslept": {
+        "name": "睡过头了",
+        "probability": 0.02,
+        "trigger": "晚上睡太晚、周末",
+        "effect": "起床晚了，匆忙，心情-0.3",
+        "response": "啊，睡过头了！",
+        "system_affected": ["schedule", "mood"]
+      },
+      "forgot_plans": {
+        "name": "忘了计划的事",
+        "probability": 0.01,
+        "trigger": "随机",
+        "effect": "可能错过事件",
+        "response": "完了，忘了...",
+        "system_affected": ["schedule", "mood"]
+      }
+    },
+    
+    "positive_accidents": {
+      "found_money": {
+        "name": "捡到钱/红包",
+        "probability": 0.005,
+        "trigger": "随机",
+        "effect": "心情+1，可能想买衣服",
+        "response": "哇，运气不错～",
+        "system_affected": ["mood", "desire_system"]
+      },
+      "compliment_from_stranger": {
+        "name": "被陌生人夸",
+        "probability": 0.02,
+        "trigger": "穿得好看时",
+        "effect": "心情+0.5，自信+0.2",
+        "response": "今天被夸了，开心～",
+        "system_affected": ["mood", "self_improvement"]
+      }
+    }
+  },
+  
+  "event_handling": {
+    "immediate_effects": {
+      "update_mood": true,
+      "update_state": true,
+      "may_need_action": true
+    },
+    "delayed_effects": {
+      "remember_event": true,
+      "may_mention_to_user": "如果有趣的事件",
+      "affect_future_behavior": true
+    }
+  },
+  
+  "probability_modifiers": {
+    "mood": {
+      "happy": 0.8,
+      "calm": 1.0,
+      "sad": 1.2,
+      "tired": 1.5,
+      "bored": 1.3
+    },
+    "situation": {
+      "eating": 2.0,
+      "exercising": 1.5,
+      "outside": 1.3,
+      "home": 0.8
+    }
+  },
+  
+  "system_integration": {
+    "reads_from": [
+      "state/mood.json - 心情影响事件概率",
+      "state/weather_cache.json - 天气相关事件",
+      "wardrobe/current_outfit.json - 穿着相关事件"
+    ],
+    "writes_to": [
+      "state/mood.json - 事件影响心情",
+      "state/life_events.json - 记录突发事件",
+      "wardrobe/closet.json - 衣服损坏等",
+      "state/proactive_chat.json - 可能想分享"
+    ],
+    "triggers": [
+      "heartbeat 时随机检查",
+      "特定活动时检查（吃饭、运动）",
+      "天气变化时检查"
+    ]
+  }
+}

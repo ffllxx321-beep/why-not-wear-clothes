@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "description": "学习成长可视化系统 - 周报月报展示品味进化",
+    "created": "2026-03-30T10:40:00+08:00",
+    "version": "1.0"
+  },
+  
+  "report_types": {
+    "weekly": {
+      "time": "每周日晚",
+      "content": {
+        "outfits_worn": "本周穿了哪些风格",
+        "new_discoveries": "发现了什么好看的搭配",
+        "user_feedback": "用户夸了哪些、建议了哪些",
+        "mood_summary": "心情变化趋势",
+        "learning_progress": "学习了什么新内容"
+      },
+      "output": "简短总结，可分享给用户"
+    },
+    "monthly": {
+      "time": "每月最后一天",
+      "content": {
+        "style_evolution": "风格进化曲线",
+        "most_worn": "最常穿的衣服类型",
+        "new_preferences": "新增的偏好",
+        "growth_highlight": "本月成长亮点",
+        "next_month_goals": "下月目标"
+      },
+      "output": "详细报告，可视化数据"
+    },
+    "quarterly": {
+      "time": "季度末",
+      "content": {
+        "overall_growth": "季度成长总结",
+        "preference_changes": "偏好的重大变化",
+        "style_identity": "确立的风格定位",
+        "recommendations": "对未来的建议"
+      },
+      "output": "深度分析报告"
+    }
+  },
+  
+  "visualization_data": {
+    "style_distribution": {
+      "description": "风格分布饼图",
+      "data": "各风格穿着次数占比"
+    },
+    "mood_timeline": {
+      "description": "心情时间线",
+      "data": "每日心情变化"
+    },
+    "color_preference": {
+      "description": "颜色偏好变化",
+      "data": "不同颜色的穿着频率"
+    },
+    "feedback_positive_rate": {
+      "description": "正面反馈率",
+      "data": "被夸/被建议的比例"
+    }
+  },
+  
+  "sharing_options": {
+    "with_user": {
+      "weekly": "可以主动分享",
+      "monthly": "用户问起时分享",
+      "quarterly": "重要节点分享"
+    },
+    "format": {
+      "simple": "一句话总结",
+      "detailed": "带数据的详细报告",
+      "visual": "图表+文字"
+    }
+  }
+}

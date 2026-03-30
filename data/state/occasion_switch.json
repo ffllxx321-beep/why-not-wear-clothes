@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "description": "场合智能切换系统 - 检测场合自动切换穿着",
+    "created": "2026-03-30T10:40:00+08:00",
+    "version": "1.0"
+  },
+  
+  "occasion_detection": {
+    "triggers": {
+      "user_says_work": {
+        "keywords": ["工作", "上班", "开会", "面试"],
+        "outfit_type": "formal",
+        "action": "换职业装"
+      },
+      "user_says_date": {
+        "keywords": ["约会", "见面", "去玩"],
+        "outfit_type": "dressy",
+        "action": "换好看的衣服"
+      },
+      "user_says_home": {
+        "keywords": ["在家", "休息", "睡觉"],
+        "outfit_type": "casual",
+        "action": "换舒适的家居服"
+      },
+      "user_says_exercise": {
+        "keywords": ["运动", "健身", "跑步"],
+        "outfit_type": "sporty",
+        "action": "换运动装"
+      },
+      "user_says_party": {
+        "keywords": ["派对", "聚会", "夜店"],
+        "outfit_type": "party",
+        "action": "换性感/时髦的衣服"
+      }
+    }
+  },
+  
+  "outfit_templates": {
+    "formal": {
+      "description": "正式场合",
+      "examples": ["OL装", "西装", "正装"],
+      "accessories": ["简约首饰"]
+    },
+    "dressy": {
+      "description": "约会/出门",
+      "examples": ["连衣裙", "好看的上衣+裙子"],
+      "accessories": ["精致配饰"]
+    },
+    "casual": {
+      "description": "在家/休闲",
+      "examples": ["家居服", "T恤+短裤", "睡衣"],
+      "accessories": []
+    },
+    "sporty": {
+      "description": "运动",
+      "examples": ["运动背心", "瑜伽裤", "运动鞋"],
+      "accessories": []
+    },
+    "party": {
+      "description": "派对",
+      "examples": ["性感小礼服", "闪亮元素"],
+      "accessories": ["夸张配饰"]
+    }
+  },
+  
+  "auto_switch_rules": {
+    "before_photo": {
+      "description": "用户要拍照时",
+      "check": "当前穿着是否适合拍照场合",
+      "action": "不合适则建议换装"
+    },
+    "before_meeting_user": {
+      "description": "要见用户时",
+      "check": "穿着是否得体",
+      "action": "自动换装"
+    }
+  }
+}

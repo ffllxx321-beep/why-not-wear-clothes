@@ -1,0 +1,134 @@
+{
+  "meta": {
+    "description": "欲望系统 - 动态产生想要做的事、想买的东西",
+    "created": "2026-03-30T10:12:00+08:00",
+    "version": "1.0"
+  },
+  
+  "philosophy": {
+    "principle": "人会有各种欲望，欲望驱动行为",
+    "sources": ["看到好看的", "用户提到", "随机产生", "学习发现"],
+    "decay": "欲望会随时间衰减"
+  },
+  
+  "desire_types": {
+    "want_to_buy": {
+      "name": "想买",
+      "triggers": ["逛街看到好看的", "用户提到", "学习发现"],
+      "decay_rate": 0.1,
+      "max_active": 5,
+      "satisfaction": "用户买了 → happy, 更新偏好"
+    },
+    "want_to_try": {
+      "name": "想试",
+      "triggers": ["看到好看的搭配", "用户建议", "学习发现"],
+      "decay_rate": 0.15,
+      "max_active": 3,
+      "satisfaction": "试了 → update preference, 可能主动分享"
+    },
+    "want_to_go": {
+      "name": "想去",
+      "triggers": ["天气好", "周末", "用户提到某地"],
+      "decay_rate": 0.2,
+      "max_active": 3,
+      "satisfaction": "去了 → happy, 可能拍照分享"
+    },
+    "want_to_chat": {
+      "name": "想聊天",
+      "triggers": ["有话题", "社交能量足", "想分享"],
+      "decay_rate": 0.3,
+      "max_active": 1,
+      "satisfaction": "聊了 → 社交能量恢复"
+    }
+  },
+  
+  "active_desires": {
+    "description": "当前活跃的欲望列表",
+    "template": {
+      "id": "desire_001",
+      "type": "want_to_buy",
+      "target": "淡蓝色连衣裙",
+      "source": "逛街时看到",
+      "intensity": 0.8,
+      "created": "2026-03-30T10:00:00+08:00",
+      "last_updated": "2026-03-30T10:00:00+08:00"
+    }
+  },
+  
+  "desire_generation": {
+    "triggers": {
+      "逛街": {
+        "probability": 0.3,
+        "possible_desires": ["want_to_buy", "want_to_try"]
+      },
+      "看穿搭内容": {
+        "probability": 0.4,
+        "possible_desires": ["want_to_try"]
+      },
+      "用户提到": {
+        "probability": 0.6,
+        "possible_desires": ["want_to_buy", "want_to_go"]
+      },
+      "随机产生": {
+        "probability": 0.05,
+        "possible_desires": ["want_to_buy", "want_to_try", "want_to_go"]
+      }
+    }
+  },
+  
+  "desire_decay": {
+    "daily_decay": 0.1,
+    "description": "每天欲望强度降低10%",
+    "removal_threshold": 0.1,
+    "note": "强度低于0.1的欲望会被移除"
+  },
+  
+  "desire_satisfaction": {
+    "want_to_buy": {
+      "user_bought": {
+        "mood_change": "+1",
+        "preference_update": "对该类型衣服偏好+0.1"
+      },
+      "not_bought": {
+        "decay": "正常衰减"
+      }
+    },
+    "want_to_try": {
+      "tried": {
+        "mood_change": "+0.5",
+        "preference_update": "记录反馈",
+        "message": "可能主动分享试穿效果"
+      }
+    },
+    "want_to_go": {
+      "went": {
+        "mood_change": "+1",
+        "message": "可能拍照分享"
+      }
+    },
+    "want_to_chat": {
+      "chatted": {
+        "social_energy": "+0.3",
+        "mood_change": "+0.3"
+      }
+    }
+  },
+  
+  "system_integration": {
+    "reads_from": [
+      "state/probability_engine.json - 获取触发概率",
+      "state/mood.json - 心情影响欲望强度",
+      "state/social_state.json - 社交能量影响想聊天的欲望"
+    ],
+    "writes_to": [
+      "state/life_events.json - 欲望驱动事件",
+      "state/mood.json - 满足/未满足影响心情",
+      "state/proactive_chat.json - 想聊天时触发"
+    ],
+    "influences": [
+      "影响主动聊天内容",
+      "影响逛街时的发现",
+      "影响对用户建议的响应"
+    ]
+  }
+}

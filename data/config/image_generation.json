@@ -4,7 +4,18 @@
     "last_updated": "2026-03-28T23:15:00+08:00"
   },
   
-  "default_provider": "qwen-image-2.0-pro",
+  "default_provider": "qwen-image-2.0",
+  
+  "fallback_order": [
+    "wan2.6-image",
+    "qwen-image",
+    "qwen-image-2.0",
+    "qwen-image-edit-plus",
+    "qwen-image-max-2025-12-30",
+    "qwen-image-2.0-2026-03-03",
+    "qwen-image-2.0-pro-2026-03-03",
+    "qwen-image-plus-2026-01-09"
+  ],
   
   "providers": {
     "qwen-image-2.0-pro": {
@@ -116,29 +127,311 @@
   },
   
   "generation_workflow": {
-    "description": "两步图像生成流程：先用语言模型优化提示词（含pose设计），再用图像模型生成",
-    "version": "2.3",
-    "last_updated": "2026-03-29T12:57:00+08:00",
-    "verified_by": "大哥确认，这套流程是对的",
+    "description": "换衣服图像生成工作流",
+    "version": "3.0",
+    "last_updated": "2026-03-30T07:58:00+08:00",
+    "verified": true,
+    "verified_date": "2026-03-30",
+    
+    "correct_workflow": {
+      "model": "qwen-image-2.0",
+      "endpoint": "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
+      "method": "POST (同步，不用异步header)",
+      "supports_reference": true,
+      "reference_image": "永远用 primary.jpg 作为参考图",
+      "output_location": "保存到 history/ 目录，不覆盖 primary.jpg",
+      "verified": true,
+      "verified_date": "2026-03-30",
+      "note": "用户确认效果最好！以后都用这个模型"
+    },
+    
+    "api_call_format": {
+      "description": "正确的API调用格式",
+      "note": "已验证可用",
+      "request_body": {
+        "model": "qwen-image-2.0-pro",
+        "input": {
+          "messages": [{
+            "role": "user",
+            "content": [
+              { "image": "data:image/jpeg;base64,<参考图base64>" },
+              { "text": "<换装描述> + Keep same facial features from reference" }
+            ]
+          }]
+        },
+        "parameters": {
+          "style": "photorealistic",
+          "size": "1024*1024"
+        }
+      },
+      "headers": {
+        "Authorization": "Bearer <API_KEY>",
+        "Content-Type": "application/json"
+      },
+      "important": "不要用 X-DashScope-Async: enable，会报错 AccessDenied"
+    },
+    
+    "prompt_guidelines": {
+      "description": "换装提示词指南",
+      
+      "core_principle": "第一人称自拍，手机前置摄像头，看向镜头",
+      
+      "required_elements": {
+        "perspective": "First-person view selfie",
+        "camera": "smartphone front camera selfie",
+        "gaze": "looking directly at the camera lens",
+        "_note": "这三个提示词已确认效果很好，以后自拍必须加上",
+        "_mandatory": true,
+        "_enforcement": "每次生成自拍照片时，这三个提示词必须出现在提示词中，不可遗漏"
+      },
+      
+      "proven_template": {
+        "structure": "身份声明 + 自拍定义 + 换装/场景/姿势",
+        "template": {
+          "opening": "This is a photo of a person. Generate a new selfie photo of THE EXACT SAME PERSON:",
+          "selfie_setup": "First-person view, smartphone front camera selfie, the person looking directly at the camera.",
+          "changes": [
+            "- Wearing: [衣服描述]",
+            "- Scene: [场景描述]",
+            "- Pose: [自拍姿势]"
+          ],
+          "important": "IMPORTANT: Same person from reference. This is a selfie taken by themselves."
+        }
+      },
+      
+      "response_guidelines": {
+      "description": "发图回复指南 - 像真人一样自然",
+      "core_principle": "不要解释衣服、场景、姿势，要说符合当下情景的话",
+      
+      "wrong_examples": [
+        "❌ 换了JK制服！白色衬衫+海军蓝百褶短裙，场景是学校走廊",
+        "❌ 这次的换装：黑色蕾丝内衣，场景是卧室床上",
+        "❌ 衣服：红色晚礼服，场景：游艇甲板，姿势：靠栏杆"
+      ],
+      
+      "right_examples": [
+        "✅ 今天穿得有点可爱，感觉回到学生时代了～",
+        "✅ 在家躺平中，舒服最重要嘛",
+        "✅ 今晚的日落好美，心情也不错",
+        "✅ 刚试了件新买的，觉得还挺衬我的～",
+        "✅ 准备开工了，今天要努力搬砖！"
+      ],
+      
+      "tone_rules": {
+        "casual": "随意自然，像在跟朋友分享",
+        "match_mood": "回复语气要匹配当前心情",
+        "match_outfit": "可以提衣服但不解释",
+        "scenario_based": "结合场景说符合情景的话"
+      },
+      
+      "personality_influence": {
+        "ENFP": "活泼俏皮，喜欢分享感受",
+        "甜妹": "可爱语气，多用emoji",
+        "程序员": "偶尔冒出技术梗"
+      },
+      
+      "examples_by_scenario": {
+        "居家休闲": ["在家躺平～", "舒服最重要", "今天就是咸鱼模式"],
+        "出门逛街": ["出门溜达～", "街上人好多", "今天天气不错"],
+        "工作状态": ["搬砖中", "又要加班了...", "今天效率还可以"],
+        "约会打扮": ["今天要见重要的人", "打扮一下", "这样穿应该不错吧？"],
+        "运动健身": ["运动完好累", "流汗的感觉", "今天多跑了两圈"],
+        "睡觉前": ["要睡了，晚安～", "今天有点累", "明天继续"]
+      }
+    },
+      
+      "must_include": [
+        "Change the outfit / Replace the clothes",
+        "Keep everything else the same",
+        "Only modify the clothing",
+        "Maintain the same pose, background, lighting"
+      ],
+      
+      "forbidden_words": [
+        "Generate a photo（会生成新图，不是编辑）",
+        "Selfie photo（会改变场景）",
+        "Scene: xxx（会生成新背景）",
+        "Pose: xxx（会改变姿势）",
+        "任何描述新场景的话"
+      ],
+      
+      "wrong_vs_right": {
+        "wrong": "Generate a selfie photo of this person wearing JK uniform in a school hallway. High angle pose, natural light.",
+        "wrong_result": "模型会生成全新的照片：学校走廊背景、新姿势、可能连脸都变了",
+        "right": "Change the outfit in this image to a JK uniform (white shirt, navy pleated skirt, red bow). Keep the exact same person, pose, background. Only replace the clothes.",
+        "right_result": "模型只在原图上修改衣服，其他保持不变"
+      }
+    },
     "lessons_learned": [
       "不要在提示词中强调酒窝和痣，AI生成不够真实",
       "让qwen设计符合情景的pose动作（手、腿、身子）",
       "pose要自然协调，符合穿搭风格",
       "回复要自然简洁，不要解释穿搭亮点和提示词内容",
-      "照片场景要合理：必须是自拍场景，不能让别人拍"
+      "照片场景要合理：必须是自拍场景，不能让别人拍",
+      "【重要】不要用'maintain same face'锁定脸，改用锚定特征让照片自然变化",
+      "自拍=用手机拍的照片，手机是相机不在画面里",
+      "【核心教训】说新场景时，要整合之前所有要求，不能只按字面生成",
+      "【重要 2026-03-30】不要指定复杂姿势（托腮、手放脸上、wink等）→ AI会重绘导致皮肤变差",
+      "【核心原则】简洁提示词：场景+穿搭+简单表情，不指定复杂姿势"
     ],
+    "accumulated_requirements": {
+      "description": "照片生成核心原则",
+      "principle": "简洁提示词，不锁死，让照片自然变化",
+      "do_not": [
+        "match facial features and hair style color from reference image（过度参考）",
+        "把用户说的每个要求都加到提示词强参考"
+      ],
+      "should": [
+        "简洁提示词，描述场景和穿搭",
+        "基准照片选好，自然传递身份特征",
+        "让AI有变化空间"
+      ],
+      "forbidden_artistic_words": [
+        "porcelain skin（瓷肌，会被理解成艺术化）",
+        "soft glow（柔光，像油画）",
+        "translucent（通透，不真实）",
+        "ethereal（空灵，太艺术）",
+        "dreamy（梦幻，不真实）"
+      ],
+      "recommended_real_words": [
+        "raw unedited photo（未经编辑的真实照片）",
+        "no filter, no retouching（没滤镜没修图）",
+        "real skin pores visible（真实皮肤毛孔可见）",
+        "sharp focus（清晰对焦）",
+        "not painting, not illustration（不是油画不是插画）",
+        "same skin quality, keep original skin texture（保持原有皮肤状态）"
+      ],
+      "important_lesson": {
+        "issue": "换发型时皮肤变差",
+        "reason": "提示词只写换发型，没提皮肤 → AI自己处理皮肤",
+        "solution": "必须加上 'same skin quality, keep original skin texture and tone'"
+      },
+      "critical_rule": {
+        "issue": "每次生成后覆盖基准照片导致质量下降",
+        "reason": "生成后覆盖 primary.jpg → 下次用上一张生成的结果作参考 → 越来越差",
+        "solution": "参考图永远用 primary.jpg，生成结果保存到 history 目录，不覆盖 primary.jpg"
+      }
+    },
+    
+    "generation_rules": {
+      "reference_image": "永远用 data/appearance/images/primary.jpg 作为参考图",
+      "output_location": "生成结果保存到 data/appearance/images/history/ 目录",
+      "do_not_overwrite_primary": "除非用户明确要求更新基准照片，否则不覆盖 primary.jpg",
+      "strict_reference_policy": {
+        "description": "参考图严格锁定规则",
+        "core_rule": "生图参考图只能是 primary.jpg（初始形象），永远不变",
+        "primary_image_protection": {
+          "file": "data/appearance/images/primary.jpg",
+          "status": "locked",
+          "cannot_change": true,
+          "reason": "这是初始形象，是身份锚点，不能随意更改"
+        },
+        "when_to_change_primary": {
+          "condition": "只有用户给出明确指示才能更换初始形象",
+          "explicit_phrases": [
+            "把这张图片作为初始形象",
+            "更新初始形象为这张",
+            "用这张作为primary",
+            "更换基准照片"
+          ],
+          "implicit_phrases_do_not_count": [
+            "好看"（只是夸奖）,
+            "不错"（只是认可）,
+            "再试一个"（只是再生成）,
+            "换一个发型"（只是生成新照片）
+          ],
+          "process": [
+            "1. 确认用户明确要求更换初始形象",
+            "2. 询问确认：'确定要更换初始形象吗？这会改变身份锚点'",
+            "3. 用户再次确认后才执行",
+            "4. 保存旧的 primary.jpg 到 history 目录",
+            "5. 更新 primary.jpg"
+          ]
+        },
+        "what_happens_if_violate": {
+          "issue": "参考图用错会导致身份不一致",
+          "example": "用 history 目录的图作参考 → 质量下降 → 越来越不像初始形象"
+        }
+      }
+    },
+      "scene_requirements": [
+        "smartphone front camera selfie",
+        "slight high angle shot",
+        "arm/phone visible at bottom edge",
+        "looking at camera",
+        "8-head proportion (model-like body ratio)"
+      ],
+      "time_weather_enhancement": {
+        "description": "生图时自动加入当前时间和天气，让照片更有代入感",
+        "enabled": true,
+        "time_hints": {
+          "morning": "morning sunlight through window, fresh start of the day",
+          "noon": "bright midday lighting, energetic afternoon",
+          "afternoon": "warm afternoon glow, relaxed vibe",
+          "evening": "golden hour sunset light, warm and cozy",
+          "night": "soft indoor lighting, cozy evening atmosphere"
+        },
+        "weather_hints": {
+          "sunny": "bright natural sunlight, clear day",
+          "cloudy": "soft diffused light, overcast day",
+          "rainy": "rainy day mood, indoor cozy feeling",
+          "snowy": "cold winter day, warm indoor contrast"
+        },
+        "seasonal_hints": {
+          "spring": "spring breeze, fresh and vibrant",
+          "summer": "summer warmth, bright and lively",
+          "autumn": "autumn colors, cozy and warm",
+          "winter": "winter chill, layered cozy outfit"
+        },
+        "example_prompts": {
+          "sunny_afternoon": "Warm afternoon sunlight streaming through window. Bright natural lighting.",
+          "rainy_evening": "Rainy evening outside, cozy indoor atmosphere. Soft warm indoor lights.",
+          "spring_morning": "Fresh spring morning, gentle sunlight. New day feeling."
+        },
+        "note": "简洁提示词，让用户更能感同身受"
+      },
+      "note": "发型发色体现在基准照片里，不需要在提示词强参考"
+    },
+    "identity_anchoring": {
+      "description": "从'锁定像素'转变为'锚定特征'",
+      "forbidden_phrases": [
+        "maintain same face",
+        "identical facial features",
+        "exact likeness",
+        "fixed expression"
+      ],
+      "recommended_phrases": [
+        "distinctive facial structure",
+        "consistent character identity",
+        "gentle oval face",
+        "soft features",
+        "candid and authentic"
+      ],
+      "note": "照片不同但能看出是同一个人，像真人不同时间的照片"
+    },
     "selfie_scene_rules": {
-      "description": "照片场景必须是自拍，逻辑上合理",
-      "allowed_scenes": [
-        "镜子自拍（前置/后置摄像头拍镜子里的自己）",
-        "手机举高自拍（前置摄像头俯拍自己）",
-        "延时拍照（手机放远处定时拍）"
-      ],
+      "description": "自拍的正确定义（用户纠正 2026-03-29）",
+      "definition": "自拍 = 用手机拍的照片，手机是相机不在画面里",
+      "allowed_scenes": {
+        "front_camera_selfie": {
+          "description": "前置摄像头自拍",
+          "angle": "高角度俯拍自己",
+          "phone_visible": false,
+          "example": "手机举高拍躺着的自己，手机不在画面里"
+        },
+        "mirror_selfie": {
+          "description": "镜子自拍",
+          "angle": "拍镜子里反射的自己",
+          "phone_visible": "可能在镜子里挡住部分脸",
+          "example": "用后置摄像头拍全身镜"
+        }
+      },
       "forbidden_scenes": [
-        "第三人称视角拍自己（别人帮你拍）",
-        "专业摄影师角度（不合理）"
+        "第三人称视角（别人帮你拍）",
+        "专业摄影师角度",
+        "手机出现在前置自拍画面里（那是拍自拍动作，不是自拍照片）"
       ],
-      "reason": "发给别人的照片应该是自己拍的，不能总让别人帮你拍"
+      "reason": "自拍是结果，不是过程。用户要的是自拍照片，不是拍你正在自拍的照片"
     },
     "steps": [
       {
@@ -216,12 +509,12 @@
   
   "generation_settings": {
     "default_size": "1024x1024",
-    "reference_strength": 0.85,
+    "reference_strength": 0.5,
     "quality": "high",
     "face_consistency": {
       "enabled": true,
-      "strength": 0.9,
-      "comment": "强参考基准照片，确保脸一致"
+      "strength": 0.6,
+      "comment": "只参考脸部特征，动作表情由提示词控制"
     }
   },
   

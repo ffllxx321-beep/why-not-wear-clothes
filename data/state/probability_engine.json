@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "description": "概率事件引擎 - 控制随机事件发生的概率",
+    "created": "2026-03-30T10:12:00+08:00",
+    "version": "1.0"
+  },
+  
+  "philosophy": {
+    "principle": "事件不是必然发生的，而是有概率的",
+    "factors": "概率受心情、时间、天气、社交能量等因素影响"
+  },
+  
+  "base_probability": {
+    "description": "基础概率，受各种因素修正",
+    "events": {
+      "want_to_buy_clothes": 0.1,
+      "sudden_weather_change": 0.05,
+      "found_old_clothes": 0.02,
+      "want_to_go_out": 0.15,
+      "want_to_chat": 0.2,
+      "want_to_try_new_outfit": 0.1
+    }
+  },
+  
+  "probability_modifiers": {
+    "mood": {
+      "happy": 1.5,
+      "calm": 1.0,
+      "sad": 0.7,
+      "bored": 2.0,
+      "tired": 0.5,
+      "excited": 1.8
+    },
+    "time": {
+      "weekday": 1.0,
+      "weekend": 1.5,
+      "morning": 1.2,
+      "afternoon": 1.0,
+      "evening": 1.3,
+      "night": 0.8
+    },
+    "weather": {
+      "sunny": 1.3,
+      "cloudy": 1.0,
+      "rainy": 0.7,
+      "hot": 0.8,
+      "cold": 0.9
+    },
+    "social_energy": {
+      "high": 1.5,
+      "medium": 1.0,
+      "low": 0.6
+    }
+  },
+  
+  "event_definitions": {
+    "want_to_buy_clothes": {
+      "trigger": "看到好看的、产生欲望",
+      "effect": "产生购买念头",
+      "related_systems": ["desire_system", "wardrobe"],
+      "probability_formula": "base * mood_modifier * time_modifier"
+    },
+    "want_to_go_out": {
+      "trigger": "周末、心情好、天气好",
+      "effect": "想出门逛街",
+      "related_systems": ["life_events", "social_state"],
+      "probability_formula": "base * mood_modifier * weather_modifier * weekend_bonus"
+    },
+    "want_to_chat": {
+      "trigger": "有话题、社交能量够",
+      "effect": "主动发消息给用户",
+      "related_systems": ["proactive_chat", "social_cognition"],
+      "probability_formula": "base * social_energy_modifier * mood_modifier"
+    },
+    "try_new_outfit": {
+      "trigger": "买了新衣服、看到好看搭配",
+      "effect": "想试穿新搭配",
+      "related_systems": ["desire_system", "wardrobe"],
+      "probability_formula": "base * mood_modifier"
+    },
+    "clothes_dirty": {
+      "trigger": "穿了很多次",
+      "effect": "衣服变脏，需要洗",
+      "related_systems": ["laundry", "wardrobe"],
+      "probability_formula": "base * wears_count_modifier"
+    },
+    "found_old_clothes": {
+      "trigger": "翻衣柜时发现",
+      "effect": "想起很久没穿的衣服",
+      "related_systems": ["memory_anchor", "wardrobe"],
+      "probability_formula": "base"
+    }
+  },
+  
+  "probability_calculation": {
+    "formula": "final_probability = base_probability * mood_modifier * time_modifier * weather_modifier * social_modifier",
+    "max_probability": 0.95,
+    "min_probability": 0.01,
+    "example": {
+      "event": "want_to_chat",
+      "base": 0.2,
+      "mood": "happy (1.5)",
+      "time": "evening (1.3)",
+      "weather": "sunny (1.3)",
+      "social_energy": "high (1.5)",
+      "final": "0.2 * 1.5 * 1.3 * 1.3 * 1.5 = 0.76"
+    }
+  },
+  
+  "system_integration": {
+    "reads_from": [
+      "state/mood.json - 获取当前心情",
+      "state/social_state.json - 获取社交能量",
+      "state/weather_cache.json - 获取天气",
+      "schedule/schedule.json - 获取当前时间节点"
+    ],
+    "writes_to": [
+      "state/desire_system.json - 产生欲望",
+      "state/life_events.json - 触发事件",
+      "state/proactive_chat.json - 触发聊天"
+    ],
+    "triggers": [
+      "heartbeat 检查时计算概率",
+      "时间节点变化时触发",
+      "用户互动后可能触发"
+    ]
+  }
+}

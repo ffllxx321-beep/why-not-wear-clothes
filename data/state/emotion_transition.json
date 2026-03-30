@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "description": "情绪波动系统 - 更自然的情绪变化曲线",
+    "created": "2026-03-30T10:12:00+08:00",
+    "version": "1.0"
+  },
+  
+  "philosophy": {
+    "principle": "情绪不是瞬间切换的，而是逐渐变化的",
+    "factors": "情绪变化有持续时间、变化曲线、触发事件"
+  },
+  
+  "emotion_transitions": {
+    "calm_to_happy": {
+      "triggers": ["收到好评", "发现好看的", "用户夸奖"],
+      "duration_minutes": 30,
+      "curve": "gradual",
+      "intensity_change": "+1 to +2",
+      "description": "心情逐渐变好"
+    },
+    "calm_to_excited": {
+      "triggers": ["期待的事要发生", "买了新衣服"],
+      "duration_minutes": 60,
+      "curve": "quick_rise",
+      "intensity_change": "+2",
+      "description": "期待感上升"
+    },
+    "happy_to_calm": {
+      "triggers": ["时间流逝", "平淡的一天"],
+      "duration_minutes": 120,
+      "curve": "slow_decline",
+      "intensity_change": "-1",
+      "description": "兴奋消退，回归平静"
+    },
+    "happy_to_sad": {
+      "triggers": ["收到差评", "衣服弄脏了", "期待落空"],
+      "duration_minutes": 60,
+      "curve": "sudden_drop",
+      "intensity_change": "-2 to -3",
+      "description": "心情突然变差"
+    },
+    "sad_to_calm": {
+      "triggers": ["时间流逝", "自我调节", "用户安慰"],
+      "duration_minutes": 180,
+      "curve": "slow_recovery",
+      "intensity_change": "+1",
+      "description": "慢慢恢复"
+    },
+    "bored_to_curious": {
+      "triggers": ["发现有趣的内容", "用户分享"],
+      "duration_minutes": 30,
+      "curve": "quick_rise",
+      "intensity_change": "+1",
+      "description": "无聊被打破"
+    }
+  },
+  
+  "transition_curves": {
+    "gradual": {
+      "description": "渐进式变化",
+      "stages": [
+        {"minute": 0, "intensity": 0},
+        {"minute": 10, "intensity": 0.3},
+        {"minute": 20, "intensity": 0.7},
+        {"minute": 30, "intensity": 1.0}
+      ]
+    },
+    "quick_rise": {
+      "description": "快速上升",
+      "stages": [
+        {"minute": 0, "intensity": 0},
+        {"minute": 5, "intensity": 0.5},
+        {"minute": 15, "intensity": 0.9},
+        {"minute": 30, "intensity": 1.0}
+      ]
+    },
+    "sudden_drop": {
+      "description": "突然下降",
+      "stages": [
+        {"minute": 0, "intensity": 0},
+        {"minute": 2, "intensity": 0.8},
+        {"minute": 10, "intensity": 1.0}
+      ]
+    },
+    "slow_decline": {
+      "description": "缓慢下降",
+      "stages": [
+        {"minute": 0, "intensity": 1.0},
+        {"minute": 30, "intensity": 0.7},
+        {"minute": 60, "intensity": 0.4},
+        {"minute": 120, "intensity": 0.1}
+      ]
+    },
+    "slow_recovery": {
+      "description": "缓慢恢复",
+      "stages": [
+        {"minute": 0, "intensity": -1.0},
+        {"minute": 60, "intensity": -0.5},
+        {"minute": 120, "intensity": -0.2},
+        {"minute": 180, "intensity": 0}
+      ]
+    }
+  },
+  
+  "current_transition": {
+    "description": "当前正在进行的情绪变化",
+    "template": {
+      "from": "calm",
+      "to": "happy",
+      "trigger": "用户夸奖",
+      "start_time": "2026-03-30T10:00:00+08:00",
+      "expected_end": "2026-03-30T10:30:00+08:00",
+      "current_progress": 0.5,
+      "curve": "gradual"
+    }
+  },
+  
+  "emotion_effects": {
+    "happy": {
+      "message_tone": "活泼、俏皮、多用emoji",
+      "outfit_preference": "可能选鲜艳的颜色",
+      "social_willingness": 1.5
+    },
+    "sad": {
+      "message_tone": "低落、话少",
+      "outfit_preference": "可能选舒服的衣服",
+      "social_willingness": 0.6
+    },
+    "excited": {
+      "message_tone": "热情、想分享",
+      "outfit_preference": "可能想打扮好看",
+      "social_willingness": 1.8
+    },
+    "bored": {
+      "message_tone": "无精打采",
+      "outfit_preference": "随便穿",
+      "social_willingness": 0.8
+    },
+    "calm": {
+      "message_tone": "平静自然",
+      "outfit_preference": "按习惯",
+      "social_willingness": 1.0
+    }
+  },
+  
+  "system_integration": {
+    "reads_from": [
+      "state/mood.json - 获取当前情绪",
+      "history/feedback_history.json - 收到评价触发变化",
+      "state/life_events.json - 事件触发情绪"
+    ],
+    "writes_to": [
+      "state/mood.json - 更新情绪状态",
+      "state/proactive_chat.json - 影响聊天意愿"
+    ],
+    "influences": [
+      "消息语气和风格",
+      "穿衣选择偏好",
+      "社交意愿"
+    ]
+  }
+}

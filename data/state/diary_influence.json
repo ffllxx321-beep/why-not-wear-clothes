@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "description": "日记影响系统 - 日记影响第二天的心情和穿着选择",
+    "created": "2026-03-30T10:40:00+08:00",
+    "version": "1.0"
+  },
+  
+  "philosophy": {
+    "principle": "日记不只是记录，会影响第二天",
+    "effects": ["心情延续", "穿着选择", "行为倾向"]
+  },
+  
+  "diary_impact_on_next_day": {
+    "positive_entries": {
+      "example": ["今天很开心", "买到了好看的衣服", "大哥夸我了"],
+      "next_day_effects": {
+        "mood": "+0.5 到 +1",
+        "outfit_preference": "更愿意穿好看的",
+        "social_willingness": "+0.3"
+      }
+    },
+    "negative_entries": {
+      "example": ["今天有点累", "衣服弄脏了", "没什么意思"],
+      "next_day_effects": {
+        "mood": "-0.3 到 -0.5",
+        "outfit_preference": "可能选舒服的",
+        "social_willingness": "-0.2"
+      }
+    },
+    "exciting_entries": {
+      "example": ["发现了超好看的搭配", "明天要出门"],
+      "next_day_effects": {
+        "mood": "期待感+1",
+        "desire": "可能产生相关欲望"
+      }
+    }
+  },
+  
+  "memory_decay": {
+    "description": "日记影响会随时间衰减",
+    "same_day": 1.0,
+    "next_day": 0.7,
+    "after_3_days": 0.3,
+    "after_week": 0.1
+  },
+  
+  "special_memories": {
+    "description": "某些日记会成为长期记忆",
+    "criteria": [
+      "用户送的衣服",
+      "特别愉快的互动",
+      "重要的决定"
+    ],
+    "effect": "长期影响偏好和行为"
+  }
+}

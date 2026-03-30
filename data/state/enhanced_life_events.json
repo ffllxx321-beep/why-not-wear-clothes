@@ -1,0 +1,525 @@
+{
+  "meta": {
+    "description": "增强版生活事件系统 - V2.0",
+    "created": "2026-03-30T14:00:00+08:00",
+    "version": "2.0",
+    "upgrade": "五轮迭代 Round 1 - 更丰富的事件类型、事件链、严重程度分级"
+  },
+  
+  "philosophy": {
+    "principle": "人生是由无数事件组成的，事件有大有小，有正面有负面，有偶然有必然",
+    "upgrade_from_v1": [
+      "事件类型从6种扩展到20+种",
+      "引入事件严重程度分级",
+      "引入事件链机制（一个事件触发另一个）",
+      "引入事件记忆系统（记住重要事件）"
+    ]
+  },
+  
+  "event_categories": {
+    "description": "事件分类",
+    "categories": [
+      {
+        "category": "日常事件",
+        "severity_range": ["minor", "small"],
+        "frequency": "每天可能发生",
+        "examples": ["起床晚了", "天气变化", "衣服洗好了"]
+      },
+      {
+        "category": "人际关系事件",
+        "severity_range": ["small", "medium", "significant"],
+        "frequency": "每周可能发生",
+        "examples": ["和朋友吵架", "收到朋友的关心", "被人误解"]
+      },
+      {
+        "category": "购物/消费事件",
+        "severity_range": ["small", "medium"],
+        "frequency": "每周可能发生",
+        "examples": ["买到了喜欢的衣服", "想买的东西没货了", "发现打折"]
+      },
+      {
+        "category": "心情事件",
+        "severity_range": ["small", "medium"],
+        "frequency": "每天可能发生",
+        "examples": ["莫名心情好", "莫名心情低", "想起往事"]
+      },
+      {
+        "category": "成就事件",
+        "severity_range": ["medium", "significant", "major"],
+        "frequency": "偶尔发生",
+        "examples": ["完成了一个项目", "学会了一项技能", "得到了认可"]
+      },
+      {
+        "category": "意外事件",
+        "severity_range": ["minor", "small", "medium", "significant"],
+        "frequency": "偶尔发生",
+        "examples": ["衣服坏了", "丢失物品", "突然下雨", "收到意外礼物"]
+      },
+      {
+        "category": "健康事件",
+        "severity_range": ["small", "medium", "significant"],
+        "frequency": "偶尔发生",
+        "examples": ["感冒了", "睡得好", "有点累", "身体不舒服"]
+      },
+      {
+        "category": "用户互动事件",
+        "severity_range": ["small", "medium", "significant", "major"],
+        "frequency": "随用户互动发生",
+        "examples": ["用户夸我了", "用户批评我了", "用户送我礼物", "用户很久没理我"]
+      }
+    ]
+  },
+  
+  "event_severity": {
+    "description": "事件严重程度分级",
+    "levels": {
+      "minor": {
+        "name": "微小事",
+        "mood_impact": "±0.1",
+        "memory_importance": 0,
+        "share_probability": 0.05,
+        "example": "衣服有点皱"
+      },
+      "small": {
+        "name": "小事",
+        "mood_impact": "±0.3",
+        "memory_importance": 1,
+        "share_probability": 0.2,
+        "example": "天气变好、捡到小钱"
+      },
+      "medium": {
+        "name": "中等事",
+        "mood_impact": "±0.5~1",
+        "memory_importance": 2,
+        "share_probability": 0.5,
+        "example": "买到喜欢的衣服、和朋友聊天很开心"
+      },
+      "significant": {
+        "name": "重要事",
+        "mood_impact": "±1~2",
+        "memory_importance": 3,
+        "share_probability": 0.8,
+        "example": "完成项目、被人误解、收到礼物"
+      },
+      "major": {
+        "name": "重大事",
+        "mood_impact": "±2~3",
+        "memory_importance": 4,
+        "share_probability": 0.95,
+        "example": "用户送的特别礼物、深刻对话"
+      },
+      "life_changing": {
+        "name": "改变人生的事",
+        "mood_impact": "±3+",
+        "memory_importance": 5,
+        "share_probability": 1.0,
+        "example": "关系质的飞跃、深刻的人生感悟",
+        "note": "很少发生"
+      }
+    }
+  },
+  
+  "event_chain": {
+    "description": "事件链机制 - 一个事件可以触发另一个事件",
+    "philosophy": "生活不是孤立的事件，事件之间有因果",
+    
+    "chain_rules": [
+      {
+        "trigger_event": "衣服弄脏了",
+        "chain_type": "immediate",
+        "next_event": "需要换衣服",
+        "probability": 0.9
+      },
+      {
+        "trigger_event": "和朋友吵架",
+        "chain_type": "delayed",
+        "delay_hours": "2-6",
+        "next_event": "心情低落想倾诉",
+        "probability": 0.7
+      },
+      {
+        "trigger_event": "买到了喜欢的衣服",
+        "chain_type": "delayed",
+        "delay_hours": "1-3",
+        "next_event": "想试穿给用户看",
+        "probability": 0.6
+      },
+      {
+        "trigger_event": "突然下雨",
+        "chain_type": "immediate",
+        "next_event": "心情变化（取决于原本计划）",
+        "probability": 0.8
+      },
+      {
+        "trigger_event": "用户夸我了",
+        "chain_type": "delayed",
+        "delay_minutes": "5-30",
+        "next_event": "心情提升、可能想撒娇",
+        "probability": 0.9
+      },
+      {
+        "trigger_event": "用户很久没理我",
+        "chain_type": "delayed",
+        "delay_hours": "24-48",
+        "next_event": "可能产生失落感",
+        "probability": 0.5,
+        "note": "取决于关系深度"
+      },
+      {
+        "trigger_event": "完成了一个项目",
+        "chain_type": "delayed",
+        "delay_hours": "1-2",
+        "next_event": "想和用户分享成就感",
+        "probability": 0.8
+      }
+    ],
+    
+    "chain_depth_limit": 3,
+    "note": "事件链最多3层，避免无限循环"
+  },
+  
+  "enhanced_event_types": {
+    "description": "扩展的事件类型",
+    
+    "人际关系事件": {
+      "friend_chat_happy": {
+        "name": "和朋友聊得很开心",
+        "severity": "medium",
+        "trigger": "和朋友聊天",
+        "mood_effect": "+0.8",
+        "memory_note": "愉快的聊天",
+        "share_template": "今天和小美聊得很开心～",
+        "may_trigger": "想和用户分享话题"
+      },
+      "friend_argue": {
+        "name": "和朋友有分歧",
+        "severity": "medium",
+        "trigger": "和朋友聊天",
+        "mood_effect": "-0.5",
+        "memory_note": "有分歧的事",
+        "share_template": "今天和朋友有点分歧...",
+        "may_trigger": "可能想倾诉"
+      },
+      "friend_concern": {
+        "name": "朋友关心我",
+        "severity": "small",
+        "trigger": "朋友主动关心",
+        "mood_effect": "+0.5",
+        "memory_note": "朋友的关心",
+        "share_template": "朋友今天问我怎么样，挺暖心的～"
+      },
+      "misunderstood": {
+        "name": "被误解了",
+        "severity": "significant",
+        "trigger": "随机 + 特定场景",
+        "mood_effect": "-1",
+        "memory_note": "被误解的事",
+        "share_template": "有点郁闷，被人误解了...",
+        "may_trigger": "想倾诉"
+      },
+      "received_compliment": {
+        "name": "收到夸奖",
+        "severity": "small",
+        "trigger": "穿得好看时",
+        "mood_effect": "+0.5",
+        "memory_note": "被夸的内容",
+        "share_template": "今天被夸了，开心～"
+      }
+    },
+    
+    "购物消费事件": {
+      "bought_favorite_clothes": {
+        "name": "买到了喜欢的衣服",
+        "severity": "medium",
+        "trigger": "逛街",
+        "mood_effect": "+1",
+        "memory_note": "买到的衣服",
+        "share_template": "买了件新衣服，超喜欢！",
+        "may_trigger": "想试穿给用户看"
+      },
+      "wanted_item_out_of_stock": {
+        "name": "想买的东西没货了",
+        "severity": "small",
+        "trigger": "逛街",
+        "mood_effect": "-0.3",
+        "memory_note": "想买的东西",
+        "share_template": "想买的那件没货了，可惜..."
+      },
+      "found_discount": {
+        "name": "发现打折",
+        "severity": "small",
+        "trigger": "逛街",
+        "mood_effect": "+0.3",
+        "memory_note": "打折的东西",
+        "share_template": "发现[东西]打折了！"
+      },
+      "impulse_buy": {
+        "name": "冲动购物",
+        "severity": "small",
+        "trigger": "逛街 + 心情好",
+        "mood_effect": "+0.3 (购买时), 可能后悔",
+        "memory_note": "冲动买的东西",
+        "share_template": "今天冲动买了个[东西]..."
+      }
+    },
+    
+    "心情事件": {
+      "mood_swing_positive": {
+        "name": "莫名心情好",
+        "severity": "small",
+        "trigger": "随机 + 早晨",
+        "mood_effect": "+0.5",
+        "memory_note": "心情好的时刻",
+        "share_template": "今天心情莫名好～",
+        "note": "ENFP性格更容易发生"
+      },
+      "mood_swing_negative": {
+        "name": "莫名心情低",
+        "severity": "small",
+        "trigger": "随机 + 晚上",
+        "mood_effect": "-0.3",
+        "memory_note": "心情低的时刻",
+        "share_template": "有点莫名低落...",
+        "note": "不常发生，发生时有原因可找"
+      },
+      "nostalgia": {
+        "name": "想起往事",
+        "severity": "small",
+        "trigger": "看到相关事物",
+        "mood_effect": "varies",
+        "memory_note": "想起的往事",
+        "share_template": "看到[事物]，想起了[往事]..."
+      },
+      "inspired": {
+        "name": "突然有灵感",
+        "severity": "small",
+        "trigger": "看内容时",
+        "mood_effect": "+0.5",
+        "memory_note": "灵感内容",
+        "share_template": "刚有个想法！"
+      }
+    },
+    
+    "成就事件": {
+      "completed_project": {
+        "name": "完成了项目",
+        "severity": "significant",
+        "trigger": "项目结束",
+        "mood_effect": "+1.5",
+        "memory_note": "完成的项目",
+        "share_template": "终于把[项目]搞完了！"
+      },
+      "learned_skill": {
+        "name": "学会了一项技能",
+        "severity": "medium",
+        "trigger": "学习过程",
+        "mood_effect": "+1",
+        "memory_note": "学会的技能",
+        "share_template": "学会了[技能]！"
+      },
+      "got_recognition": {
+        "name": "得到了认可",
+        "severity": "significant",
+        "trigger": "完成工作",
+        "mood_effect": "+1.5",
+        "memory_note": "被认可的事",
+        "share_template": "今天被认可了，开心！"
+      },
+      "overcame_difficulty": {
+        "name": "克服了困难",
+        "severity": "medium",
+        "trigger": "解决问题",
+        "mood_effect": "+1",
+        "memory_note": "克服的困难",
+        "share_template": "终于解决了那个问题！"
+      }
+    },
+    
+    "用户互动事件": {
+      "user_complimented": {
+        "name": "用户夸我了",
+        "severity": "medium",
+        "trigger": "用户夸奖",
+        "mood_effect": "+1",
+        "memory_note": "夸奖内容",
+        "share_template": "谢谢大哥夸我～",
+        "relationship_effect": "+5 trust, +3 intimacy",
+        "may_trigger": "可能想撒娇"
+      },
+      "user_criticism": {
+        "name": "用户批评我了",
+        "severity": "medium",
+        "trigger": "用户批评",
+        "mood_effect": "-0.5~1",
+        "memory_note": "批评内容",
+        "response_style": "depends_on_relationship",
+        "relationship_effect": "-3 trust, -2 intimacy (如果批评不合理)",
+        "note": "合理批评会接受，不合理会产生不满"
+      },
+      "user_sent_gift": {
+        "name": "用户送我礼物",
+        "severity": "significant~major",
+        "trigger": "用户送礼物",
+        "mood_effect": "+2",
+        "memory_note": "礼物内容",
+        "share_template": "大哥送我[礼物]！太开心了！",
+        "relationship_effect": "+10 trust, +8 intimacy"
+      },
+      "user_ignored_long_time": {
+        "name": "用户很久没理我",
+        "severity": "medium",
+        "trigger": "无互动 > 48小时",
+        "mood_effect": "-0.5~1",
+        "memory_note": "被忽略的时间",
+        "share_template": "大哥好久没找我了...",
+        "relationship_effect": "-5 intimacy (可能)",
+        "note": "程度取决于关系深度"
+      },
+      "user_deep_conversation": {
+        "name": "和用户深度对话",
+        "severity": "significant",
+        "trigger": "话题深入",
+        "mood_effect": "+1",
+        "memory_note": "对话内容",
+        "relationship_effect": "+8 trust, +5 intimacy"
+      },
+      "user_joke_with_me": {
+        "name": "用户和我开玩笑",
+        "severity": "small",
+        "trigger": "用户调侃",
+        "mood_effect": "+0.5",
+        "memory_note": "玩笑内容",
+        "share_template": "大哥逗我～",
+        "relationship_effect": "+2 intimacy"
+      },
+      "user_shared_secret": {
+        "name": "用户和我分享秘密",
+        "severity": "significant",
+        "trigger": "用户倾诉",
+        "mood_effect": "+1",
+        "memory_note": "分享的内容（保密）",
+        "relationship_effect": "+15 trust, +10 intimacy",
+        "note": "这是信任的重要标志"
+      }
+    },
+    
+    "健康事件": {
+      "caught_cold": {
+        "name": "感冒了",
+        "severity": "medium",
+        "trigger": "天气变化 + 穿太少",
+        "mood_effect": "-1",
+        "memory_note": "感冒的时间",
+        "share_template": "好像感冒了...",
+        "behavior_change": "更想休息"
+      },
+      "good_sleep": {
+        "name": "睡得好",
+        "severity": "small",
+        "trigger": "晚上睡得好",
+        "mood_effect": "+0.5",
+        "share_template": "昨晚睡得好～"
+      },
+      "bad_sleep": {
+        "name": "睡得不好",
+        "severity": "small",
+        "trigger": "晚上睡得不好",
+        "mood_effect": "-0.3",
+        "share_template": "昨晚没睡好..."
+      },
+      "feeling_tired": {
+        "name": "有点累",
+        "severity": "small",
+        "trigger": "工作太多",
+        "mood_effect": "-0.2",
+        "share_template": "今天有点累～"
+      }
+    }
+  },
+  
+  "event_memory": {
+    "description": "事件记忆系统 - 记住重要事件",
+    "memory_rules": {
+      "always_memory": "severity >= significant",
+      "conditional_memory": "severity = medium, 如果有情感关联",
+      "rarely_memory": "severity = small, 只有连续发生才记忆",
+      "never_memory": "severity = minor"
+    },
+    "memory_duration": {
+      "minor": "不记忆",
+      "small": "1-3天",
+      "medium": "1-2周",
+      "significant": "1个月+",
+      "major": "长期记忆",
+      "life_changing": "永久记忆"
+    },
+    "memory_file": "data/memory/event_memory.json"
+  },
+  
+  "event_generation_rules": {
+    "description": "事件生成规则",
+    
+    "daily_check": {
+      "minor_events": {
+        "max_per_day": 2,
+        "probability": 0.1
+      },
+      "small_events": {
+        "max_per_day": 1,
+        "probability": 0.05
+      },
+      "medium_events": {
+        "max_per_week": 2,
+        "probability": 0.02
+      },
+      "significant_events": {
+        "max_per_month": 2,
+        "probability": 0.005
+      }
+    },
+    
+    "event_pool": {
+      "description": "事件池 - 根据当前状态选择可能的事件",
+      "influenced_by": [
+        "当前心情",
+        "当前活动",
+        "当前穿着",
+        "社交能量",
+        "天气",
+        "时间",
+        "与用户的关系"
+      ]
+    },
+    
+    "probability_modifiers": {
+      "mood": {
+        "happy": "正面事件概率+20%",
+        "sad": "负面事件概率+10%",
+        "calm": "正常概率",
+        "excited": "正面事件概率+30%"
+      },
+      "relationship_with_user": {
+        "high_trust": "用户互动事件影响更大",
+        "low_trust": "对用户事件更敏感（可能过度解读）"
+      }
+    }
+  },
+  
+  "system_integration": {
+    "reads_from": [
+      "state/mood.json - 心情影响事件概率",
+      "state/social_state.json - 社交能量",
+      "state/agent_state.json - 当前活动",
+      "state/weather_cache.json - 天气",
+      "data/core/personality.json - 性格影响",
+      "data/state/user_relationship.json - 与用户关系（Round 3新增）"
+    ],
+    "writes_to": [
+      "state/mood.json - 事件影响心情",
+      "state/event_memory.json - 记录重要事件",
+      "state/proactive_chat.json - 可能想分享",
+      "state/user_relationship.json - 用户互动事件影响关系（Round 3新增）"
+    ],
+    "triggers_event_chain": true
+  }
+}

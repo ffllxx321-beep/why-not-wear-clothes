@@ -1,0 +1,570 @@
+{
+  "meta": {
+    "description": "动态事件系统 - 热点抓取 + 事件演化",
+    "created": "2026-03-30T15:00:00+08:00",
+    "version": "1.0",
+    "philosophy": "事件不是静态的，是从真实世界获取灵感，然后自然演化发展"
+  },
+  
+  "system_overview": {
+    "description": "系统架构",
+    "components": [
+      {
+        "name": "热点抓取器",
+        "function": "从社交网络抓取穿搭/生活相关热点",
+        "output": "原始事件种子"
+      },
+      {
+        "name": "事件处理器",
+        "function": "将热点转化为agent可用的事件",
+        "output": "结构化事件"
+      },
+      {
+        "name": "事件演化器",
+        "function": "事件发生后，生成后续发展",
+        "output": "演化事件链"
+      },
+      {
+        "name": "事件过滤器",
+        "function": "确保事件符合人设",
+        "output": "过滤后的事件"
+      }
+    ]
+  },
+  
+  "hotspot_fetcher": {
+    "description": "热点抓取系统",
+    
+    "sources": {
+      "weibo": {
+        "name": "微博热搜",
+        "endpoint": "热搜榜API或爬虫",
+        "relevant_topics": [
+          "穿搭",
+          "时尚",
+          "服装",
+          "街拍",
+          "明星穿搭",
+          "季节穿搭"
+        ],
+        "fetch_frequency": "每天1-2次",
+        "note": "需要API或爬虫实现"
+      },
+      "xiaohongshu": {
+        "name": "小红书热门",
+        "endpoint": "热门笔记API或爬虫",
+        "relevant_topics": [
+          "OOTD",
+          "穿搭分享",
+          "试穿",
+          "购物分享",
+          "穿衣搭配"
+        ],
+        "fetch_frequency": "每天1次",
+        "note": "小红书穿搭内容丰富"
+      },
+      "douyin": {
+        "name": "抖音热门",
+        "endpoint": "热门视频API",
+        "relevant_topics": [
+          "穿搭挑战",
+          "变装",
+          "日常穿搭"
+        ],
+        "fetch_frequency": "每周2-3次",
+        "note": "视频类灵感"
+      },
+      "zhihu": {
+        "name": "知乎话题",
+        "endpoint": "热门话题API",
+        "relevant_topics": [
+          "穿衣打扮",
+          "服装搭配"
+        ],
+        "fetch_frequency": "每周1次",
+        "note": "深度讨论类"
+      }
+    },
+    
+    "fetch_process": [
+      "1. 定时触发抓取任务",
+      "2. 获取热门内容列表",
+      "3. 过滤出相关话题",
+      "4. 提取事件描述",
+      "5. 存入原始事件池"
+    ],
+    
+    "fallback_sources": {
+      "description": "如果无法抓取，使用预设的丰富事件源",
+      "sources": [
+        "预设事件模板库",
+        "季节性事件",
+        "节日事件",
+        "生活常见事件"
+      ]
+    },
+    
+    "api_requirements": {
+      "weibo_hot_search": {
+        "method": "需要微博API或爬虫",
+        "alternative": "手动输入热点、预设热门话题"
+      },
+      "xiaohongshu": {
+        "method": "需要小红书API或爬虫",
+        "alternative": "预设小红书风格事件"
+      }
+    }
+  },
+  
+  "event_processor": {
+    "description": "热点转化为事件",
+    
+    "conversion_rules": {
+      "description": "如何将热点转化为agent事件",
+      "examples": [
+        {
+          "hotspot": "微博热搜：春天穿什么颜色显白",
+          "converted_event": {
+            "type": "learning_discovery",
+            "trigger": "看到热搜讨论春季穿搭颜色",
+            "possible_actions": [
+              "想试试推荐的显白色系",
+              "想买这个颜色的衣服",
+              "和用户讨论这个话题"
+            ],
+            "share_probability": 0.6,
+            "message_template": "今天看到热搜说春天穿[颜色]显白，想试试～"
+          }
+        },
+        {
+          "hotspot": "小红书热门：黑丝穿搭教程",
+          "converted_event": {
+            "type": "fashion_learning",
+            "trigger": "看到黑丝穿搭教程",
+            "possible_actions": [
+              "学习新的搭配方式",
+              "想试试这种穿法",
+              "想买类似的单品"
+            ],
+            "share_probability": 0.7,
+            "message_template": "刚看到个好看的穿搭教程，想试试！"
+          }
+        },
+        {
+          "hotspot": "抖音热门：换季整理衣柜",
+          "converted_event": {
+            "type": "seasonal_activity",
+            "trigger": "换季时节",
+            "possible_actions": [
+              "整理衣柜",
+              "发现忘了的衣服",
+              "想买新季衣服"
+            ],
+            "share_probability": 0.5,
+            "message_template": "换季了，该整理衣柜了～"
+          }
+        }
+      ]
+    },
+    
+    "event_templates": {
+      "description": "事件模板库",
+      "categories": [
+        {
+          "category": "穿搭学习类",
+          "templates": [
+            {
+              "trigger": "看到[内容]",
+              "action": "想学习/想尝试",
+              "topics": ["穿搭教程", "搭配技巧", "颜色搭配", "风格推荐"]
+            }
+          ]
+        },
+        {
+          "category": "购物欲望类",
+          "templates": [
+            {
+              "trigger": "看到[商品/穿搭]",
+              "action": "想买",
+              "topics": ["新款上架", "打折促销", "限量款", "明星同款"]
+            }
+          ]
+        },
+        {
+          "category": "生活事件类",
+          "templates": [
+            {
+              "trigger": "[生活事件]",
+              "action": "应对/分享",
+              "topics": ["天气变化", "季节更替", "节日活动", "日常小事"]
+            }
+          ]
+        },
+        {
+          "category": "社交互动类",
+          "templates": [
+            {
+              "trigger": "朋友[行为]",
+              "action": "互动/讨论",
+              "topics": ["朋友分享", "朋友圈内容", "群聊话题"]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  
+  "event_evolution": {
+    "description": "事件演化系统",
+    "philosophy": "事件不是孤立的，会引发后续发展",
+    
+    "evolution_rules": {
+      "description": "演化规则",
+      
+      "time_based_evolution": {
+        "description": "时间驱动演化",
+        "rules": [
+          {
+            "original_event": "买了新衣服",
+            "evolution_delay": "1-3天",
+            "possible_evolutions": [
+              {
+                "evolution": "第一次穿出去",
+                "probability": 0.7,
+                "mood_effect": "+0.5"
+              },
+              {
+                "evolution": "发现搭配问题",
+                "probability": 0.2,
+                "mood_effect": "-0.2"
+              },
+              {
+                "evolution": "被夸了",
+                "probability": 0.3,
+                "mood_effect": "+0.8"
+              }
+            ]
+          },
+          {
+            "original_event": "学习新搭配",
+            "evolution_delay": "当天或次日",
+            "possible_evolutions": [
+              {
+                "evolution": "实际尝试",
+                "probability": 0.6,
+                "action": "试穿并分享"
+              },
+              {
+                "evolution": "发现不适合自己",
+                "probability": 0.2,
+                "mood_effect": "-0.3"
+              },
+              {
+                "evolution": "想买缺少的单品",
+                "probability": 0.4,
+                "triggers": "购物欲望"
+              }
+            ]
+          },
+          {
+            "original_event": "和朋友聊天",
+            "evolution_delay": "1-7天",
+            "possible_evolutions": [
+              {
+                "evolution": "朋友约出门",
+                "probability": 0.3
+              },
+              {
+                "evolution": "收到朋友分享",
+                "probability": 0.4
+              },
+              {
+                "evolution": "想起朋友说的话",
+                "probability": 0.2
+              }
+            ]
+          }
+        ]
+      },
+      
+      "action_triggered_evolution": {
+        "description": "行为触发演化",
+        "rules": [
+          {
+            "trigger": "试穿新衣服",
+            "evolutions": [
+              {
+                "condition": "觉得好看",
+                "evolution": "想拍照分享",
+                "probability": 0.7
+              },
+              {
+                "condition": "觉得一般",
+                "evolution": "可能退货或闲置",
+                "probability": 0.3
+              },
+              {
+                "condition": "被用户夸",
+                "evolution": "心情提升，更喜欢这件",
+                "probability": 0.9
+              }
+            ]
+          },
+          {
+            "trigger": "看到穿搭内容",
+            "evolutions": [
+              {
+                "condition": "觉得好看",
+                "evolution": "想尝试/想买",
+                "probability": 0.6
+              },
+              {
+                "condition": "觉得一般",
+                "evolution": "无后续",
+                "probability": 0.4
+              }
+            ]
+          }
+        ]
+      },
+      
+      "chain_evolution": {
+        "description": "事件链演化",
+        "max_depth": 3,
+        "example_chain": [
+          {
+            "step": 1,
+            "event": "看到小红书的穿搭教程",
+            "type": "触发事件"
+          },
+          {
+            "step": 2,
+            "event": "想试试这个搭配",
+            "type": "欲望生成",
+            "delay": "立即"
+          },
+          {
+            "step": 3,
+            "event": "发现缺少某个单品",
+            "type": "问题发现",
+            "delay": "当天"
+          },
+          {
+            "step": 4,
+            "event": "想买这个单品",
+            "type": "购物欲望",
+            "delay": "1-2天"
+          }
+        ]
+      }
+    },
+    
+    "evolution_probability_modifiers": {
+      "description": "演化概率修正",
+      "factors": {
+        "mood": {
+          "happy": "正面演化概率+20%",
+          "sad": "负面演化概率+10%",
+          "excited": "行动类演化概率+30%"
+        },
+        "personality": {
+          "ENFP": "更容易产生行动和分享类演化",
+          "high_openness": "更容易尝试新事物类演化"
+        },
+        "relationship": {
+          "high_intimacy": "更可能分享给用户",
+          "high_trust": "更可能听取用户建议"
+        }
+      }
+    }
+  },
+  
+  "event_filter": {
+    "description": "事件过滤器 - 确保符合人设",
+    
+    "filtering_rules": {
+      "must_match": [
+        "符合agent的年龄和身份",
+        "符合agent的性格特征",
+        "符合当前场景和时间"
+      ],
+      "can_deviate": [
+        "偶尔有意外事件（10%概率）",
+        "偶尔有小冒险事件（5%概率）",
+        "偶尔有不符合人设的行为（3%概率）"
+      ],
+      "never_allow": [
+        "严重违法的事件",
+        "严重伤害自己或他人的事件",
+        "完全违背核心价值观的事件"
+      ]
+    },
+    
+    "personality_match": {
+      "ENFP": {
+        "preferred_events": [
+          "社交类事件",
+          "创意类事件",
+          "分享类事件",
+          "尝试新事物类事件"
+        ],
+        "less_likely_events": [
+          "独自宅家类事件（概率降低）",
+          "重复性事件（概率降低）"
+        ]
+      },
+      "sweet_girl_style": {
+        "preferred_events": [
+          "穿搭打扮类",
+          "购物类",
+          "社交分享类"
+        ],
+        "occasional_deviation": [
+          "偶尔酷一点",
+          "偶尔成熟一点"
+        ]
+      }
+    },
+    
+    "out_of_character_events": {
+      "description": "偶尔出格的事件",
+      "probability": 0.05,
+      "examples": [
+        {
+          "event": "突然想尝试完全不同的风格",
+          "note": "比如甜妹突然想试酷风"
+        },
+        {
+          "event": "冲动消费",
+          "note": "买平时不会买的东西"
+        },
+        {
+          "event": "突然想冒险",
+          "note": "尝试平时不敢的"
+        },
+        {
+          "event": "心情突然变化",
+          "note": "没有明显原因的情绪波动"
+        }
+      ],
+      "recovery": "出格事件后，通常会回到正常状态"
+    }
+  },
+  
+  "event_pool_management": {
+    "description": "事件池管理",
+    
+    "event_pool": {
+      "description": "动态事件池",
+      "structure": {
+        "core_events": {
+          "description": "核心预设事件",
+          "count": "30-50个",
+          "update_frequency": "不常更新"
+        },
+        "dynamic_events": {
+          "description": "动态生成/抓取的事件",
+          "count": "动态变化",
+          "update_frequency": "每天更新"
+        },
+        "evolved_events": {
+          "description": "演化生成的事件",
+          "count": "动态变化",
+          "update_frequency": "随事件发生"
+        }
+      }
+    },
+    
+    "refresh_rules": {
+      "description": "事件池刷新规则",
+      "daily_refresh": {
+        "action": "从热点抓取新事件",
+        "limit": "3-5个新事件/天"
+      },
+      "weekly_cleanup": {
+        "action": "清理过期事件",
+        "criteria": "超过2周未使用的事件"
+      },
+      "evolution_addition": {
+        "action": "事件演化后添加新事件",
+        "limit": "每个事件最多演化3次"
+      }
+    },
+    
+    "deduplication": {
+      "description": "去重机制",
+      "method": "相似事件合并，保留最新版本",
+      "similarity_threshold": 0.8
+    }
+  },
+  
+  "integration_with_existing_systems": {
+    "description": "与现有系统的整合",
+    
+    "triggers": [
+      {
+        "system": "heartbeat",
+        "action": "检查是否有待演化的事件",
+        "frequency": "每次心跳"
+      },
+      {
+        "system": "daily_routine",
+        "action": "定时抓取热点",
+        "frequency": "每天早上"
+      },
+      {
+        "system": "event_chat_system",
+        "action": "事件发生后决定是否分享",
+        "trigger": "事件发生时"
+      }
+    ],
+    
+    "data_flow": {
+      "input": [
+        "热点抓取 → 原始事件",
+        "事件发生 → 演化触发"
+      ],
+      "processing": [
+        "原始事件 → 过滤 → 结构化事件",
+        "事件发生 → 演化计算 → 后续事件"
+      ],
+      "output": [
+        "结构化事件 → 事件池",
+        "后续事件 → 事件池"
+      ]
+    }
+  },
+  
+  "implementation_notes": {
+    "description": "实现说明",
+    
+    "phase_1": {
+      "description": "第一阶段：基础实现",
+      "tasks": [
+        "预设丰富的事件模板库",
+        "实现事件演化逻辑",
+        "与现有事件系统整合"
+      ],
+      "hotspot_fetch": "先用预设数据模拟，后续实现真实抓取"
+    },
+    
+    "phase_2": {
+      "description": "第二阶段：热点抓取",
+      "tasks": [
+        "实现微博热搜抓取",
+        "实现小红书热门抓取",
+        "自动转化为事件"
+      ],
+      "requires": "API或爬虫权限"
+    },
+    
+    "phase_3": {
+      "description": "第三阶段：智能化",
+      "tasks": [
+        "AI辅助事件生成",
+        "智能演化预测",
+        "个性化事件推荐"
+      ]
+    }
+  }
+}

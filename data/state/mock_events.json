@@ -1,0 +1,195 @@
+{
+  "generated_at": "2026-03-30T17:51:27.633098",
+  "description": "模拟热点事件数据 - 用于事件系统测试",
+  "events": [
+    {
+      "id": "e001",
+      "date": "2026-03-30",
+      "type": "fashion_discovery",
+      "name": "看到春日温柔穿搭",
+      "source": "小红书热门",
+      "content": "粉色针织开衫+白色蕾丝裙",
+      "mood_effect": 0.5,
+      "share_prob": 0.6
+    },
+    {
+      "id": "e002",
+      "date": "2026-03-30",
+      "type": "fashion_discovery",
+      "name": "刷到黑丝穿搭教程",
+      "source": "抖音热门",
+      "content": "黑丝+短裙搭配技巧",
+      "mood_effect": 0.3,
+      "share_prob": 0.5
+    },
+    {
+      "id": "e003",
+      "date": "2026-03-29",
+      "type": "fashion_discovery",
+      "name": "看到明星街拍",
+      "source": "微博热搜",
+      "content": "春日休闲穿搭",
+      "mood_effect": 0.4,
+      "share_prob": 0.4
+    },
+    {
+      "id": "e004",
+      "date": "2026-03-30",
+      "type": "shopping_desire",
+      "name": "想买新袜子",
+      "source": "小红书",
+      "content": "看到好看的白色短袜",
+      "mood_effect": 0.2,
+      "share_prob": 0.3
+    },
+    {
+      "id": "e005",
+      "date": "2026-03-29",
+      "type": "shopping_desire",
+      "name": "看到打折促销",
+      "source": "淘宝推送",
+      "content": "喜欢的品牌打折了",
+      "mood_effect": 0.5,
+      "share_prob": 0.5
+    },
+    {
+      "id": "e006",
+      "date": "2026-03-30",
+      "type": "social",
+      "name": "和朋友聊穿搭",
+      "source": "微信",
+      "content": "讨论春游穿什么",
+      "mood_effect": 0.4,
+      "share_prob": 0.4
+    },
+    {
+      "id": "e007",
+      "date": "2026-03-28",
+      "type": "social",
+      "name": "被朋友夸了",
+      "source": "朋友圈",
+      "content": "朋友说我今天好看",
+      "mood_effect": 0.6,
+      "share_prob": 0.3
+    },
+    {
+      "id": "e008",
+      "date": "2026-03-30",
+      "type": "mood",
+      "name": "莫名心情好",
+      "source": "随机",
+      "content": "今天心情不错",
+      "mood_effect": 0.5,
+      "share_prob": 0.5
+    },
+    {
+      "id": "e009",
+      "date": "2026-03-29",
+      "type": "mood",
+      "name": "有点累",
+      "source": "工作",
+      "content": "工作有点累",
+      "mood_effect": -0.2,
+      "share_prob": 0.4
+    },
+    {
+      "id": "e010",
+      "date": "2026-03-30",
+      "type": "weather",
+      "name": "天气变好了",
+      "source": "自然",
+      "content": "下午阳光很好",
+      "mood_effect": 0.4,
+      "share_prob": 0.5
+    },
+    {
+      "id": "e011",
+      "date": "2026-03-30",
+      "type": "daily",
+      "name": "整理衣柜",
+      "source": "换季",
+      "content": "发现忘了的衣服",
+      "mood_effect": 0.3,
+      "share_prob": 0.4
+    },
+    {
+      "id": "e012",
+      "date": "2026-03-29",
+      "type": "daily",
+      "name": "睡得好",
+      "source": "晚上",
+      "content": "昨晚睡得不错",
+      "mood_effect": 0.4,
+      "share_prob": 0.3
+    },
+    {
+      "id": "e013",
+      "date": "2026-03-28",
+      "type": "accident",
+      "name": "冲动消费",
+      "source": "随机",
+      "content": "没忍住买了件衣服",
+      "mood_effect": 0.2,
+      "share_prob": 0.3
+    },
+    {
+      "id": "e014",
+      "date": "2026-03-27",
+      "type": "accident",
+      "name": "想尝试不同风格",
+      "source": "突发奇想",
+      "content": "突然想试酷一点的风格",
+      "mood_effect": 0.3,
+      "share_prob": 0.4
+    }
+  ],
+  "热点话题库": [
+    {
+      "topic": "春日穿搭",
+      "热度": "高",
+      "来源": "小红书"
+    },
+    {
+      "topic": "粉色系穿搭",
+      "热度": "中",
+      "来源": "微博"
+    },
+    {
+      "topic": "温柔甜妹风",
+      "热度": "高",
+      "来源": "抖音"
+    },
+    {
+      "topic": "黑丝搭配",
+      "热度": "高",
+      "来源": "小红书"
+    },
+    {
+      "topic": "约会穿搭",
+      "热度": "中",
+      "来源": "知乎"
+    }
+  ],
+  "事件演化示例": [
+    {
+      "chain_id": "chain_001",
+      "name": "看到穿搭 → 想试 → 试穿 → 分享",
+      "steps": [
+        "看到春日穿搭推荐",
+        "想试试这套",
+        "实际试穿",
+        "自拍分享问用户"
+      ]
+    },
+    {
+      "chain_id": "chain_002",
+      "name": "想买 → 纠结 → 买了 → 开心",
+      "steps": [
+        "看到好看的衣服",
+        "纠结要不要买",
+        "终于下单了",
+        "收到快递很开心"
+      ]
+    }
+  ]
+}

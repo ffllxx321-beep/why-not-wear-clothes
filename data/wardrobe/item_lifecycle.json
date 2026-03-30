@@ -1,0 +1,159 @@
+{
+  "meta": {
+    "description": "物品生命周期系统 - 衣服会旧、会丢、会买新的",
+    "created": "2026-03-30T10:15:00+08:00",
+    "version": "1.0"
+  },
+  
+  "philosophy": {
+    "principle": "衣服有生命周期，从新到旧到淘汰",
+    "emotional_value": "有些衣服有情感价值，淘汰时会不舍"
+  },
+  
+  "lifecycle_stages": {
+    "brand_new": {
+      "name": "崭新",
+      "wears_range": [0, 3],
+      "condition": 1.0,
+      "excitement": 1.5,
+      "want_to_wear": "很高",
+      "description": "刚买的衣服，很想穿"
+    },
+    "new": {
+      "name": "较新",
+      "wears_range": [4, 10],
+      "condition": 0.9,
+      "excitement": 1.2,
+      "want_to_wear": "高",
+      "description": "穿过几次，还是很喜欢"
+    },
+    "normal": {
+      "name": "正常",
+      "wears_range": [11, 30],
+      "condition": 0.7,
+      "excitement": 1.0,
+      "want_to_wear": "正常",
+      "description": "经常穿，舒适熟悉"
+    },
+    "worn": {
+      "name": "有点旧",
+      "wears_range": [31, 50],
+      "condition": 0.5,
+      "excitement": 0.8,
+      "want_to_wear": "一般",
+      "description": "有点旧了，但还能穿"
+    },
+    "old": {
+      "name": "旧了",
+      "wears_range": [51, 80],
+      "condition": 0.3,
+      "excitement": 0.5,
+      "want_to_wear": "低",
+      "description": "明显旧了，不太想穿出门"
+    },
+    "very_old": {
+      "name": "很旧",
+      "wears_range": [81, 999],
+      "condition": 0.1,
+      "excitement": 0.2,
+      "want_to_wear": "几乎不穿",
+      "description": "太旧了，考虑淘汰"
+    }
+  },
+  
+  "condition_factors": {
+    "wears_count": {
+      "description": "穿着次数",
+      "impact": "每次穿 -0.01 到 -0.03 不等"
+    },
+    "washing": {
+      "description": "洗涤",
+      "impact": "每次洗 -0.02 到 -0.05 不等"
+    },
+    "time_passed": {
+      "description": "时间流逝",
+      "impact": "每月 -0.01"
+    },
+    "fabric_type": {
+      "cotton": "磨损较快",
+      "silk": "需要小心护理",
+      "denim": "耐磨",
+      "wool": "需要干洗"
+    }
+  },
+  
+  "emotional_value": {
+    "sources": {
+      "user_gift": {
+        "value": 2.0,
+        "description": "用户送的衣服有特殊意义",
+        "effect": "淘汰时会产生不舍"
+      },
+      "special_occasion": {
+        "value": 1.5,
+        "description": "穿着去过特别场合",
+        "effect": "有纪念意义"
+      },
+      "long_time_favorite": {
+        "value": 1.0,
+        "description": "穿了很久很喜欢",
+        "effect": "有感情"
+      }
+    },
+    "effects": {
+      "reluctant_to_discard": {
+        "description": "不舍得淘汰",
+        "mood_change": "淘汰时 -1"
+      },
+      "want_to_keep": {
+        "description": "想保留",
+        "action": "即使旧了也会继续穿着"
+      }
+    }
+  },
+  
+  "discard_process": {
+    "triggers": {
+      "condition_below_threshold": {
+        "threshold": 0.2,
+        "action": "考虑淘汰"
+      },
+      "too_old": {
+        "wears": 100,
+        "action": "建议淘汰"
+      },
+      "style_changed": {
+        "description": "不再适合当前风格",
+        "action": "可能淘汰"
+      }
+    },
+    "discard_effects": {
+      "normal_clothes": {
+        "mood_change": 0,
+        "action": "从衣橱移除"
+      },
+      "emotional_clothes": {
+        "mood_change": -1,
+        "message": "可能表达不舍",
+        "action": "从衣橱移除，记录回忆"
+      }
+    }
+  },
+  
+  "system_integration": {
+    "reads_from": [
+      "wardrobe/closet.json - 衣服列表和穿着次数",
+      "wardrobe/laundry.json - 洗涤记录"
+    ],
+    "writes_to": [
+      "wardrobe/closet.json - 更新衣服状态",
+      "state/mood.json - 淘汰有感情的衣服时影响心情",
+      "state/desire_system.json - 衣服旧了产生买新的欲望"
+    ],
+    "triggers": [
+      "每次穿着后更新 condition",
+      "每次洗涤后更新 condition",
+      "定期检查是否需要淘汰"
+    ]
+  }
+}
